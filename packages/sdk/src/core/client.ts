@@ -1,9 +1,9 @@
+import axios, { type AxiosInstance, isAxiosError } from 'axios';
 import { getValidatedEnv } from '@/env';
 import { VelariError } from '@/errors';
 import { PingInfo } from '@/resources/PingInfo';
 import { VelariResponse } from '@/resources/VelariResponse';
 import { CommerceService } from '@/services/commerce';
-import axios, { type AxiosInstance, isAxiosError } from 'axios';
 
 export interface RequestOptions<T> {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
@@ -11,7 +11,6 @@ export interface RequestOptions<T> {
   data?: unknown;
   params?: unknown;
   transform: (data: unknown) => T;
-  mock: () => T;
 }
 
 export class Velari {
@@ -19,7 +18,6 @@ export class Velari {
   readonly spaceId: string;
   readonly pubKey: string;
   readonly baseUrl: string;
-  readonly isTestMode: boolean;
   readonly commerce: CommerceService;
 
   constructor() {
@@ -28,7 +26,6 @@ export class Velari {
     this.spaceId = envVal.VELARI_SPACE_ID;
     this.pubKey = envVal.VELARI_PUBLIC_KEY;
     this.baseUrl = envVal.VELARI_API_URL;
-    this.isTestMode = envVal.HIVELARI_TEST_MODE;
 
     this.axiosInstance = axios.create({
       baseURL: envVal.VELARI_API_URL,
@@ -47,12 +44,6 @@ export class Velari {
   public async request<T>(
     options: RequestOptions<T>,
   ): Promise<VelariResponse<T>> {
-    if (this.isTestMode) {
-      await new Promise((resolve) => setTimeout(resolve, 200));
-      const fakedData = options.mock();
-      return new VelariResponse(true, 200, fakedData);
-    }
-
     try {
       const response = await this.axiosInstance.request({
         method: options.method,
@@ -91,7 +82,6 @@ export class Velari {
         new PingInfo(
           data as { status: string; message: string; space: string },
         ),
-      mock: () => PingInfo.fake({ space: this.spaceId }),
     });
   }
 }

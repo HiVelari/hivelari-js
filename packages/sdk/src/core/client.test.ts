@@ -44,7 +44,7 @@ describe('Velari Client', () => {
     );
   });
 
-  it('should throw validation error if required env vars are missing and not in test mode', () => {
+  it('should throw validation error if required env vars are missing', () => {
     expect(() => new Velari()).toThrow();
   });
 
@@ -57,7 +57,6 @@ describe('Velari Client', () => {
     expect(client.spaceId).toBe('space_123');
     expect(client.pubKey).toBe('pub_123');
     expect(client.baseUrl).toBe('https://api.hivelari.com');
-    expect(client.isTestMode).toBe(false);
   });
 
   it('should support overriding baseUrl with VELARI_API_URL', () => {
@@ -99,20 +98,5 @@ describe('Velari Client', () => {
     expect(response.data.status).toBe('ok');
     expect(response.data.message).toBe('pong');
     expect(response.data.space).toBe('space_123');
-  });
-
-  it('should initialize and return faked values in test mode without requiring env variables', async () => {
-    process.env.HIVELARI_TEST_MODE = 'true';
-
-    const client = new Velari();
-    expect(client.isTestMode).toBe(true);
-    expect(client.spaceId).toBe('space_mock_123');
-
-    const response = await client.ping();
-    expect(response.success).toBe(true);
-    expect(response.status).toBe(200);
-    expect(response.data).toBeInstanceOf(PingInfo);
-    expect(response.data.status).toBe('ok');
-    expect(response.data.space).toBe('space_mock_123');
   });
 });

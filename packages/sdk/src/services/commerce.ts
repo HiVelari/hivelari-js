@@ -21,13 +21,6 @@ export class CommerceService {
           data as PaginatedPayload<unknown>,
           (item) => new Product(item as CommerceProductPayload),
         ),
-      mock: () =>
-        PaginatedResponse.fake(3, (i) =>
-          Product.fake({
-            id: `prod_mock_${i + 1}`,
-            name: `Mock Product ${i + 1}`,
-          }),
-        ),
     });
   }
 
@@ -39,7 +32,6 @@ export class CommerceService {
         const payload = data as { data: CommerceProductPayload };
         return new Product(payload.data);
       },
-      mock: () => Product.fake({ id }),
     });
   }
 }

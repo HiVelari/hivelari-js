@@ -113,20 +113,4 @@ describe('Commerce Service', () => {
     expect(response.data.id).toBe('prod_1');
     expect(response.data.name).toBe('Test Product 1');
   });
-
-  it('should return faked products and single product in test mode', async () => {
-    process.env.HIVELARI_TEST_MODE = 'true';
-
-    const client = new Velari();
-    const listResponse = await client.commerce.listProducts();
-    expect(listResponse.success).toBe(true);
-    expect(listResponse.data).toBeInstanceOf(PaginatedResponse);
-    expect(listResponse.data.data.length).toBe(3);
-    expect(listResponse.data.data[0]).toBeInstanceOf(Product);
-
-    const getResponse = await client.commerce.getProduct('prod_mock_id');
-    expect(getResponse.success).toBe(true);
-    expect(getResponse.data).toBeInstanceOf(Product);
-    expect(getResponse.data.id).toBe('prod_mock_id');
-  });
 });
