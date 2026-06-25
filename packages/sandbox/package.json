@@ -1,0 +1,19 @@
+{
+  "name": "@hivelari/sandbox",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "simapi serve",
+    "dev": "simapi dev",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@simapi/console": "^0.0.11",
+    "@simapi/simapi": "^0.0.11"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "@types/node": "^22.10.2"
+  }
+}

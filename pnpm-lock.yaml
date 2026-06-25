@@ -15,7 +15,7 @@ importers:
         specifier: ^2.10.0
         version: 2.10.0
       typescript:
-        specifier: ^5.7.2
+        specifier: ^5.9.3
         version: 5.9.3
 
   apps/playground:
@@ -39,22 +39,16 @@ importers:
 
   packages/sandbox:
     dependencies:
-      '@hono/node-server':
-        specifier: ^1.13.7
-        version: 1.19.14(hono@4.12.27)
+      '@simapi/console':
+        specifier: ^0.0.11
+        version: 0.0.11(@hono/node-server@1.19.14(hono@4.12.27))(hono@4.12.27)
       '@simapi/simapi':
-        specifier: ^0.0.10
-        version: 0.0.10(typescript@5.9.3)
-      hono:
-        specifier: ^4.6.14
-        version: 4.12.27
+        specifier: ^0.0.11
+        version: 0.0.11(typescript@5.9.3)
     devDependencies:
       '@types/node':
         specifier: ^22.10.2
         version: 22.20.0
-      tsx:
-        specifier: ^4.19.2
-        version: 4.22.4
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -926,12 +920,18 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@simapi/openapi@0.0.10':
-    resolution: {integrity: sha512-p0hMF2EkuxDX9BTN+ytqmbPmPKKrZbPtbXKSKOMnC/C/p1M2b25OJQ4T42fzvGAYf1i6WyHVDOe5C4mY30bZfw==}
+  '@simapi/console@0.0.11':
+    resolution: {integrity: sha512-Z3U0N50WEV//KnFAqkn1SXNmWT91TbmaXoz5jZEI6nETbsMIk6cNQen+pFlDhPrXrFshudMKiuY6C2F5mwlJzA==}
+    peerDependencies:
+      '@hono/node-server': ^1.x
+      hono: ^4.x
+
+  '@simapi/openapi@0.0.11':
+    resolution: {integrity: sha512-ENd18pyCnQ4Hs2NVgFGzk3DqYlqYmgba3cfZon7HfHiaOK2duyq9tNwe7r+38dm3JzShBR7lKQBSwnfWPvyZWw==}
     hasBin: true
 
-  '@simapi/simapi@0.0.10':
-    resolution: {integrity: sha512-NGI8xe5xYvr/Nu1WiE6o31oeZvXyRRIOuIom2Of36pomu8xbIGQytD5p9GDBXn3TCQx2Igqtd4GwXy2w/sq3nA==}
+  '@simapi/simapi@0.0.11':
+    resolution: {integrity: sha512-00TQKfX3p2nV7rMbSwBDxfY4Pq6PCk8Gozh++5CFh6lYKzm8k9k9Z0TtP9RPn14wsXbf8rc5Jxpyv+LfDQXWRQ==}
     hasBin: true
 
   '@t3-oss/env-core@0.11.1':
@@ -2360,19 +2360,24 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.62.2':
     optional: true
 
-  '@simapi/openapi@0.0.10':
+  '@simapi/console@0.0.11(@hono/node-server@1.19.14(hono@4.12.27))(hono@4.12.27)':
+    dependencies:
+      '@hono/node-server': 1.19.14(hono@4.12.27)
+      hono: 4.12.27
+
+  '@simapi/openapi@0.0.11':
     dependencies:
       cac: 6.7.14
       consola: 3.4.2
       yaml: 2.9.0
 
-  '@simapi/simapi@0.0.10(typescript@5.9.3)':
+  '@simapi/simapi@0.0.11(typescript@5.9.3)':
     dependencies:
       '@clack/prompts': 0.9.1
       '@faker-js/faker': 9.9.0
       '@hono/node-server': 1.19.14(hono@4.12.27)
       '@libsql/client': 0.17.4
-      '@simapi/openapi': 0.0.10
+      '@simapi/openapi': 0.0.11
       cac: 6.7.14
       consola: 3.4.2
       drizzle-orm: 0.45.2(@libsql/client@0.17.4)(pg@8.22.0)
