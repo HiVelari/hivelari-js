@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import type { Product } from '@hivelari/sdk';
+import Link from 'next/link';
 
 interface ProductGridProps {
   products: Product[];
@@ -187,7 +187,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
                 </div>
 
                 <Link
-                  href={`/products/${product.id}`}
+                  href={`/commerce/products/${product.id}`}
                   className="btn-primary"
                   style={{
                     padding: '8px 16px',

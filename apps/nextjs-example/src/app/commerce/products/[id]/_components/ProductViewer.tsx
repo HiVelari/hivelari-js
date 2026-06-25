@@ -1,80 +1,11 @@
+import type { Product } from '@hivelari/sdk';
 import Link from 'next/link';
-import { velari } from '@/lib/velari';
-import type { Metadata } from 'next';
 
-interface ProductProps {
-  params: Promise<{
-    id: string;
-  }>;
+interface ProductViewerProps {
+  product: Product;
 }
 
-export async function generateMetadata({
-  params,
-}: ProductProps): Promise<Metadata> {
-  const { id } = await params;
-  try {
-    const response = await velari.commerce.getProduct(id);
-    return {
-      title: `${response.data.name} | Velari Storefront`,
-      description:
-        response.data.description || `View details of ${response.data.name}`,
-    };
-  } catch {
-    return {
-      title: 'Product Details | Velari Storefront',
-      description: 'Detailed product profile page',
-    };
-  }
-}
-
-export default async function ProductPage({ params }: ProductProps) {
-  const { id } = await params;
-
-  let product = null;
-  let errorMsg: string | null = null;
-
-  try {
-    const response = await velari.commerce.getProduct(id);
-    product = response.data;
-  } catch (error: unknown) {
-    console.error(`❌ Failed loading product ${id}:`, error);
-    errorMsg = error instanceof Error ? error.message : String(error);
-  }
-
-  if (errorMsg || !product) {
-    return (
-      <div style={{ padding: '40px 0', maxWidth: '800px', margin: '0 auto' }}>
-        <Link
-          href="/"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            color: 'var(--color-primary)',
-            fontWeight: 600,
-            marginBottom: '24px',
-          }}
-        >
-          ← Back to Catalog
-        </Link>
-        <div
-          className="glass-panel"
-          style={{
-            padding: '32px',
-            borderLeft: '4px solid var(--color-error)',
-          }}
-        >
-          <h3 style={{ color: 'var(--color-error)', marginBottom: '8px' }}>
-            Error Loading Product
-          </h3>
-          <p style={{ color: 'var(--text-muted)' }}>
-            {errorMsg || 'Product not found.'}
-          </p>
-        </div>
-      </div>
-    );
-  }
-
+export default function ProductViewer({ product }: ProductViewerProps) {
   const hasSale =
     product.salePrice !== null && product.salePrice < product.originalPrice;
   const displayPrice =
@@ -86,14 +17,14 @@ export default async function ProductPage({ params }: ProductProps) {
   return (
     <div
       style={{
-        padding: '40px 0',
+        padding: '20px 0',
         maxWidth: '1000px',
         margin: '0 auto',
         width: '100%',
       }}
     >
       <Link
-        href="/"
+        href="/commerce"
         style={{
           display: 'inline-flex',
           alignItems: 'center',
@@ -473,7 +404,7 @@ export default async function ProductPage({ params }: ProductProps) {
                 textAlign: 'center',
               }}
             >
-              Secure simulated checkout checkout. No real money will be charged.
+              Secure simulated checkout. No real money will be charged.
             </p>
           </div>
         </div>

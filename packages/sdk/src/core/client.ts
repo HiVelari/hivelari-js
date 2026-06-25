@@ -1,9 +1,11 @@
-import axios, { type AxiosInstance, isAxiosError } from 'axios';
 import { getValidatedEnv } from '@/env';
 import { VelariError } from '@/errors';
 import { PingInfo } from '@/resources/PingInfo';
 import { VelariResponse } from '@/resources/VelariResponse';
+import { AuthService } from '@/services/auth';
 import { CommerceService } from '@/services/commerce';
+import type { AuthUserPayload } from '@/types/auth';
+import axios, { type AxiosInstance, isAxiosError } from 'axios';
 
 export interface RequestOptions<T> {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
@@ -15,17 +17,26 @@ export interface RequestOptions<T> {
 
 export class Velari {
   private axiosInstance: AxiosInstance;
+  private token?: string;
+  private authUser?: AuthUserPayload;
+
   readonly spaceId: string;
   readonly pubKey: string;
   readonly baseUrl: string;
-  readonly commerce: CommerceService;
 
-  constructor() {
+  readonly commerce: CommerceService;
+  readonly auth: AuthService;
+
+  constructor(options?: { token?: string; user?: AuthUserPayload }) {
     const envVal = getValidatedEnv();
 
     this.spaceId = envVal.VELARI_SPACE_ID;
     this.pubKey = envVal.VELARI_PUBLIC_KEY;
     this.baseUrl = envVal.VELARI_API_URL;
+
+    if (options?.token) this.token = options.token;
+
+    if (options?.user) this.authUser = options.user;
 
     this.axiosInstance = axios.create({
       baseURL: envVal.VELARI_API_URL,
@@ -38,7 +49,35 @@ export class Velari {
       },
     });
 
+    // Request interceptor to append authorization token if present
+    this.axiosInstance.interceptors.request.use((config) => {
+      if (this.token) config.headers.Authorization = `Bearer ${this.token}`;
+
+      return config;
+    });
+
     this.commerce = new CommerceService(this);
+    this.auth = new AuthService(this);
+  }
+
+  public setToken(token: string | undefined): void {
+    this.token = token;
+  }
+
+  public setAuthUser(user: AuthUserPayload | undefined): void {
+    this.authUser = user;
+  }
+
+  public isAuthenticated(): boolean {
+    return !!this.token;
+  }
+
+  public user(): AuthUserPayload | undefined {
+    return this.authUser;
+  }
+
+  public getToken(): string | undefined {
+    return this.token;
   }
 
   public async request<T>(

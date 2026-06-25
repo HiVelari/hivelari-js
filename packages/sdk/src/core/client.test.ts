@@ -9,6 +9,11 @@ vi.mock('axios', () => {
   const mockAxiosInstance = {
     get: vi.fn(),
     request: vi.fn(),
+    interceptors: {
+      request: {
+        use: vi.fn(),
+      },
+    },
   };
   return {
     default: {

@@ -1,4 +1,4 @@
-import { AppResponse, type AppRequest } from '@simapi/simapi';
+import { type AppRequest, AppResponse } from '@simapi/simapi';
 
 export function authHandler(req: AppRequest) {
   const spaceId = req.header('X-HVL-SPACEID');

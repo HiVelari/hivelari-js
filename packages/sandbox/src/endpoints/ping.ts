@@ -1,6 +1,6 @@
 import {
-  AppResponse,
   type AppRequest,
+  AppResponse,
   type EndpointDefinition,
 } from '@simapi/simapi';
 

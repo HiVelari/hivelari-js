@@ -1,10 +1,10 @@
-import {
-  AppResponse,
-  type AppRequest,
-  type EndpointDefinition,
-} from '@simapi/simapi';
 import { mockProducts } from '@models/product.js';
 import { listProductsRequest } from '@requests/list-products.js';
+import {
+  type AppRequest,
+  AppResponse,
+  type EndpointDefinition,
+} from '@simapi/simapi';
 
 export const getProducts: EndpointDefinition = {
   path: '/api/commerce/v1/products',

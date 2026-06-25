@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { runHandshakeAction } from '../_actions';
 
-interface HandshakeConsoleProps {
+interface PingConsoleProps {
   targetUrl: string;
 }
 
-export default function HandshakeConsole({ targetUrl }: HandshakeConsoleProps) {
+export default function PingConsole({ targetUrl }: PingConsoleProps) {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{
     success: boolean;
@@ -40,14 +40,24 @@ export default function HandshakeConsole({ targetUrl }: HandshakeConsoleProps) {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px',
+        marginTop: '40px',
+      }}
+    >
       <div
         className="glass-panel"
         style={{
           padding: '24px',
           display: 'flex',
+          flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '16px',
         }}
       >
         <div>
@@ -59,7 +69,7 @@ export default function HandshakeConsole({ targetUrl }: HandshakeConsoleProps) {
               marginBottom: '4px',
             }}
           >
-            Target API Endpoint
+            Target API Host URL
           </span>
           <span
             style={{
@@ -84,7 +94,7 @@ export default function HandshakeConsole({ targetUrl }: HandshakeConsoleProps) {
             pointerEvents: loading ? 'none' : 'auto',
           }}
         >
-          {loading ? 'Pinging...' : 'Run Handshake'}
+          {loading ? 'Pinging...' : 'Test SDK Handshake'}
         </button>
       </div>
 
@@ -92,7 +102,7 @@ export default function HandshakeConsole({ targetUrl }: HandshakeConsoleProps) {
       <div
         className="glass-panel"
         style={{
-          background: 'rgba(10, 9, 20, 0.9)',
+          background: 'rgba(10, 9, 20, 0.95)',
           borderRadius: '16px',
           overflow: 'hidden',
           border: '1px solid rgba(255, 255, 255, 0.05)',
@@ -145,7 +155,7 @@ export default function HandshakeConsole({ targetUrl }: HandshakeConsoleProps) {
               fontFamily: 'monospace',
             }}
           >
-            velari-sdk-ping.sh
+            hivelari-sdk-ping.sh
           </span>
         </div>
 
@@ -157,26 +167,21 @@ export default function HandshakeConsole({ targetUrl }: HandshakeConsoleProps) {
             fontSize: '0.9rem',
             lineHeight: '1.6',
             color: '#d1d5db',
-            minHeight: '260px',
+            minHeight: '220px',
           }}
         >
           <div>$ velari-sdk ping --host={targetUrl}</div>
 
           {loading && (
-            <div
-              style={{
-                color: 'var(--color-primary)',
-                marginTop: '12px',
-                animation: 'pulse 1.5s infinite',
-              }}
-            >
-              ⏳ Dispatching handshake ping, awaiting server response...
+            <div style={{ color: 'var(--color-primary)', marginTop: '12px' }}>
+              ⏳ Request sent. Waiting for space credential validation...
             </div>
           )}
 
           {!loading && !result && (
             <div style={{ color: 'var(--text-muted)', marginTop: '12px' }}>
-              Click "Run Handshake" above to start testing connection.
+              Ready to verify connection parameters. Click "Test SDK Handshake"
+              above.
             </div>
           )}
 
@@ -208,7 +213,7 @@ export default function HandshakeConsole({ targetUrl }: HandshakeConsoleProps) {
                 >
                   {result.success
                     ? `SUCCESS (HTTP ${result.status})`
-                    : 'FAILED'}
+                    : 'CONNECTION FAILED'}
                 </span>
 
                 <span

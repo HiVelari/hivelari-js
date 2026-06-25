@@ -5,7 +5,7 @@ interface SearchFormProps {
 export default function SearchForm({ initialSearch = '' }: SearchFormProps) {
   return (
     <form
-      action="/"
+      action="/commerce"
       method="GET"
       style={{
         display: 'flex',

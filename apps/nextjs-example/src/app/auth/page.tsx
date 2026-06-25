@@ -1,18 +1,21 @@
+import { getAuthSession } from '@/lib/velari';
 import type { Metadata } from 'next';
-import HandshakeConsole from './_components/HandshakeConsole';
-import { velari } from '@/lib/velari';
+import AuthConsole from './_components/AuthConsole';
 
 export const metadata: Metadata = {
-  title: 'Handshake Ping Console | Velari',
-  description: 'Test local SDK connection and request latency',
+  title: 'Authentication Domain | HiVelari',
+  description:
+    'Securely authenticate client profiles, manage account attributes, and exchange credentials using the HiVelari SDK.',
 };
 
-export default function HandshakePage() {
+export default async function AuthDomainPage() {
+  const { user } = await getAuthSession();
+
   return (
     <div
       style={{
         padding: '40px 0',
-        maxWidth: '800px',
+        maxWidth: '1000px',
         margin: '0 auto',
         width: '100%',
       }}
@@ -29,7 +32,7 @@ export default function HandshakePage() {
             letterSpacing: '-1px',
           }}
         >
-          Handshake connection console
+          Customer Authentication
         </h1>
         <p
           style={{
@@ -37,14 +40,15 @@ export default function HandshakePage() {
             color: 'var(--text-muted)',
             maxWidth: '600px',
             margin: '0 auto',
+            lineHeight: '1.5',
           }}
         >
-          Test your server-side connection and calculate ping handshake latency
-          to the API server.
+          Test client authentication APIs, profile updates, and email/password
+          workflows completely through the Velari TS SDK service layer.
         </p>
       </div>
 
-      <HandshakeConsole targetUrl={velari.baseUrl} />
+      <AuthConsole initialUser={user} />
     </div>
   );
 }

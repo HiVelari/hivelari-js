@@ -1,15 +1,14 @@
-"use server";
+'use server';
 
-import { velari } from "@/lib/velari";
+import { getVelariClient } from '@/lib/velari';
 
 export async function runHandshakeAction() {
   const startTime = Date.now();
   try {
-    const response = await velari.ping();
+    const client = await getVelariClient();
+    const response = await client.ping();
 
     const latency = Date.now() - startTime;
-
-    console.log(response.data)
 
     return {
       success: true,
@@ -24,10 +23,9 @@ export async function runHandshakeAction() {
   } catch (error: unknown) {
     const latency = Date.now() - startTime;
     const errorMsg = error instanceof Error ? error.message : String(error);
-
     return {
       success: false,
-      error: errorMsg || "Failed to execute SDK handshake ping.",
+      error: errorMsg || 'Failed to execute SDK handshake ping.',
       latency,
     };
   }

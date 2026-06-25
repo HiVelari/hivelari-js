@@ -90,34 +90,4 @@ export class Product {
       }));
     }
   }
-
-  static fake(overrides: Partial<CommerceProductPayload> = {}): Product {
-    return new Product({
-      id: 'prod_mock_123',
-      name: 'Mock Product',
-      currency: 'USD',
-      original_price: 2999,
-      sale_price: 2499,
-      description: 'A premium mock product description.',
-      category_id: 'cat_mock_123',
-      custom_category: 'Mock Category',
-      type: 'physical',
-      requires_approval: false,
-      visibility: 'public',
-      limit_purchase: null,
-      redirect_on_purchase: null,
-      physical_unit: 'piece',
-      physical_quantity_available: 50,
-      files: [],
-      images: [
-        {
-          id: 'img_mock_123',
-          image_id: 'media_mock_123',
-          alt: 'Mock Product Image',
-          media: null,
-        },
-      ],
-      ...overrides,
-    });
-  }
 }

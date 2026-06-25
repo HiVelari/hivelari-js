@@ -54,16 +54,4 @@ describe('Product Resource', () => {
     expect(product.images?.[0].id).toBe('img_1');
     expect(product.images?.[0].alt).toBe('Product alt text');
   });
-
-  it('should generate a valid fake model using static fake helper', () => {
-    const faked = Product.fake({ name: 'Faked Name' });
-
-    expect(faked.id).toBe('prod_mock_123');
-    expect(faked.name).toBe('Faked Name');
-    expect(faked.currency).toBe('USD');
-    expect(faked.originalPrice).toBe(2999);
-    expect(faked.salePrice).toBe(2499);
-    expect(faked.type).toBe('physical');
-    expect(faked.requiresApproval).toBe(false);
-  });
 });
