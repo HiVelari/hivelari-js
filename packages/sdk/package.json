@@ -1,0 +1,49 @@
+{
+  "name": "@hivelari/sdk",
+  "version": "0.1.0",
+  "description": "Official TypeScript SDK for the HiVelari platform - a multi-service modular monolith (Commerce, Booking, Blog, Profiles).",
+  "keywords": [
+    "hivelari",
+    "sdk",
+    "typescript",
+    "commerce",
+    "headless",
+    "api-client"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.mts",
+        "require": "./dist/index.d.cts"
+      },
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist", "README.md", "package.json"],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsdown": "^0.22.3",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0",
+    "vite-tsconfig-paths": "^5.1.4",
+    "@types/node": "^22.10.2"
+  },
+  "dependencies": {
+    "@t3-oss/env-core": "^0.11.1",
+    "axios": "^1.7.9",
+    "server-only": "^0.0.1",
+    "zod": "^3.24.1"
+  }
+}
