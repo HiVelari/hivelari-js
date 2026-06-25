@@ -2,22 +2,22 @@ import {
   AppResponse,
   type AppRequest,
   type EndpointDefinition,
-} from "@simapi/simapi";
-import { mockProducts } from "@models/product.js";
-import { listProductsRequest } from "@requests/list-products.js";
+} from '@simapi/simapi';
+import { mockProducts } from '@models/product.js';
+import { listProductsRequest } from '@requests/list-products.js';
 
 export const getProducts: EndpointDefinition = {
-  path: "/api/commerce/v1/products",
-  method: "GET",
-  type: "secure",
-  title: "List Commerce Products",
+  path: '/api/commerce/v1/products',
+  method: 'GET',
+  type: 'secure',
+  title: 'List Commerce Products',
   description:
-    "Returns a paginated list of commerce products, optionally filtered by keyword.",
+    'Returns a paginated list of commerce products, optionally filtered by keyword.',
   request: listProductsRequest,
   handler: (req: AppRequest) => {
-    const search = req.param("search")?.toLowerCase() || "";
-    const page = Number.parseInt(req.param("page") || "1", 10);
-    const perPage = Number.parseInt(req.param("per_page") || "15", 10);
+    const search = req.param('search')?.toLowerCase() || '';
+    const page = Number.parseInt(req.param('page') || '1', 10);
+    const perPage = Number.parseInt(req.param('per_page') || '15', 10);
 
     let filtered = [...mockProducts];
 
@@ -49,13 +49,13 @@ export const getProducts: EndpointDefinition = {
 };
 
 export const getProductDetail: EndpointDefinition = {
-  path: "/api/commerce/v1/products/:id",
-  method: "GET",
-  type: "secure",
-  title: "Get Single Product Details",
-  description: "Returns the details of a single commerce product.",
+  path: '/api/commerce/v1/products/:id',
+  method: 'GET',
+  type: 'secure',
+  title: 'Get Single Product Details',
+  description: 'Returns the details of a single commerce product.',
   handler: (req: AppRequest) => {
-    const id = req.urlParam("id");
+    const id = req.urlParam('id');
     const product = mockProducts.find((p) => p.id === id);
 
     if (!product) {

@@ -21,8 +21,7 @@
 ### Playground & Sandbox Execution
 
 - Run local SimAPI sandbox server: `pnpm --filter @hivelari/sandbox run serve` (Runs SimAPI server on port 3001)
-- Run playground API server: `pnpm --filter hivelari-playground run server` (Runs Express server on port 3000)
-- Run playground Vite web client GUI: `pnpm --filter hivelari-playground run gui` (Runs Vite client on port 5173)
+- Run Next.js example app dev server: `pnpm --filter nextjs-example run dev` (Runs dev server on port 3000)
 
 ---
 
@@ -30,7 +29,7 @@
 
 - `packages/sdk`: Server-only TypeScript SDK client for the Velari API.
 - `packages/sandbox`: Mock API sandbox server using `@simapi/simapi` framework to replicate real endpoints.
-- `apps/playground`: Developer playground app comprising a Vite frontend GUI and an Express proxy backend to experiment with the SDK against local/live APIs.
+- `apps/nextjs-example`: Showcase Next.js application representing real-world server-side integrations of the Velari SDK.
 
 ---
 
