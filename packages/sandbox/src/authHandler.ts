@@ -1,6 +1,11 @@
 import { type AppRequest, AppResponse } from '@simapi/simapi';
 
 export function authHandler(req: AppRequest) {
+  // Bypass credentials check for local sandbox mock social auth screen
+  if (req.param('redirect_url') && req.param('client_seckey')) {
+    return;
+  }
+
   const spaceId = req.header('X-HVL-SPACEID');
   const pubKey = req.header('X-HVL-PUBKEY');
   const secKey = req.header('X-HVL-SECKEY');

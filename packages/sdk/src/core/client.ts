@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { getValidatedEnv } from '@/env';
 import { VelariError } from '@/errors';
 import { PingInfo } from '@/resources/PingInfo';
@@ -19,6 +20,7 @@ export class Velari {
   private axiosInstance: AxiosInstance;
   private token?: string;
   private authUser?: AuthUserPayload;
+  private readonly secretKey: string;
 
   readonly spaceId: string;
   readonly pubKey: string;
@@ -33,6 +35,7 @@ export class Velari {
     this.spaceId = envVal.VELARI_SPACE_ID;
     this.pubKey = envVal.VELARI_PUBLIC_KEY;
     this.baseUrl = envVal.VELARI_API_URL;
+    this.secretKey = envVal.VELARI_SECRET_KEY;
 
     if (options?.token) this.token = options.token;
 
@@ -58,6 +61,38 @@ export class Velari {
 
     this.commerce = new CommerceService(this);
     this.auth = new AuthService(this);
+  }
+
+  public encrypt(data: string): string {
+    const keyBuf = Buffer.alloc(32);
+    const srcBuf = Buffer.from(this.secretKey, 'utf8');
+    srcBuf.copy(keyBuf, 0, 0, Math.min(srcBuf.length, 32));
+
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv('aes-256-cbc', keyBuf, iv);
+    let encrypted = cipher.update(data, 'utf8');
+    encrypted = Buffer.concat([encrypted, cipher.final()]);
+
+    return Buffer.concat([iv, encrypted]).toString('base64');
+  }
+
+  public decrypt(payload: string): string {
+    const keyBuf = Buffer.alloc(32);
+    const srcBuf = Buffer.from(this.secretKey, 'utf8');
+    srcBuf.copy(keyBuf, 0, 0, Math.min(srcBuf.length, 32));
+
+    const raw = Buffer.from(payload, 'base64');
+    if (raw.length < 16) {
+      throw new Error('Invalid encrypted payload size.');
+    }
+    const iv = raw.subarray(0, 16);
+    const encrypted = raw.subarray(16);
+
+    const decipher = crypto.createDecipheriv('aes-256-cbc', keyBuf, iv);
+    let decrypted = decipher.update(encrypted);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+
+    return decrypted.toString('utf8');
   }
 
   public setToken(token: string | undefined): void {

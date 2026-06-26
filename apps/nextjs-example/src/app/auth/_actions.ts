@@ -170,7 +170,8 @@ export async function initiatePasswordRecoveryAction(email: string) {
 export async function socialRedirectUrlAction(provider: string) {
   try {
     const client = await getVelariClient();
-    const response = await client.auth.socialRedirectUrl(provider);
+    const redirectUrl = 'http://localhost:3000/auth/callback';
+    const response = await client.auth.socialRedirectUrl(provider, redirectUrl);
     return {
       success: response.success,
       redirectUrl: response.data.redirect_url,
@@ -180,6 +181,43 @@ export async function socialRedirectUrlAction(provider: string) {
       error instanceof Error
         ? error.message
         : 'An error occurred retrieving social redirect URL.';
+    return {
+      success: false,
+      error: message,
+    };
+  }
+}
+
+export async function authenticateUsingCodeAction(code: string) {
+  try {
+    const client = await getVelariClient();
+    const response = await client.auth.authenticateUsingCode(code);
+
+    if (response.success && response.data?.token) {
+      const cookieStore = await cookies();
+      cookieStore.set('velari_token', response.data.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 7, // 1 week
+      });
+      cookieStore.set('velari_user', JSON.stringify(response.data.user), {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 7, // 1 week
+      });
+
+      revalidatePath('/');
+      return { success: true, user: response.data.user };
+    }
+
+    return { success: false, error: 'Authentication failed.' };
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'An error occurred during code authentication.';
     return {
       success: false,
       error: message,

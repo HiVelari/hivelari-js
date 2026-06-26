@@ -1,4 +1,5 @@
 import { Velari } from '@/core/client';
+import { VelariError } from '@/errors';
 import { VelariResponse } from '@/resources/VelariResponse';
 import {
   AuthResponsePayload,
@@ -50,12 +51,47 @@ export class AuthService {
 
   async socialRedirectUrl(
     provider: string,
+    redirectUrl: string,
   ): Promise<VelariResponse<{ redirect_url: string }>> {
     return this.client.request<{ redirect_url: string }>({
       method: 'GET',
       url: `/api/auth/v1/social/${provider}/redirect-url`,
-      transform: (data) => data as { redirect_url: string },
+      params: { redirect_url: redirectUrl },
+      transform: (data) =>
+        (data as { data: { redirect_url: string } }).data ||
+        (data as { redirect_url: string }),
     });
+  }
+
+  async authenticateUsingCode(
+    code: string,
+  ): Promise<VelariResponse<AuthResponsePayload>> {
+    try {
+      const decrypted = this.client.decrypt(code);
+      const session = JSON.parse(decrypted) as {
+        token: string;
+        user: AuthUserPayload;
+        expires_at: number;
+      };
+
+      if (session.expires_at * 1000 < Date.now()) {
+        throw new Error('Authentication session has expired.');
+      }
+
+      this.client.setToken(session.token);
+      this.client.setAuthUser(session.user);
+
+      return new VelariResponse<AuthResponsePayload>(true, 200, {
+        token: session.token,
+        user: session.user,
+      });
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Authentication session decryption failed.';
+      throw new VelariError(message);
+    }
   }
 
   async exchangeSocialToken(

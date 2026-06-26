@@ -136,7 +136,10 @@ describe('Auth Service', () => {
     });
 
     const client = new Velari();
-    const response = await client.auth.socialRedirectUrl('github');
+    const response = await client.auth.socialRedirectUrl(
+      'github',
+      'http://localhost:3000/callback',
+    );
 
     expect(mockAxiosInstance.request).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -338,5 +341,101 @@ describe('Auth Service', () => {
     );
     expect(response.success).toBe(true);
     expect(client.user()).toEqual(mockResponseData.data);
+  });
+
+  describe('Social Auth & Encryption Utilities', () => {
+    it('should encrypt and decrypt strings correctly', () => {
+      const client = new Velari();
+      const originalText = 'Hello Velari Cryptography!';
+      const encrypted = client.encrypt(originalText);
+      expect(encrypted).not.toBe(originalText);
+
+      const decrypted = client.decrypt(encrypted);
+      expect(decrypted).toBe(originalText);
+    });
+
+    it('should call socialRedirectUrl with redirect_url parameter', async () => {
+      const mockResponseData = {
+        redirect_url: 'https://github.com/login/oauth/authorize?state=xyz',
+      };
+
+      const mockAxiosInstance = axios.create();
+      vi.mocked(mockAxiosInstance.request).mockResolvedValueOnce({
+        status: 200,
+        data: mockResponseData,
+      });
+
+      const client = new Velari();
+      const response = await client.auth.socialRedirectUrl(
+        'github',
+        'http://localhost:3000/callback',
+      );
+
+      expect(mockAxiosInstance.request).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: 'GET',
+          url: '/api/auth/v1/social/github/redirect-url',
+          params: { redirect_url: 'http://localhost:3000/callback' },
+        }),
+      );
+      expect(response.success).toBe(true);
+      expect(response.data.redirect_url).toBe(mockResponseData.redirect_url);
+    });
+
+    it('should authenticate user using encrypted session code', async () => {
+      const client = new Velari();
+      const mockUser = {
+        id: 'usr_social_99',
+        first_name: 'Social',
+        middle_name: null,
+        last_name: 'Tester',
+        username: 'social_tester',
+        email: 'social@example.com',
+        phone: null,
+        avatar_id: null,
+      };
+
+      const sessionPayload = {
+        token: 'hvl_tok_social_session_123',
+        user: mockUser,
+        expires_at: Math.floor(Date.now() / 1000) + 60,
+      };
+
+      const encryptedCode = client.encrypt(JSON.stringify(sessionPayload));
+
+      const response = await client.auth.authenticateUsingCode(encryptedCode);
+
+      expect(response.success).toBe(true);
+      expect(response.data.token).toBe('hvl_tok_social_session_123');
+      expect(client.isAuthenticated()).toBe(true);
+      expect(client.getToken()).toBe('hvl_tok_social_session_123');
+      expect(client.user()).toEqual(mockUser);
+    });
+
+    it('should throw an error if the social session code has expired', async () => {
+      const client = new Velari();
+      const mockUser = {
+        id: 'usr_social_99',
+        first_name: 'Social',
+        middle_name: null,
+        last_name: 'Tester',
+        username: 'social_tester',
+        email: 'social@example.com',
+        phone: null,
+        avatar_id: null,
+      };
+
+      const sessionPayload = {
+        token: 'hvl_tok_social_session_123',
+        user: mockUser,
+        expires_at: Math.floor(Date.now() / 1000) - 10, // Expired 10s ago
+      };
+
+      const encryptedCode = client.encrypt(JSON.stringify(sessionPayload));
+
+      await expect(
+        client.auth.authenticateUsingCode(encryptedCode),
+      ).rejects.toThrow('Authentication session has expired.');
+    });
   });
 });

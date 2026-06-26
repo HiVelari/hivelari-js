@@ -17,8 +17,8 @@ export default async function RootLayout({
   const { user } = await getAuthSession();
 
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <header
           className="glass-panel"
           style={{
