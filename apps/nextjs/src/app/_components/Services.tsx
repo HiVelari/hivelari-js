@@ -52,7 +52,7 @@ export default function Services() {
   return (
     <section className="section" id="services">
       <div className="section-inner">
-        <div className="section-head">
+        <div className="section-head" data-reveal>
           <span className="section-eyebrow">SDK services</span>
           <h2 className="section-title">Every domain, one client.</h2>
           <p className="section-sub">
@@ -62,8 +62,14 @@ export default function Services() {
         </div>
 
         <div className="services">
-          {SERVICES.map((svc) => (
-            <a key={svc.id} href={svc.href} className="service-card">
+          {SERVICES.map((svc, i) => (
+            <a
+              key={svc.id}
+              href={svc.href}
+              className="service-card"
+              data-reveal
+              data-reveal-delay={i + 1}
+            >
               <div className="service-icon-wrap">{svc.icon}</div>
 
               <h3 className="service-title">{svc.title}</h3>

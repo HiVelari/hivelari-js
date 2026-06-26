@@ -5,6 +5,7 @@ import Footer from './_components/Footer';
 import Header from './_components/Header';
 import Hero from './_components/Hero';
 import Services from './_components/Services';
+import Stats from './_components/Stats';
 import Steps from './_components/Steps';
 
 export default function HomePage() {
@@ -14,6 +15,7 @@ export default function HomePage() {
       <main>
         <Hero />
         <CompatStrip />
+        <Stats />
         <Steps />
         <Services />
         <Features />

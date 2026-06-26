@@ -48,8 +48,13 @@ export default function DomainPage() {
       </div>
 
       <div className="coming-soon-grid overflow-x-auto">
-        {DOMAINS.map((domain) => (
-          <div key={domain.title} className="coming-soon-card">
+        {DOMAINS.map((domain, i) => (
+          <div
+            key={domain.title}
+            className="coming-soon-card"
+            data-reveal
+            data-reveal-delay={i + 1}
+          >
             <div className="cs-icon">{domain.icon}</div>
             <div>
               <h3 className="cs-title">{domain.title}</h3>

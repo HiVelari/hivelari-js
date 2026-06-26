@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const NAV: Array<
   | { label: string; href: string; exact: boolean }
@@ -31,7 +32,16 @@ const NAV: Array<
 
 function LockIcon() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <rect x="3" y="11" width="18" height="11" rx="2" />
       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
     </svg>
@@ -40,7 +50,16 @@ function LockIcon() {
 
 function CartIcon() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <circle cx="9" cy="21" r="1" />
       <circle cx="20" cy="21" r="1" />
       <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
@@ -50,7 +69,15 @@ function CartIcon() {
 
 function MenuIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    >
       <line x1="3" y1="6" x2="21" y2="6" />
       <line x1="3" y1="12" x2="21" y2="12" />
       <line x1="3" y1="18" x2="21" y2="18" />
@@ -60,7 +87,15 @@ function MenuIcon() {
 
 function CloseIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    >
       <line x1="18" y1="6" x2="6" y2="18" />
       <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
@@ -79,7 +114,14 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
     <>
       <div className="sidebar-brand">
         <Link href="/" className="sidebar-brand-link" onClick={onLinkClick}>
-          <div className="sidebar-brand-mark">H</div>
+          <Image
+            src="/logo.png"
+            alt="HiVelari"
+            width={28}
+            height={28}
+            className="header-logo-img"
+            priority
+          />
           <div>
             <div className="sidebar-brand-name">HiVelari</div>
             <div className="sidebar-brand-sub">SDK Explorer</div>
@@ -110,7 +152,9 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
             return (
               <div key={item.group} className="sidebar-group">
                 <div className="sidebar-group-label">
-                  <span className="sidebar-group-icon">{GROUP_ICONS[item.group]}</span>
+                  <span className="sidebar-group-icon">
+                    {GROUP_ICONS[item.group]}
+                  </span>
                   {item.group}
                 </div>
                 <div className="sidebar-group-items">
@@ -142,12 +186,16 @@ export default function DomainSidebar() {
   const pathname = usePathname();
 
   // Close drawer on route change
-  useEffect(() => { setOpen(false); }, [pathname]);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   // Lock body scroll when drawer open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
   return (
@@ -160,7 +208,14 @@ export default function DomainSidebar() {
       {/* ── Mobile top bar ── */}
       <div className="domain-mobile-bar">
         <Link href="/" className="sidebar-brand-link">
-          <div className="sidebar-brand-mark" style={{ width: 26, height: 26, fontSize: 12 }}>H</div>
+          <Image
+            src="/logo.png"
+            alt="HiVelari"
+            width={28}
+            height={28}
+            className="header-logo-img"
+            priority
+          />
           <span className="sidebar-brand-name">HiVelari SDK</span>
         </Link>
         <button
@@ -175,9 +230,15 @@ export default function DomainSidebar() {
 
       {/* ── Mobile drawer ── */}
       {open && (
-        <div className="domain-overlay" onClick={() => setOpen(false)} aria-hidden="true" />
+        <div
+          className="domain-overlay"
+          onClick={() => setOpen(false)}
+          aria-hidden="true"
+        />
       )}
-      <aside className={`domain-sidebar domain-sidebar--drawer ${open ? "domain-sidebar--open" : ""}`}>
+      <aside
+        className={`domain-sidebar domain-sidebar--drawer ${open ? "domain-sidebar--open" : ""}`}
+      >
         <button
           type="button"
           className="drawer-close-btn"

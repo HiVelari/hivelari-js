@@ -11,7 +11,12 @@ const FEATURES = [
       </svg>
     ),
     title: 'Server-only',
-    desc: 'Imports `server-only` to ensure your credentials never reach the client bundle. Violations fail at build time.',
+    desc: (
+      <>
+        Imports <code>server-only</code> to ensure your credentials never reach
+        the client bundle. Violations fail at build time.
+      </>
+    ),
   },
   {
     icon: (
@@ -59,7 +64,13 @@ const FEATURES = [
       </svg>
     ),
     title: 'Modular domains',
-    desc: 'Each service is a separate domain (`auth`, `commerce`). More domains ship as the API grows — one client, always.',
+    desc: (
+      <>
+        Each service is a separate domain (<code>auth</code>,{" "}
+        <code>commerce</code>). More domains ship as the API grows — one client,
+        always.
+      </>
+    ),
   },
 ];
 
@@ -67,13 +78,18 @@ export default function Features() {
   return (
     <div className="features-bg" id="features">
       <div style={{ maxWidth: 1160, margin: '0 auto' }}>
-        <div style={{ padding: '72px 48px 48px' }}>
+        <div style={{ padding: '72px 48px 48px' }} data-reveal>
           <span className="section-eyebrow">Capabilities</span>
           <h2 className="section-title">Built the right way.</h2>
         </div>
         <div className="features-grid">
-          {FEATURES.map((f) => (
-            <div key={f.title} className="feature">
+          {FEATURES.map((f, i) => (
+            <div
+              key={f.title}
+              className="feature"
+              data-reveal
+              data-reveal-delay={(i % 3) + 1}
+            >
               <Icon>{f.icon}</Icon>
               <h3 className="feature-title">{f.title}</h3>
               <p className="feature-desc">{f.desc}</p>

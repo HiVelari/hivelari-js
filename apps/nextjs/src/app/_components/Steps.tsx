@@ -49,7 +49,7 @@ export default function Steps() {
   return (
     <section className="section" id="how-it-works">
       <div className="section-inner">
-        <div className="section-head">
+        <div className="section-head" data-reveal>
           <span className="section-eyebrow">How it works</span>
           <h2 className="section-title">Up and running in minutes.</h2>
           <p className="section-sub">
@@ -58,9 +58,14 @@ export default function Steps() {
           </p>
         </div>
 
-        <div className="steps">
-          {STEPS.map((step) => (
-            <div key={step.num} className="step">
+        <div className="steps overflow-x-auto">
+          {STEPS.map((step, i) => (
+            <div
+              key={step.num}
+              className="step"
+              data-reveal
+              data-reveal-delay={i + 1}
+            >
               <span className="step-num">{step.num}</span>
               <h3 className="step-title">{step.title}</h3>
               <div className="step-code">{step.code}</div>

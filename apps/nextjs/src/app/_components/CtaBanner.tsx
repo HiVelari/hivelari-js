@@ -2,7 +2,7 @@ export default function CtaBanner() {
   return (
     <section className="cta-section">
       <div className="container">
-        <div className="cta-inner">
+        <div className="cta-inner" data-reveal>
           <h2 className="cta-title">
             Start building today.
           </h2>

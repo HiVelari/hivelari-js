@@ -1,4 +1,5 @@
 import Link from "next/link";
+import InstallCommand from "./InstallCommand";
 
 function CodeBlock() {
   return (
@@ -129,6 +130,10 @@ export default function Hero() {
               <a href="#how-it-works" className="btn btn-ghost btn-lg">
                 How it works
               </a>
+            </div>
+
+            <div className="hero-install fade-up delay-3">
+              <InstallCommand />
             </div>
           </div>
 
