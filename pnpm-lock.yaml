@@ -26,6 +26,9 @@ importers:
 
   apps/nextjs:
     dependencies:
+      '@hivelari/sdk':
+        specifier: workspace:*
+        version: link:../../packages/sdk
       next:
         specifier: 16.2.9
         version: 16.2.9(react-dom@19.2.4(react@19.2.4))(react@19.2.4)

@@ -11,10 +11,10 @@ export default function CtaBanner() {
             your first authenticated page in under an hour.
           </p>
           <div className="cta-actions">
-            <a href="/auth" className="btn btn-primary btn-lg">
+            <a href="/domain/auth" className="btn btn-primary btn-lg">
               Try authentication
             </a>
-            <a href="/commerce" className="btn btn-ghost btn-lg">
+            <a href="/domain/commerce" className="btn btn-ghost btn-lg">
               Browse products
             </a>
           </div>

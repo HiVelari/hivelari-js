@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 function GitHubIcon() {
   return (
@@ -15,42 +16,41 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
+    const handler = () => setScrolled(window.scrollY > 80);
+    window.addEventListener("scroll", handler, { passive: true });
+    handler();
+    return () => window.removeEventListener("scroll", handler);
   }, []);
 
   return (
-    <header className={`header ${scrolled ? 'scrolled' : ''}`}>
-      <div className="container">
-        <div className="header-inner">
-          <Link href="/" className="header-logo">
-            <div className="header-logo-mark">H</div>
-            <span className="header-logo-name">HiVelari</span>
-            <span className="header-logo-tag">SDK</span>
+    <header className="header">
+      <div className={`header-pill ${scrolled ? "header-pill--float" : ""}`}>
+        <Link href="/" className="header-logo">
+          <Image
+            src="/logo.png"
+            alt="HiVelari"
+            width={28}
+            height={28}
+            className="header-logo-img"
+            priority
+          />
+          <span className="header-logo-name">HiVelari</span>
+          <span className="header-logo-tag">SDK</span>
+        </Link>
+
+        <div className="header-actions">
+          <a
+            href="https://github.com/hivelari"
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-ghost btn-sm"
+          >
+            <GitHubIcon />
+            GitHub
+          </a>
+          <Link href="/domain" className="btn btn-primary btn-sm">
+            Get started
           </Link>
-
-          <nav className="header-nav">
-            <a href="#services" className="header-nav-link">Services</a>
-            <a href="#how-it-works" className="header-nav-link">How it works</a>
-            <a href="#features" className="header-nav-link">Features</a>
-          </nav>
-
-          <div className="header-actions">
-            <a
-              href="https://github.com/hivelari"
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-ghost btn-sm"
-              style={{ gap: 7 }}
-            >
-              <GitHubIcon />
-              GitHub
-            </a>
-            <a href="#services" className="btn btn-primary btn-sm">
-              Get started
-            </a>
-          </div>
         </div>
       </div>
     </header>

@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: "HiVelari SDK — The developer SDK for HiVelari",
   description:
     "Authentication, commerce, and payments — all server-side, fully typed. Build on HiVelari faster.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
