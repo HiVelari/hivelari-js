@@ -12,39 +12,11 @@ export default async function AuthDomainPage() {
   const { user } = await getAuthSession();
 
   return (
-    <div
-      style={{
-        padding: '40px 0',
-        maxWidth: '1000px',
-        margin: '0 auto',
-        width: '100%',
-      }}
-    >
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1
-          style={{
-            fontSize: '2.5rem',
-            fontWeight: 700,
-            background: 'linear-gradient(135deg, white, var(--text-muted))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            marginBottom: '12px',
-            letterSpacing: '-1px',
-          }}
-        >
-          Customer Authentication
-        </h1>
-        <p
-          style={{
-            fontSize: '1.1rem',
-            color: 'var(--text-muted)',
-            maxWidth: '600px',
-            margin: '0 auto',
-            lineHeight: '1.5',
-          }}
-        >
-          Test client authentication APIs, profile updates, and email/password
-          workflows completely through the Velari TS SDK service layer.
+    <div className="wrap page">
+      <div style={{ marginBottom: 32 }}>
+        <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 6 }}>Authentication</h1>
+        <p className="text-secondary" style={{ fontSize: 14 }}>
+          Login, register, update profile, and OAuth flows via <code className="mono">client.auth.*</code>
         </p>
       </div>
 

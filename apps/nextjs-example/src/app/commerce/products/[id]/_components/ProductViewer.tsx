@@ -1,410 +1,155 @@
 import type { Product } from '@hivelari/sdk';
 import Link from 'next/link';
 
-interface ProductViewerProps {
-  product: Product;
-}
-
-export default function ProductViewer({ product }: ProductViewerProps) {
-  const hasSale =
-    product.salePrice !== null && product.salePrice < product.originalPrice;
-  const displayPrice =
-    hasSale && product.salePrice !== null
-      ? product.salePrice / 100
-      : product.originalPrice / 100;
-  const originalDisplay = product.originalPrice / 100;
+export default function ProductViewer({ product }: { product: Product }) {
+  const hasSale = product.salePrice !== null && product.salePrice < product.originalPrice;
+  const displayPrice = hasSale && product.salePrice !== null
+    ? product.salePrice / 100
+    : product.originalPrice / 100;
 
   return (
-    <div
-      style={{
-        padding: '20px 0',
-        maxWidth: '1000px',
-        margin: '0 auto',
-        width: '100%',
-      }}
-    >
-      <Link
-        href="/commerce"
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          color: 'var(--color-primary)',
-          fontWeight: 600,
-          marginBottom: '32px',
-        }}
-      >
-        ← Back to Catalog
+    <div className="wrap page">
+      <Link href="/commerce" className="btn btn-ghost btn-sm" style={{ marginBottom: 28, display: 'inline-flex' }}>
+        ← Back to catalog
       </Link>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '48px',
-        }}
-      >
-        {/* Left Column: Visual Showcase & Specifications */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 32, alignItems: 'start' }}>
+        {/* Left: details */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          {/* Hero thumb */}
           <div
-            className="glass-panel"
+            className="card"
             style={{
-              aspectRatio: '1.2',
+              aspectRatio: '16/9',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              background:
-                'linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05))',
-              fontSize: '4rem',
+              fontSize: 56,
               position: 'relative',
+              background: 'var(--bg-subtle)',
             }}
           >
             {product.type === 'physical' ? '📦' : '⚡'}
-
             <span
-              style={{
-                position: 'absolute',
-                top: '16px',
-                right: '16px',
-                padding: '6px 12px',
-                borderRadius: '20px',
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                background:
-                  product.type === 'physical'
-                    ? 'rgba(99, 102, 241, 0.15)'
-                    : 'rgba(168, 85, 247, 0.15)',
-                border: `1px solid ${product.type === 'physical' ? 'rgba(99, 102, 241, 0.3)' : 'rgba(168, 85, 247, 0.3)'}`,
-                color: product.type === 'physical' ? '#a5b4fc' : '#e9d5ff',
-              }}
+              className={`badge ${product.type === 'physical' ? 'badge-blue' : 'badge-neutral'}`}
+              style={{ position: 'absolute', top: 14, right: 14 }}
             >
-              {product.type} Product
+              {product.type}
             </span>
           </div>
 
-          {/* Detailed Specifications Panel */}
-          <div className="glass-panel" style={{ padding: '24px' }}>
-            <h3
-              style={{
-                fontSize: '1.1rem',
-                marginBottom: '16px',
-                fontWeight: 600,
-              }}
-            >
-              Specifications
-            </h3>
-
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-                fontSize: '0.9rem',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgba(255,255,255,0.05)',
-                  paddingBottom: '8px',
-                }}
-              >
-                <span style={{ color: 'var(--text-muted)' }}>Category</span>
-                <span style={{ color: 'white', fontWeight: 500 }}>
-                  {product.customCategory || 'General'}
-                </span>
+          {/* Specs */}
+          <div className="card card-body">
+            <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 12 }}>Specifications</h3>
+            <div className="kv-table">
+              <div className="kv-row">
+                <span className="kv-key">Product ID</span>
+                <span className="kv-val">{product.id}</span>
               </div>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgba(255,255,255,0.05)',
-                  paddingBottom: '8px',
-                }}
-              >
-                <span style={{ color: 'var(--text-muted)' }}>Product ID</span>
-                <span style={{ color: 'white', fontFamily: 'monospace' }}>
-                  {product.id}
-                </span>
+              <div className="kv-row">
+                <span className="kv-key">Category</span>
+                <span className="kv-val">{product.customCategory ?? 'General'}</span>
+              </div>
+              <div className="kv-row">
+                <span className="kv-key">Currency</span>
+                <span className="kv-val">{product.currency}</span>
+              </div>
+              <div className="kv-row">
+                <span className="kv-key">Requires approval</span>
+                <span className="kv-val">{product.requiresApproval ? 'Yes' : 'No'}</span>
               </div>
 
-              {product.type === 'physical' ? (
+              {product.type === 'physical' && (
                 <>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      borderBottom: '1px solid rgba(255,255,255,0.05)',
-                      paddingBottom: '8px',
-                    }}
-                  >
-                    <span style={{ color: 'var(--text-muted)' }}>
-                      Unit Type
-                    </span>
-                    <span style={{ color: 'white' }}>
-                      {product.physicalUnit || 'piece'}
-                    </span>
+                  <div className="kv-row">
+                    <span className="kv-key">Unit</span>
+                    <span className="kv-val">{product.physicalUnit ?? 'piece'}</span>
                   </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      borderBottom: '1px solid rgba(255,255,255,0.05)',
-                      paddingBottom: '8px',
-                    }}
-                  >
-                    <span style={{ color: 'var(--text-muted)' }}>In Stock</span>
-                    <span
-                      style={{
-                        color:
-                          (product.physicalQuantityAvailable || 0) > 10
-                            ? 'var(--color-success)'
-                            : 'var(--color-warning)',
-                        fontWeight: 600,
-                      }}
-                    >
+                  <div className="kv-row">
+                    <span className="kv-key">Stock</span>
+                    <span className="kv-val" style={{ color: (product.physicalQuantityAvailable ?? 0) > 10 ? 'var(--green)' : 'var(--yellow)' }}>
                       {product.physicalQuantityAvailable !== null
                         ? `${product.physicalQuantityAvailable} units`
                         : 'Out of stock'}
                     </span>
                   </div>
                 </>
-              ) : (
-                <>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      borderBottom: '1px solid rgba(255,255,255,0.05)',
-                      paddingBottom: '8px',
-                    }}
-                  >
-                    <span style={{ color: 'var(--text-muted)' }}>
-                      Files Included
-                    </span>
-                    <span style={{ color: 'white' }}>
-                      {product.files?.length || 0} file(s)
-                    </span>
-                  </div>
-                  {product.files && product.files.length > 0 && (
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '6px',
-                        paddingLeft: '12px',
-                        marginTop: '4px',
-                      }}
-                    >
-                      {product.files.map((file) => (
-                        <div
-                          key={file.id}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                            fontSize: '0.85rem',
-                            color: 'var(--text-muted)',
-                          }}
-                        >
-                          <span>📄</span>
-                          <span>{file.title || 'File attachment'}</span>
-                          {file.license && (
-                            <span
-                              style={{
-                                fontSize: '0.75rem',
-                                background: 'rgba(255,255,255,0.05)',
-                                padding: '1px 6px',
-                                borderRadius: '4px',
-                              }}
-                            >
-                              {file.license}
-                            </span>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </>
               )}
 
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  paddingTop: '4px',
-                }}
-              >
-                <span style={{ color: 'var(--text-muted)' }}>
-                  Requires Approval
-                </span>
-                <span style={{ color: 'white' }}>
-                  {product.requiresApproval ? 'Yes' : 'No'}
-                </span>
-              </div>
+              {product.type !== 'physical' && (
+                <div className="kv-row">
+                  <span className="kv-key">Files</span>
+                  <span className="kv-val">{product.files?.length ?? 0} included</span>
+                </div>
+              )}
             </div>
           </div>
+
+          {/* File list for digital */}
+          {product.files && product.files.length > 0 && (
+            <div className="card card-body">
+              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 12 }}>Included Files</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {product.files.map((file) => (
+                  <div
+                    key={file.id}
+                    style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13 }}
+                  >
+                    <span>📄</span>
+                    <span style={{ flex: 1 }}>{file.title ?? 'Untitled file'}</span>
+                    {file.license && (
+                      <span className="badge badge-neutral">{file.license}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Right Column: Title, Description, and Order Panel */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        {/* Right: buy panel */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <div>
-            <span
-              style={{
-                background: 'rgba(99, 102, 241, 0.1)',
-                border: '1px solid rgba(99, 102, 241, 0.2)',
-                color: '#a5b4fc',
-                padding: '6px 12px',
-                borderRadius: '6px',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-                display: 'inline-block',
-                marginBottom: '16px',
-              }}
-            >
-              {product.customCategory || 'General'}
+            <span className="badge badge-blue" style={{ marginBottom: 14 }}>
+              {product.customCategory ?? 'General'}
             </span>
-
-            <h1
-              style={{
-                fontSize: '2.25rem',
-                fontWeight: 700,
-                color: 'white',
-                lineHeight: '1.2',
-                marginBottom: '16px',
-              }}
-            >
+            <h1 style={{ fontSize: 26, fontWeight: 700, lineHeight: 1.2, marginBottom: 14 }}>
               {product.name}
             </h1>
-
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'baseline',
-                gap: '12px',
-                marginBottom: '24px',
-              }}
-            >
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
               {hasSale && (
-                <span
-                  style={{
-                    fontSize: '1.1rem',
-                    textDecoration: 'line-through',
-                    color: 'var(--text-muted)',
-                  }}
-                >
-                  ${originalDisplay.toFixed(2)}
+                <span style={{ fontSize: 15, textDecoration: 'line-through', color: 'var(--text-dim)' }}>
+                  ${(product.originalPrice / 100).toFixed(2)}
                 </span>
               )}
-              <span
-                style={{
-                  fontSize: '2rem',
-                  fontWeight: 700,
-                  color: 'white',
-                }}
-              >
-                ${displayPrice.toFixed(2)} {product.currency}
+              <span style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-0.03em' }}>
+                ${displayPrice.toFixed(2)}
               </span>
+              <span className="text-secondary" style={{ fontSize: 13 }}>{product.currency}</span>
             </div>
           </div>
 
-          <div
-            style={{
-              borderTop: '1px solid var(--border-color)',
-              borderBottom: '1px solid var(--border-color)',
-              padding: '24px 0',
-            }}
-          >
-            <h3
-              style={{
-                fontSize: '1.1rem',
-                marginBottom: '12px',
-                fontWeight: 600,
-              }}
-            >
-              Description
-            </h3>
-            <p
-              style={{
-                color: 'var(--text-muted)',
-                lineHeight: '1.6',
-                fontSize: '1rem',
-              }}
-            >
-              {product.description || 'No product description provided.'}
-            </p>
-          </div>
+          <hr className="divider" />
 
-          {/* Action Order Box */}
-          <div
-            className="glass-panel"
-            style={{
-              padding: '24px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '16px',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
+          <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.7 }}>
+            {product.description ?? 'No product description provided.'}
+          </p>
+
+          <hr className="divider" />
+
+          <div className="card card-body" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <span
-                  style={{
-                    display: 'block',
-                    fontSize: '0.8rem',
-                    color: 'var(--text-muted)',
-                  }}
-                >
-                  Total Price
-                </span>
-                <span
-                  style={{
-                    fontSize: '1.3rem',
-                    fontWeight: 700,
-                    color: 'white',
-                  }}
-                >
-                  ${displayPrice.toFixed(2)}
-                </span>
+                <span className="text-dim" style={{ fontSize: 12, display: 'block' }}>Total</span>
+                <span style={{ fontSize: 20, fontWeight: 700 }}>${displayPrice.toFixed(2)}</span>
               </div>
-              <span
-                style={{
-                  fontSize: '0.85rem',
-                  color: 'var(--text-success)',
-                  background: 'rgba(16, 185, 129, 0.1)',
-                  padding: '4px 10px',
-                  borderRadius: '20px',
-                }}
-              >
-                ✔ Instantly Available
-              </span>
+              <span className="badge badge-green">Available</span>
             </div>
-
-            <button
-              type="button"
-              className="btn-primary"
-              style={{ width: '100%', padding: '14px' }}
-            >
-              Purchase Product
+            <button type="button" className="btn btn-primary btn-full btn-lg">
+              Purchase
             </button>
-
-            <p
-              style={{
-                fontSize: '0.75rem',
-                color: 'var(--text-muted)',
-                textAlign: 'center',
-              }}
-            >
-              Secure simulated checkout. No real money will be charged.
+            <p style={{ fontSize: 12, color: 'var(--text-dim)', textAlign: 'center' }}>
+              Simulated checkout — no real charges.
             </p>
           </div>
         </div>

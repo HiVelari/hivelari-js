@@ -2,42 +2,12 @@ import { sdkFeatures } from '@/lib/data/sdk-info';
 
 export default function FeatureCards() {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-        gap: '24px',
-        width: '100%',
-        marginTop: '40px',
-      }}
-    >
+    <div className="grid-auto" style={{ marginTop: '28px' }}>
       {sdkFeatures.map((feat) => (
-        <div key={feat.id} className="glass-panel" style={{ padding: '24px' }}>
-          <div
-            style={{
-              fontSize: '2rem',
-              marginBottom: '16px',
-            }}
-          >
-            {feat.icon}
-          </div>
-          <h3
-            style={{
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              color: 'white',
-              marginBottom: '8px',
-            }}
-          >
-            {feat.title}
-          </h3>
-          <p
-            style={{
-              fontSize: '0.875rem',
-              color: 'var(--text-muted)',
-              lineHeight: '1.6',
-            }}
-          >
+        <div key={feat.id} className="card card-body">
+          <div style={{ fontSize: 28, marginBottom: 14 }}>{feat.icon}</div>
+          <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 8 }}>{feat.title}</h3>
+          <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
             {feat.description}
           </p>
         </div>

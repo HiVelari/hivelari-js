@@ -36,90 +36,40 @@ export default async function CommerceCatalogPage({ searchParams }: PageProps) {
   }
 
   return (
-    <div style={{ padding: '40px 0' }}>
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1
-          style={{
-            fontSize: '2.5rem',
-            fontWeight: 700,
-            background: 'linear-gradient(135deg, white, var(--text-muted))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            marginBottom: '12px',
-            letterSpacing: '-1px',
-          }}
-        >
-          Storefront Catalog
-        </h1>
-        <p
-          style={{
-            fontSize: '1.1rem',
-            color: 'var(--text-muted)',
-            maxWidth: '600px',
-            margin: '0 auto',
-          }}
-        >
-          Explore products using type-safe queries powered by the server-side
-          Velari SDK Client.
+    <div className="wrap page">
+      <div style={{ marginBottom: 32 }}>
+        <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 6 }}>Commerce Catalog</h1>
+        <p className="text-secondary" style={{ fontSize: 14 }}>
+          Products fetched server-side via <code className="mono">client.commerce.listProducts()</code>
         </p>
       </div>
 
-      <StatsPanel
-        spaceId={client.spaceId}
-        baseUrl={client.baseUrl}
-        publicKey={client.pubKey}
-      />
-
+      <StatsPanel spaceId={client.spaceId} baseUrl={client.baseUrl} publicKey={client.pubKey} />
       <SearchForm initialSearch={search} />
 
       {errorMessage ? (
-        <div
-          className="glass-panel"
-          style={{
-            padding: '32px',
-            maxWidth: '800px',
-            margin: '0 auto',
-            borderLeft: '4px solid var(--color-error)',
-            borderRadius: '12px',
-          }}
-        >
-          <h3
-            style={{
-              color: 'var(--color-error)',
-              marginBottom: '8px',
-              fontSize: '1.15rem',
-            }}
-          >
-            🔌 Sandbox Offline
-          </h3>
-          <p
-            style={{
-              color: 'var(--text-muted)',
-              marginBottom: '16px',
-              fontSize: '0.95rem',
-            }}
-          >
-            The Velari SDK client failed to connect to the target API host at{' '}
-            <code>{client.baseUrl}</code>.{errorMessage && ` (${errorMessage})`}
+        <div className="card card-body">
+          <p style={{ fontWeight: 600, color: 'var(--red)', marginBottom: 8 }}>Sandbox offline</p>
+          <p className="text-secondary" style={{ fontSize: 14, marginBottom: 16 }}>
+            Could not reach <code className="mono">{client.baseUrl}</code>. Start the sandbox server:
           </p>
-          <div
+          <code
+            className="mono"
             style={{
-              background: 'rgba(0, 0, 0, 0.2)',
-              padding: '16px',
-              borderRadius: '8px',
-              fontSize: '0.85rem',
+              display: 'block',
+              background: 'var(--bg)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-sm)',
+              padding: '10px 14px',
+              fontSize: 13,
+              color: 'var(--accent)',
             }}
           >
-            <p style={{ marginBottom: '8px', fontWeight: 600, color: 'white' }}>
-              Start the local sandbox server from your terminal:
-            </p>
-            <code style={{ color: '#a5b4fc' }}>
-              pnpm --filter @hivelari/sandbox run serve
-            </code>
-          </div>
+            pnpm --filter @hivelari/sandbox run serve
+          </code>
         </div>
       ) : (
-        <ProductGrid products={productsResponse?.data || []} />
+        <ProductGrid products={productsResponse?.data ?? []} />
       )}
     </div>
   );

@@ -1,259 +1,133 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { runHandshakeAction } from '../_actions';
+import { useState } from "react";
+import { runHandshakeAction } from "../_actions";
 
-interface PingConsoleProps {
-  targetUrl: string;
+interface PingResult {
+  success: boolean;
+  status?: number;
+  data?: { status: string; message: string; space: string };
+  error?: string;
+  latency: number;
 }
 
-export default function PingConsole({ targetUrl }: PingConsoleProps) {
+export default function PingConsole({ targetUrl }: { targetUrl: string }) {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<{
-    success: boolean;
-    status?: number;
-    data?: {
-      status: string;
-      message: string;
-      space: string;
-    };
-    error?: string;
-    latency: number;
-  } | null>(null);
+  const [result, setResult] = useState<PingResult | null>(null);
 
-  const handleRunPing = async () => {
+  async function handlePing() {
     setLoading(true);
     setResult(null);
+
     try {
       const data = await runHandshakeAction();
+
       setResult(data);
-    } catch (err: unknown) {
-      const errorMsg = err instanceof Error ? err.message : String(err);
+    } catch (err) {
       setResult({
         success: false,
-        error: errorMsg || 'An unexpected error occurred.',
+        error: err instanceof Error ? err.message : String(err),
         latency: 0,
       });
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-        marginTop: '40px',
-      }}
-    >
-      <div
-        className="glass-panel"
-        style={{
-          padding: '24px',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '16px',
-        }}
-      >
-        <div>
-          <span
-            style={{
-              fontSize: '0.85rem',
-              color: 'var(--text-muted)',
-              display: 'block',
-              marginBottom: '4px',
-            }}
-          >
-            Target API Host URL
-          </span>
-          <span
-            style={{
-              fontSize: '1.1rem',
-              fontFamily: 'monospace',
-              fontWeight: 500,
-              color: 'white',
-            }}
-          >
-            {targetUrl}/api/ping
-          </span>
+    <div className="terminal" style={{ marginTop: 28 }}>
+      <div className="terminal-bar">
+        <div className="terminal-dots">
+          <span className="terminal-dot" />
+          <span className="terminal-dot" />
+          <span className="terminal-dot" />
         </div>
-
+        <span className="terminal-title">{targetUrl}/api/ping</span>
         <button
           type="button"
-          onClick={handleRunPing}
+          className="btn btn-primary btn-sm"
+          onClick={handlePing}
           disabled={loading}
-          className="btn-primary"
-          style={{
-            minWidth: '160px',
-            opacity: loading ? 0.7 : 1,
-            pointerEvents: loading ? 'none' : 'auto',
-          }}
         >
-          {loading ? 'Pinging...' : 'Test SDK Handshake'}
+          {loading ? <span className="spin">⟳</span> : null}
+          {loading ? "Pinging…" : "Run Ping"}
         </button>
       </div>
 
-      {/* Terminal Block */}
-      <div
-        className="glass-panel"
-        style={{
-          background: 'rgba(10, 9, 20, 0.95)',
-          borderRadius: '16px',
-          overflow: 'hidden',
-          border: '1px solid rgba(255, 255, 255, 0.05)',
-        }}
-      >
-        {/* Terminal Header */}
-        <div
-          style={{
-            background: 'rgba(0, 0, 0, 0.3)',
-            padding: '12px 20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-          }}
-        >
-          <div style={{ display: 'flex', gap: '6px' }}>
-            <span
-              style={{
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                background: '#ef4444',
-                display: 'inline-block',
-              }}
-            />
-            <span
-              style={{
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                background: '#eab308',
-                display: 'inline-block',
-              }}
-            />
-            <span
-              style={{
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                background: '#22c55e',
-                display: 'inline-block',
-              }}
-            />
+      <div className="terminal-body">
+        <div>
+          <span className="t-prompt">$ </span>
+          <span className="t-cmd">velari ping </span>
+          <span className="t-muted">--host={targetUrl}</span>
+        </div>
+
+        {!loading && !result && (
+          <div className="t-muted" style={{ marginTop: 8 }}>
+            Waiting — click "Run Ping" to test the handshake.
           </div>
-          <span
-            style={{
-              fontSize: '0.8rem',
-              color: 'var(--text-muted)',
-              fontFamily: 'monospace',
-            }}
-          >
-            hivelari-sdk-ping.sh
-          </span>
-        </div>
+        )}
 
-        {/* Terminal Body */}
-        <div
-          style={{
-            padding: '24px',
-            fontFamily: "var(--font-geist-mono), 'JetBrains Mono', monospace",
-            fontSize: '0.9rem',
-            lineHeight: '1.6',
-            color: '#d1d5db',
-            minHeight: '220px',
-          }}
-        >
-          <div>$ velari-sdk ping --host={targetUrl}</div>
+        {loading && (
+          <div className="t-info" style={{ marginTop: 8 }}>
+            Sending request… validating space credentials…
+          </div>
+        )}
 
-          {loading && (
-            <div style={{ color: 'var(--color-primary)', marginTop: '12px' }}>
-              ⏳ Request sent. Waiting for space credential validation...
-            </div>
-          )}
-
-          {!loading && !result && (
-            <div style={{ color: 'var(--text-muted)', marginTop: '12px' }}>
-              Ready to verify connection parameters. Click "Test SDK Handshake"
-              above.
-            </div>
-          )}
-
-          {result && (
-            <div
-              style={{
-                marginTop: '16px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '16px',
-              }}
-            >
-              {/* Badges row */}
-              <div
-                style={{ display: 'flex', gap: '12px', alignItems: 'center' }}
-              >
-                <span
-                  style={{
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: 600,
-                    background: result.success
-                      ? 'rgba(16, 185, 129, 0.15)'
-                      : 'rgba(239, 68, 68, 0.15)',
-                    border: `1px solid ${result.success ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`,
-                    color: result.success ? '#34d399' : '#f87171',
-                  }}
-                >
-                  {result.success
-                    ? `SUCCESS (HTTP ${result.status})`
-                    : 'CONNECTION FAILED'}
-                </span>
-
-                <span
-                  style={{
-                    fontSize: '0.85rem',
-                    color:
+        {result && (
+          <div className="fade-in" style={{ marginTop: 12 }}>
+            {result.success ? (
+              <>
+                <div className="t-ok">✓ Connection established</div>
+                <div style={{ marginTop: 4 }}>
+                  <span className="t-muted">HTTP </span>
+                  <span className="t-ok">{result.status}</span>
+                  <span className="t-muted"> · latency </span>
+                  <span
+                    className={
                       result.latency < 100
-                        ? 'var(--color-success)'
+                        ? "t-ok"
                         : result.latency < 300
-                          ? 'var(--color-warning)'
-                          : 'var(--color-error)',
-                    fontWeight: 500,
-                  }}
-                >
-                  Latency: {result.latency}ms
-                </span>
-              </div>
-
-              {/* JSON/Output block */}
-              <pre
-                style={{
-                  background: 'rgba(0, 0, 0, 0.4)',
-                  padding: '16px',
-                  borderRadius: '8px',
-                  overflowX: 'auto',
-                  border: '1px solid rgba(255, 255, 255, 0.05)',
-                  color: '#e2e8f0',
-                }}
-              >
-                {result.success ? (
-                  JSON.stringify(result.data, null, 2)
-                ) : (
-                  <span style={{ color: '#f87171' }}>
-                    Error: {result.error}
+                          ? ""
+                          : "t-err"
+                    }
+                    style={
+                      result.latency >= 100 && result.latency < 300
+                        ? { color: "var(--yellow)" }
+                        : undefined
+                    }
+                  >
+                    {result.latency}ms
                   </span>
+                </div>
+                {result.data && (
+                  <pre style={{ marginTop: 12, fontSize: 12, lineHeight: 1.7 }}>
+                    <span className="t-key"> status </span>
+                    <span className="t-str">"{result.data.status}"</span>
+                    {"\n"}
+                    <span className="t-key"> message </span>
+                    <span className="t-str">"{result.data.message}"</span>
+                    {"\n"}
+                    <span className="t-key"> space </span>
+                    <span className="t-str">"{result.data.space}"</span>
+                  </pre>
                 )}
-              </pre>
-            </div>
-          )}
-        </div>
+              </>
+            ) : (
+              <>
+                <div className="t-err">✗ Connection failed</div>
+                <div className="t-err" style={{ marginTop: 4, fontSize: 12 }}>
+                  {result.error}
+                </div>
+                <div
+                  className="t-muted"
+                  style={{ marginTop: 10, fontSize: 12 }}
+                >
+                  Start the sandbox: pnpm --filter @hivelari/sandbox run serve
+                </div>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

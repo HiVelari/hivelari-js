@@ -1,112 +1,58 @@
 import { sdkDomains } from '@/lib/data/sdk-info';
 import Link from 'next/link';
 
-interface DomainCardProps {
-  dom: (typeof sdkDomains)[0];
-  isLinkable: boolean;
-}
-
-function DomainCard({ dom, isLinkable }: DomainCardProps) {
-  return (
-    <div
-      className="glass-panel"
-      style={{
-        padding: '24px',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '16px',
-        cursor: isLinkable ? 'pointer' : 'default',
-      }}
-    >
-      <div style={{ flex: 1 }}>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            marginBottom: '6px',
-          }}
-        >
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 600, color: 'white' }}>
-            {dom.title}
-          </h3>
-          <span
-            style={{
-              fontSize: '0.75rem',
-              padding: '2px 8px',
-              borderRadius: '12px',
-              fontWeight: 600,
-              background:
-                dom.status === 'active'
-                  ? 'rgba(16, 185, 129, 0.1)'
-                  : dom.status === 'mock'
-                    ? 'rgba(99, 102, 241, 0.1)'
-                    : 'rgba(255,255,255,0.05)',
-              border: `1px solid ${dom.status === 'active' ? 'rgba(16, 185, 129, 0.2)' : dom.status === 'mock' ? 'rgba(99, 102, 241, 0.2)' : 'rgba(255,255,255,0.05)'}`,
-              color:
-                dom.status === 'active'
-                  ? '#34d399'
-                  : dom.status === 'mock'
-                    ? '#a5b4fc'
-                    : 'var(--text-muted)',
-            }}
-          >
-            {dom.badge}
-          </span>
-        </div>
-        <p
-          style={{
-            fontSize: '0.9rem',
-            color: 'var(--text-muted)',
-            lineHeight: '1.5',
-          }}
-        >
-          {dom.description}
-        </p>
-      </div>
-
-      {isLinkable && (
-        <span
-          style={{
-            color: 'var(--color-primary)',
-            fontWeight: 600,
-            fontSize: '1.1rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px',
-          }}
-        >
-          Open Domain →
-        </span>
-      )}
-    </div>
-  );
-}
-
 export default function DomainList() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-        width: '100%',
-        marginTop: '40px',
-      }}
-    >
-      {sdkDomains.map((dom) => {
-        const isLinkable = dom.path !== '#';
-        return isLinkable ? (
-          <Link key={dom.title} href={dom.path}>
-            <DomainCard dom={dom} isLinkable={isLinkable} />
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 28 }}>
+      {sdkDomains.map((domain) => {
+        const isLive = domain.path !== '#';
+        const card = (
+          <div
+            className={`card card-body ${isLive ? 'card-hover' : ''}`}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}
+          >
+            <div style={{ flex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                <span style={{ fontSize: 16, fontWeight: 600 }}>{domain.title}</span>
+                <span className={`badge ${domain.status === 'active' ? 'badge-green' : domain.status === 'soon' ? 'badge-neutral' : 'badge-blue'}`}>
+                  {domain.badge}
+                </span>
+              </div>
+              <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: domain.endpoints.length ? 10 : 0 }}>
+                {domain.description}
+              </p>
+              {domain.endpoints.length > 0 && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {domain.endpoints.map((ep) => (
+                    <code
+                      key={ep}
+                      style={{
+                        fontSize: 11,
+                        padding: '2px 8px',
+                        background: 'var(--bg-subtle)',
+                        border: '1px solid var(--border-subtle)',
+                        borderRadius: 4,
+                        color: 'var(--text-secondary)',
+                      }}
+                    >
+                      {ep}
+                    </code>
+                  ))}
+                </div>
+              )}
+            </div>
+            {isLive && (
+              <span style={{ color: 'var(--accent)', fontSize: 18, flexShrink: 0 }}>→</span>
+            )}
+          </div>
+        );
+
+        return isLive ? (
+          <Link key={domain.title} href={domain.path} style={{ display: 'block' }}>
+            {card}
           </Link>
         ) : (
-          <div key={dom.title}>
-            <DomainCard dom={dom} isLinkable={isLinkable} />
-          </div>
+          <div key={domain.title}>{card}</div>
         );
       })}
     </div>

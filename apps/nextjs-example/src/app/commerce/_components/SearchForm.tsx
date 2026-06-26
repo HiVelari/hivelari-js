@@ -4,28 +4,19 @@ interface SearchFormProps {
 
 export default function SearchForm({ initialSearch = '' }: SearchFormProps) {
   return (
-    <form
-      action="/commerce"
-      method="GET"
-      style={{
-        display: 'flex',
-        gap: '12px',
-        width: '100%',
-        maxWidth: '600px',
-        margin: '0 auto 32px auto',
-      }}
-    >
+    <form action="/commerce" method="GET" style={{ display: 'flex', gap: 8, marginBottom: 32 }}>
       <input
         type="text"
         name="search"
         defaultValue={initialSearch}
-        placeholder="Search product catalog..."
-        className="input-field"
-        style={{ flex: 1 }}
+        placeholder="Search products…"
+        className="field-input"
+        style={{ flex: 1, maxWidth: 400 }}
       />
-      <button type="submit" className="btn-primary">
-        Search
-      </button>
+      <button type="submit" className="btn btn-secondary">Search</button>
+      {initialSearch && (
+        <a href="/commerce" className="btn btn-ghost">Clear</a>
+      )}
     </form>
   );
 }
