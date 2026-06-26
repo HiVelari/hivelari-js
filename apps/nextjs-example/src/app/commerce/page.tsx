@@ -37,10 +37,12 @@ export default async function CommerceCatalogPage({ searchParams }: PageProps) {
 
   return (
     <div className="wrap page">
-      <div style={{ marginBottom: 32 }}>
-        <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 6 }}>Commerce Catalog</h1>
-        <p className="text-secondary" style={{ fontSize: 14 }}>
-          Products fetched server-side via <code className="mono">client.commerce.listProducts()</code>
+      <div style={{ marginBottom: 40 }}>
+        <p className="section-label">Commerce</p>
+        <h1 className="section-title" style={{ fontSize: 36 }}>Product catalog</h1>
+        <p className="section-sub">
+          Products fetched server-side via{' '}
+          <code className="mono" style={{ fontSize: 13, color: 'var(--accent-text)' }}>client.commerce.listProducts()</code>
         </p>
       </div>
 
@@ -48,25 +50,21 @@ export default async function CommerceCatalogPage({ searchParams }: PageProps) {
       <SearchForm initialSearch={search} />
 
       {errorMessage ? (
-        <div className="card card-body">
-          <p style={{ fontWeight: 600, color: 'var(--red)', marginBottom: 8 }}>Sandbox offline</p>
-          <p className="text-secondary" style={{ fontSize: 14, marginBottom: 16 }}>
-            Could not reach <code className="mono">{client.baseUrl}</code>. Start the sandbox server:
+        <div className="card card-p" style={{ maxWidth: 640 }}>
+          <p style={{ fontWeight: 600, color: 'var(--fail)', marginBottom: 8, fontSize: 15 }}>Sandbox offline</p>
+          <p className="ink-2" style={{ fontSize: 14, marginBottom: 20, lineHeight: 1.65 }}>
+            Could not reach <code className="mono" style={{ fontSize: 12 }}>{client.baseUrl}</code>.
+            Start the local sandbox to see products.
           </p>
-          <code
-            className="mono"
-            style={{
-              display: 'block',
-              background: 'var(--bg)',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius-sm)',
-              padding: '10px 14px',
-              fontSize: 13,
-              color: 'var(--accent)',
-            }}
+          <div
+            className="terminal"
+            style={{ borderRadius: 6 }}
           >
-            pnpm --filter @hivelari/sandbox run serve
-          </code>
+            <div className="terminal-body" style={{ padding: '14px 18px', minHeight: 'auto' }}>
+              <span className="t-prompt">❯ </span>
+              <span className="t-cmd">pnpm --filter @hivelari/sandbox run serve</span>
+            </div>
+          </div>
         </div>
       ) : (
         <ProductGrid products={productsResponse?.data ?? []} />

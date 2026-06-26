@@ -152,7 +152,9 @@ export const getSocialRedirectUrl: EndpointDefinition = {
       });
     }
 
-    const mockRedirect = `http://localhost:3001/api/_social-auth?redirect_url=${encodeURIComponent(
+    const host = req.header("host") ?? "localhost:3001";
+    const proto = host.startsWith("localhost") || host.startsWith("127.0.0.1") ? "http" : "https";
+    const mockRedirect = `${proto}://${host}/api/_social-auth?redirect_url=${encodeURIComponent(
       redirectUrl,
     )}&provider=${encodeURIComponent(provider)}&client_seckey=${encodeURIComponent(secKey)}`;
 
@@ -197,7 +199,7 @@ export const getSocialAuthMock: EndpointDefinition = {
     const payload = JSON.stringify({
       token,
       user: userPayload,
-      expires_at: Math.floor(Date.now() / 1000) + 300, // 1 minute expiry
+      expires_at: Math.floor(Date.now() / 1000) + 300, // 5 minute expiry
     });
 
     const code = encryptNode(payload, clientSecKey);
