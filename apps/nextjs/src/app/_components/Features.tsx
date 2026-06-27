@@ -1,7 +1,3 @@
-function Icon({ children }: { children: React.ReactNode }) {
-  return <div className="feature-icon">{children}</div>;
-}
-
 const FEATURES = [
   {
     icon: (
@@ -76,23 +72,34 @@ const FEATURES = [
 
 export default function Features() {
   return (
-    <div className="features-bg" id="features">
-      <div style={{ maxWidth: 1160, margin: '0 auto' }}>
-        <div style={{ padding: '72px 48px 48px' }} data-reveal>
-          <span className="section-eyebrow">Capabilities</span>
-          <h2 className="section-title">Built the right way.</h2>
+    <div className="border-y border-line bg-surface" id="features">
+      <div className="mx-auto max-w-[1160px]">
+        <div
+          className="px-12 pt-18 pb-12 max-[768px]:px-6 max-[520px]:px-5"
+          data-reveal
+        >
+          <span className="eyebrow mb-3">Capabilities</span>
+          <h2 className="text-[clamp(28px,3.5vw,44px)] font-extrabold tracking-[-0.05em] text-ink">
+            Built the right way.
+          </h2>
         </div>
-        <div className="features-grid">
+        <div className="grid grid-cols-3 gap-px bg-line max-[768px]:grid-cols-2 max-[520px]:grid-cols-1">
           {FEATURES.map((f, i) => (
             <div
               key={f.title}
-              className="feature"
               data-reveal
               data-reveal-delay={(i % 3) + 1}
+              className="group bg-surface px-9 py-10 transition-colors hover:bg-white/[0.02]"
             >
-              <Icon>{f.icon}</Icon>
-              <h3 className="feature-title">{f.title}</h3>
-              <p className="feature-desc">{f.desc}</p>
+              <div className="mb-5 flex size-10 shrink-0 items-center justify-center rounded-sm border border-line-accent bg-accent-dim text-accent-light transition-[transform,background] duration-200 group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:bg-accent/[0.16]">
+                {f.icon}
+              </div>
+              <h3 className="mb-2 text-[15px] font-semibold tracking-[-0.03em]">
+                {f.title}
+              </h3>
+              <p className="text-[14px] leading-[1.65] text-ink-2 [&_code]:rounded-xs [&_code]:bg-accent-dim [&_code]:px-[5px] [&_code]:py-px [&_code]:font-mono [&_code]:text-[0.86em] [&_code]:text-accent-light">
+                {f.desc}
+              </p>
             </div>
           ))}
         </div>

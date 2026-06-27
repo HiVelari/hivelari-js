@@ -3,17 +3,19 @@ import InstallCommand from "./InstallCommand";
 
 function CodeBlock() {
   return (
-    <div className="hero-code fade-up delay-3">
-      <div className="code-bar">
-        <div className="code-dots">
-          <span className="code-dot" />
-          <span className="code-dot" />
-          <span className="code-dot" />
+    <div className="code-card relative overflow-hidden rounded-lg bg-surface transition-transform duration-300 hover:-translate-y-1 fade-up delay-3 max-[1020px]:hidden">
+      <div className="flex items-center gap-2.5 border-b border-line bg-white/[0.018] px-[18px] py-3.5">
+        <div className="flex gap-[7px]">
+          <span className="size-[11px] rounded-full bg-[#ff5f57]" />
+          <span className="size-[11px] rounded-full bg-[#febc2e]" />
+          <span className="size-[11px] rounded-full bg-[#28c840]" />
         </div>
-        <span className="code-filename">lib/velari.ts</span>
+        <span className="ml-1 font-mono text-xs text-white/[0.22]">
+          lib/velari.ts
+        </span>
       </div>
 
-      <div className="code-body">
+      <div className="relative bg-[#080810] px-[26px] pt-6 pb-7 font-mono text-[13.5px] leading-[2.05]">
         <span className="t-line">
           <span className="t-kw">import </span>
           <span className="t-dim">{"{ "}</span>
@@ -103,36 +105,42 @@ function CodeBlock() {
 
 export default function Hero() {
   return (
-    <section className="hero">
+    <section className="hero-glow relative overflow-hidden pt-44 pb-26 max-[768px]:pt-25 max-[768px]:pb-16 max-[520px]:pt-23 max-[520px]:pb-14">
       <div className="container">
-        <div className="hero-inner">
+        <div className="relative z-[1] grid grid-cols-[1fr_480px] items-center gap-[72px] max-[1020px]:max-w-[640px] max-[1020px]:grid-cols-1">
           <div>
-            <div className="hero-badge fade-up">
-              <span className="hero-badge-pip" />
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-line-accent bg-accent-dim py-[5px] pr-3 pl-1.5 text-xs font-medium tracking-[0.01em] text-accent-light fade-up max-[520px]:mb-6">
+              <span className="size-1.5 animate-[pulse-dot_2.4s_ease-in-out_infinite] rounded-full bg-green shadow-[0_0_8px_var(--color-green)]" />
               @hivelari/sdk — early access
             </div>
 
-            <h1 className="hero-h1 fade-up delay-1">
+            <h1 className="mb-6 text-[clamp(48px,5.5vw,80px)] font-extrabold leading-[1.04] tracking-[-0.055em] text-ink fade-up delay-1 max-[380px]:text-[40px]">
               Build on HiVelari,
               <br />
-              ship in <span className="hero-h1-em">days.</span>
+              ship in <span className="text-gradient">days.</span>
             </h1>
 
-            <p className="hero-sub fade-up delay-2">
+            <p className="mb-11 max-w-[430px] text-[18px] font-normal leading-[1.75] text-ink-2 fade-up delay-2 max-[520px]:mb-8">
               Authentication, commerce, and payments — all server-side,
               fully type-safe. One SDK built for the Next.js App Router.
             </p>
 
-            <div className="hero-actions fade-up delay-2">
-              <Link href="/domain" className="btn btn-primary btn-lg">
+            <div className="flex items-center gap-3 fade-up delay-2 max-[520px]:flex-col max-[520px]:items-stretch">
+              <Link
+                href="/domain"
+                className="btn btn-primary btn-lg max-[520px]:w-full"
+              >
                 Explore the SDK
               </Link>
-              <a href="#how-it-works" className="btn btn-ghost btn-lg">
+              <a
+                href="#how-it-works"
+                className="btn btn-ghost btn-lg max-[520px]:w-full"
+              >
                 How it works
               </a>
             </div>
 
-            <div className="hero-install fade-up delay-3">
+            <div className="mt-7 fade-up delay-3">
               <InstallCommand />
             </div>
           </div>

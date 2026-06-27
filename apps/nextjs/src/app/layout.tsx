@@ -26,7 +26,7 @@ export default function RootLayout({
           <span className="aurora-blob aurora-blob--3" />
         </div>
         <div className="app-noise" aria-hidden="true" />
-        <div className="site">{children}</div>
+        <div className="flex min-h-[100dvh] flex-col">{children}</div>
         <ScrollReveal />
       </body>
     </html>

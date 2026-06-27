@@ -23,27 +23,33 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="header">
-      <div className={`header-pill ${scrolled ? "header-pill--float" : ""}`}>
-        <Link href="/" className="header-logo">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-[100] flex justify-center px-12 pt-9 max-[900px]:px-3.5 max-[900px]:pt-3.5">
+      <div
+        className={`header-pill flex items-center ${scrolled ? "header-pill--float" : ""}`}
+      >
+        <Link href="/" className="mr-auto flex shrink-0 items-center gap-2.5">
           <Image
             src="/logo.png"
             alt="HiVelari"
             width={28}
             height={28}
-            className="header-logo-img"
+            className="size-8 shrink-0 rounded-lg object-contain"
             priority
           />
-          <span className="header-logo-name">HiVelari</span>
-          <span className="header-logo-tag">SDK</span>
+          <span className="text-[15px] font-bold tracking-[-0.04em] text-ink">
+            HiVelari
+          </span>
+          <span className="rounded-full border border-line-accent bg-accent-dim px-[7px] py-0.5 font-mono text-[11px] font-medium tracking-[0.02em] text-accent-light">
+            SDK
+          </span>
         </Link>
 
-        <div className="header-actions">
+        <div className="flex items-center gap-2 max-[600px]:gap-1.5">
           <a
             href="https://github.com/hivelari"
             target="_blank"
             rel="noreferrer"
-            className="btn btn-ghost btn-sm"
+            className="btn btn-ghost btn-sm max-[600px]:hidden"
           >
             <GitHubIcon />
             GitHub

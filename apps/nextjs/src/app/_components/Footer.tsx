@@ -15,39 +15,46 @@ const LINKS = {
   ],
 };
 
+const LINK_CLASS =
+  "inline-flex items-center gap-[3px] text-[13px] text-ink-3 no-underline transition-colors hover:text-ink-2";
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="footer">
+    <footer className="mt-auto border-t border-line pt-24 pb-12 max-[768px]:pt-16 max-[768px]:pb-10">
       <div className="container">
         {/* Top: brand + columns */}
-        <div className="footer-top">
-          <div className="footer-brand-col">
-            <div className="footer-logo">
-              <div className="footer-logo-mark">H</div>
-              <span className="footer-logo-name">HiVelari SDK</span>
+        <div className="mb-9 grid grid-cols-[300px_1fr] gap-20 border-b border-line pb-16 max-[768px]:mb-7 max-[768px]:grid-cols-1 max-[768px]:gap-10 max-[768px]:pb-10">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <div className="flex size-6 shrink-0 items-center justify-center rounded-md bg-accent text-[12px] font-extrabold text-white">
+                H
+              </div>
+              <span className="text-[14px] font-bold tracking-[-0.03em] text-ink">
+                HiVelari SDK
+              </span>
             </div>
-            <p className="footer-tagline">
+            <p className="text-[14px] leading-[1.75] text-ink-3">
               The official SDK for building on HiVelari.
               <br />
               Server-only. Fully typed. App Router native.
             </p>
-            <span className="pill pill-green" style={{ alignSelf: "flex-start" }}>
-              Early access
-            </span>
+            <span className="pill pill-green self-start">Early access</span>
           </div>
 
-          <div className="footer-cols">
+          <div className="grid grid-cols-3 gap-8 max-[768px]:gap-6 max-[520px]:grid-cols-2 max-[520px]:gap-x-[18px] max-[520px]:gap-y-[22px]">
             {Object.entries(LINKS).map(([heading, items]) => (
-              <div key={heading} className="footer-col">
-                <h4 className="footer-col-heading">{heading}</h4>
-                <ul className="footer-col-list">
+              <div key={heading}>
+                <h4 className="mb-4 text-[12px] font-semibold uppercase tracking-[0.04em] text-ink">
+                  {heading}
+                </h4>
+                <ul className="flex list-none flex-col gap-3.5">
                   {items.map((item) => (
                     <li key={item.label}>
                       <a
                         href={item.href}
-                        className="footer-col-link"
+                        className={LINK_CLASS}
                         target={item.external ? "_blank" : undefined}
                         rel={item.external ? "noreferrer" : undefined}
                       >
@@ -61,7 +68,7 @@ export default function Footer() {
                             stroke="currentColor"
                             strokeWidth="1.5"
                             strokeLinecap="round"
-                            style={{ display: "inline", marginLeft: 4, opacity: 0.5 }}
+                            className="ml-1 inline opacity-50"
                           >
                             <path d="M2 10L10 2M10 2H5M10 2V7" />
                           </svg>
@@ -76,18 +83,18 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="footer-bottom">
-          <span className="footer-copy">
+        <div className="flex flex-wrap items-center justify-between gap-4 max-[768px]:flex-col max-[768px]:items-start max-[768px]:gap-3.5">
+          <span className="text-[13px] text-ink-3">
             &copy; {year} HiVelari. All rights reserved.
           </span>
-          <div className="footer-bottom-links">
-            <a href="#" className="footer-col-link">Privacy</a>
-            <a href="#" className="footer-col-link">Terms</a>
+          <div className="flex items-center gap-5">
+            <a href="#" className={LINK_CLASS}>Privacy</a>
+            <a href="#" className={LINK_CLASS}>Terms</a>
             <a
               href="https://www.npmjs.com/package/@hivelari/sdk"
               target="_blank"
               rel="noreferrer"
-              className="footer-col-link"
+              className={LINK_CLASS}
             >
               @hivelari/sdk
             </a>

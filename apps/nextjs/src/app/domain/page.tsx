@@ -34,12 +34,16 @@ const DOMAINS = [
 
 export default function DomainPage() {
   return (
-    <div className="domain-content">
-      <div className="domain-content-header">
+    <div className="mx-auto max-w-[820px] px-14 pt-14 pb-24 max-[768px]:max-w-full max-[768px]:px-5 max-[768px]:pt-8 max-[768px]:pb-18">
+      <div className="mb-12 flex items-start justify-between gap-6 max-[768px]:mb-8 max-[768px]:flex-wrap max-[768px]:gap-3.5">
         <div>
-          <p className="domain-eyebrow">SDK domains</p>
-          <h1 className="domain-h1">All services, one client.</h1>
-          <p className="domain-sub">
+          <p className="mb-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-accent-light">
+            SDK domains
+          </p>
+          <h1 className="mb-3 text-[34px] font-extrabold tracking-[-0.05em] text-ink max-[768px]:text-[28px]">
+            All services, one client.
+          </h1>
+          <p className="max-w-[480px] text-[16px] leading-[1.7] text-ink-2">
             Each domain maps to a service on the HiVelari API. Initialise
             a single <code className="inline-code">Velari</code> client and access all of them.
           </p>
@@ -47,36 +51,43 @@ export default function DomainPage() {
         <span className="pill pill-amber">Coming soon</span>
       </div>
 
-      <div className="coming-soon-grid overflow-x-auto">
+      <div className="mb-9 grid grid-cols-2 gap-3.5 overflow-x-auto max-[768px]:grid-cols-1">
         {DOMAINS.map((domain, i) => (
           <div
             key={domain.title}
-            className="coming-soon-card"
             data-reveal
             data-reveal-delay={i + 1}
+            className="group flex flex-col gap-4 rounded-lg border border-line bg-surface p-8 transition-[border-color,background,transform] duration-200 hover:-translate-y-[3px] hover:border-line-accent hover:bg-surface-2"
           >
-            <div className="cs-icon">{domain.icon}</div>
-            <div>
-              <h3 className="cs-title">{domain.title}</h3>
-              <p className="cs-desc">{domain.desc}</p>
+            <div className="flex size-11 items-center justify-center rounded-sm border border-line-accent bg-accent-dim text-accent-light transition-transform duration-200 group-hover:-rotate-3 group-hover:scale-[1.06]">
+              {domain.icon}
             </div>
-            <div className="cs-methods">
+            <div>
+              <h3 className="mb-1.5 text-[17px] font-bold tracking-[-0.03em]">
+                {domain.title}
+              </h3>
+              <p className="text-[13px] leading-[1.65] text-ink-2">{domain.desc}</p>
+            </div>
+            <div className="flex flex-1 flex-col gap-[5px]">
               {domain.methods.map((m) => (
-                <span key={m} className="cs-method">
-                  <span className="cs-method-dot" />
+                <span
+                  key={m}
+                  className="flex items-center gap-2 font-mono text-xs text-ink-3"
+                >
+                  <span className="size-[3px] shrink-0 rounded-full bg-ink-3" />
                   client.{m}
                 </span>
               ))}
             </div>
-            <div className="cs-footer">
+            <div className="mt-auto">
               <span className="pill pill-neutral">Coming soon</span>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="coming-soon-notice">
-        <div className="csn-icon">
+      <div className="flex gap-4 rounded-md border border-line bg-surface p-6 max-[768px]:flex-col max-[768px]:gap-3">
+        <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-sm border border-line-accent bg-accent-dim text-accent-light">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
             <line x1="12" y1="8" x2="12" y2="12" />
@@ -84,8 +95,10 @@ export default function DomainPage() {
           </svg>
         </div>
         <div>
-          <p className="csn-title">Interactive demos are in progress</p>
-          <p className="csn-sub">
+          <p className="mb-1.5 text-[14px] font-semibold tracking-[-0.02em]">
+            Interactive demos are in progress
+          </p>
+          <p className="text-[13px] leading-[1.65] text-ink-2 [&_a]:text-accent-light [&_a]:underline [&_a]:underline-offset-[3px]">
             Each domain will have a live, interactive playground where you can call SDK methods
             directly and see the responses. Check back soon — or browse the{" "}
             <a href="https://www.npmjs.com/package/@hivelari/sdk" target="_blank" rel="noreferrer">
