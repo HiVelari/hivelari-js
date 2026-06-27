@@ -1,3 +1,5 @@
+import { ExternalLinkIcon } from "@/app/_icons/ExternalLinkIcon";
+
 const LINKS = {
   SDK: [
     { label: "npm package", href: "https://www.npmjs.com/package/@hivelari/sdk", external: true },
@@ -60,18 +62,7 @@ export default function Footer() {
                       >
                         {item.label}
                         {item.external && (
-                          <svg
-                            width="10"
-                            height="10"
-                            viewBox="0 0 12 12"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            className="ml-1 inline opacity-50"
-                          >
-                            <path d="M2 10L10 2M10 2H5M10 2V7" />
-                          </svg>
+                          <ExternalLinkIcon className="ml-1 inline opacity-50" />
                         )}
                       </a>
                     </li>

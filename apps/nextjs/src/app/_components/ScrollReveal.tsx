@@ -1,42 +1,48 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
-/**
- * Adds an `is-visible` class to any element marked with `data-reveal`
- * once it scrolls into view, driving the CSS reveal animations.
- * Respects `prefers-reduced-motion` by revealing everything immediately.
- */
 export default function ScrollReveal() {
+  const pathname = usePathname();
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
   useEffect(() => {
-    const els = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-reveal]"),
-    );
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const reduce = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    observerRef.current?.disconnect();
 
-    if (reduce || !("IntersectionObserver" in window)) {
-      els.forEach((el) => el.classList.add("is-visible"));
-      return;
-    }
+    const raf = requestAnimationFrame(() => {
+      const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
-    );
+      els.forEach((el) => el.classList.remove("is-visible"));
 
-    els.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+      if (reduce || !("IntersectionObserver" in window)) {
+        els.forEach((el) => el.classList.add("is-visible"));
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
+      );
+
+      els.forEach((el) => observer.observe(el));
+      observerRef.current = observer;
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      observerRef.current?.disconnect();
+    };
+  }, [pathname]);
 
   return null;
 }
