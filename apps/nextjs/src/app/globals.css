@@ -263,6 +263,22 @@
   .btn-full {
     @apply w-full;
   }
+
+  /* ── Product grid (commerce pages) ── */
+  .product-grid {
+    @apply grid gap-5;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 960px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────

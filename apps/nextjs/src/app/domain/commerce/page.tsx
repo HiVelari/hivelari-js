@@ -1,46 +1,22 @@
+import CartIcon from '@/app/_icons/cart.svg';
 import InfoIcon from '@/app/_icons/info.svg';
-import LockIcon from '@/app/_icons/lock.svg';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Authentication — HiVelari SDK',
+  title: 'Commerce — HiVelari SDK',
 };
 
 const PAGES = [
   {
-    label: 'Login',
-    href: '/domain/auth/login',
-    desc: 'Sign in with email and password using client.auth.login().',
-    method: 'client.auth.login()',
-  },
-  {
-    label: 'Register',
-    href: '/domain/auth/register',
-    desc: 'Create a new user account with client.auth.register().',
-    method: 'client.auth.register()',
-  },
-  {
-    label: 'OAuth',
-    href: '/domain/auth/oauth',
-    desc: 'Social sign-in via Google or GitHub using client.auth.socialRedirectUrl().',
-    method: 'client.auth.socialRedirectUrl()',
-  },
-  {
-    label: 'Profile',
-    href: '/domain/auth/profile',
-    desc: 'View and edit your profile with client.auth.updateProfile().',
-    method: 'client.auth.updateProfile()',
-  },
-  {
-    label: 'Password Recovery',
-    href: '/domain/auth/recovery',
-    desc: 'Send a recovery email via client.auth.initiatePasswordRecovery().',
-    method: 'client.auth.initiatePasswordRecovery()',
+    label: 'Products',
+    href: '/domain/commerce/products',
+    desc: 'Browse, search, and filter the product catalog with client.commerce.listProducts().',
+    method: 'client.commerce.listProducts()',
   },
 ];
 
-export default function AuthOverviewPage() {
+export default function CommerceOverviewPage() {
   return (
     <div className="mx-auto max-w-[920px] px-16 pt-16 pb-28 max-[768px]:max-w-full max-[768px]:px-6 max-[768px]:pt-10 max-[768px]:pb-20">
       <div className="mb-10">
@@ -49,16 +25,16 @@ export default function AuthOverviewPage() {
         </p>
         <div className="mb-3 flex items-center gap-3">
           <div className="flex size-9 items-center justify-center rounded-sm border border-line-accent bg-accent-dim text-accent-light">
-            <LockIcon width={18} height={18} />
+            <CartIcon width={18} height={18} />
           </div>
           <h1 className="text-[32px] font-extrabold tracking-[-0.05em] text-ink max-[768px]:text-[26px]">
-            Authentication
+            Commerce
           </h1>
         </div>
         <p className="max-w-[520px] text-[15px] leading-[1.7] text-ink-2">
-          Identity and access management. Login, register, OAuth flows, session
-          management, profile updates, and password recovery — all through a
-          single <code className="inline-code">Velari</code> client.
+          Product listings, digital and physical items, purchasing flows, and
+          file delivery — all through a single{' '}
+          <code className="inline-code">Velari</code> client.
         </p>
       </div>
 
@@ -82,6 +58,24 @@ export default function AuthOverviewPage() {
             <code className="sdk-badge self-start">{page.method}</code>
           </Link>
         ))}
+
+        <div className="flex flex-col gap-3 rounded-md border border-line bg-surface p-6 opacity-50">
+          <div>
+            <p className="mb-1 text-[15px] font-semibold tracking-[-0.03em] text-ink">
+              Purchase
+            </p>
+            <p className="text-[13px] leading-[1.6] text-ink-2">
+              Initiate a product purchase flow with
+              client.commerce.purchaseProduct().
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <code className="sdk-badge self-start">
+              client.commerce.purchaseProduct()
+            </code>
+            <span className="pill pill-neutral">Coming soon</span>
+          </div>
+        </div>
       </div>
 
       <div className="flex gap-4 rounded-md border border-line bg-surface p-5 max-[640px]:flex-col max-[640px]:gap-3">
@@ -89,8 +83,9 @@ export default function AuthOverviewPage() {
           <InfoIcon width={16} height={16} />
         </div>
         <p className="text-[13px] leading-[1.65] text-ink-2">
-          Each page is a live interactive playground. Actions call the real SDK
-          and log responses in real time — no mocks.
+          Commerce pages are server-rendered — products are fetched directly
+          from the SDK on the server and streamed to the browser. No client-side
+          loading states.
         </p>
       </div>
     </div>

@@ -17,7 +17,8 @@ export default function OAuthPage() {
         </h1>
         <p className="text-[14px] leading-[1.7] text-ink-2">
           Social sign-in via Google or GitHub. The SDK returns a redirect URL;
-          after the provider redirects back, the code is exchanged for a session.
+          after the provider redirects back, the code is exchanged for a
+          session.
         </p>
       </div>
       <OAuthConsole />

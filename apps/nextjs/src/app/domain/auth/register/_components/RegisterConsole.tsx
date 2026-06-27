@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import type { AuthUserPayload } from '@hivelari/sdk';
+import { useState } from 'react';
+import { registerAction } from '../../_actions';
 import LogPanel, { makeEntry, type LogEntry } from '../../_components/LogPanel';
 import MethodsPanel from '../../_components/MethodsPanel';
-import { registerAction } from '../../_actions';
 
 const METHODS = ['client.auth.register()'];
 
@@ -44,7 +44,11 @@ export default function RegisterConsole({
         throw new Error('error' in res ? res.error : 'Registration failed');
       }
     } catch (err) {
-      addLog('auth.register', false, err instanceof Error ? err.message : String(err));
+      addLog(
+        'auth.register',
+        false,
+        err instanceof Error ? err.message : String(err),
+      );
     } finally {
       setBusy(false);
     }
@@ -84,8 +88,11 @@ export default function RegisterConsole({
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="grid grid-cols-2 gap-3 max-[640px]:grid-cols-1">
               <div className="field">
-                <label className="label">First name</label>
+                <label htmlFor="reg-first" className="label">
+                  First name
+                </label>
                 <input
+                  id="reg-first"
                   className="input"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -94,8 +101,11 @@ export default function RegisterConsole({
                 />
               </div>
               <div className="field">
-                <label className="label">Last name</label>
+                <label htmlFor="reg-last" className="label">
+                  Last name
+                </label>
                 <input
+                  id="reg-last"
                   className="input"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
@@ -104,8 +114,11 @@ export default function RegisterConsole({
               </div>
             </div>
             <div className="field">
-              <label className="label">Email</label>
+              <label htmlFor="reg-email" className="label">
+                Email
+              </label>
               <input
+                id="reg-email"
                 className="input"
                 type="email"
                 value={email}
@@ -115,8 +128,11 @@ export default function RegisterConsole({
               />
             </div>
             <div className="field">
-              <label className="label">Password</label>
+              <label htmlFor="reg-password" className="label">
+                Password
+              </label>
               <input
+                id="reg-password"
                 className="input"
                 type="password"
                 value={password}
@@ -126,8 +142,11 @@ export default function RegisterConsole({
               />
             </div>
             <div className="field">
-              <label className="label">Confirm password</label>
+              <label htmlFor="reg-confirm" className="label">
+                Confirm password
+              </label>
               <input
+                id="reg-confirm"
                 className="input"
                 type="password"
                 value={passwordConfirm}

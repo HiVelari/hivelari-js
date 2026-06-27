@@ -1,12 +1,20 @@
 export interface LogEntry {
+  id: string;
   ts: string;
   label: string;
   ok: boolean;
   detail: string;
 }
 
-export function makeEntry(label: string, ok: boolean, detail: string): LogEntry {
+let _seq = 0;
+
+export function makeEntry(
+  label: string,
+  ok: boolean,
+  detail: string,
+): LogEntry {
   return {
+    id: `log-${++_seq}`,
     ts: new Date().toLocaleTimeString([], {
       hour: '2-digit',
       minute: '2-digit',
@@ -32,8 +40,8 @@ export default function LogPanel({ logs }: { logs: LogEntry[] }) {
           <span className="text-ink-3">No actions yet.</span>
         ) : (
           <div className="flex flex-col gap-2.5">
-            {[...logs].reverse().map((e, i) => (
-              <div key={i}>
+            {[...logs].reverse().map((e) => (
+              <div key={e.id}>
                 <span className="text-ink-3">{e.ts} </span>
                 <span className={e.ok ? 'text-green' : 'text-red'}>
                   {e.ok ? '✓' : '✗'} {e.label}

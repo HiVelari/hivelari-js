@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { initiatePasswordRecoveryAction } from '../../_actions';
 import LogPanel, { makeEntry, type LogEntry } from '../../_components/LogPanel';
 import MethodsPanel from '../../_components/MethodsPanel';
-import { initiatePasswordRecoveryAction } from '../../_actions';
 
 const METHODS = ['client.auth.initiatePasswordRecovery()'];
 
@@ -24,9 +24,15 @@ export default function RecoveryConsole() {
       const res = await initiatePasswordRecoveryAction(email);
       if (res.success) {
         setSent(true);
-        addLog('auth.initiatePasswordRecovery', true, `Recovery email sent to ${email}`);
+        addLog(
+          'auth.initiatePasswordRecovery',
+          true,
+          `Recovery email sent to ${email}`,
+        );
       } else {
-        throw new Error('error' in res ? res.error : 'Failed to send recovery email');
+        throw new Error(
+          'error' in res ? res.error : 'Failed to send recovery email',
+        );
       }
     } catch (err) {
       addLog(
@@ -48,17 +54,22 @@ export default function RecoveryConsole() {
               ✓
             </div>
             <div>
-              <p className="mb-1 text-[15px] font-semibold text-ink">Check your inbox</p>
+              <p className="mb-1 text-[15px] font-semibold text-ink">
+                Check your inbox
+              </p>
               <p className="text-[13px] leading-[1.65] text-ink-2">
                 A recovery link was sent to{' '}
-                <span className="font-medium text-ink">{email}</span>. Follow the
-                link to reset your password.
+                <span className="font-medium text-ink">{email}</span>. Follow
+                the link to reset your password.
               </p>
             </div>
             <button
               type="button"
               className="btn btn-ghost btn-sm self-start"
-              onClick={() => { setSent(false); setEmail(''); }}
+              onClick={() => {
+                setSent(false);
+                setEmail('');
+              }}
             >
               Send another
             </button>
@@ -66,8 +77,11 @@ export default function RecoveryConsole() {
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="field">
-              <label className="label">Email address</label>
+              <label htmlFor="recovery-email" className="label">
+                Email address
+              </label>
               <input
+                id="recovery-email"
                 className="input"
                 type="email"
                 value={email}
@@ -86,7 +100,9 @@ export default function RecoveryConsole() {
                 {busy ? 'Sending…' : 'Send recovery email'}
               </button>
               <div className="text-center">
-                <code className="sdk-badge">client.auth.initiatePasswordRecovery()</code>
+                <code className="sdk-badge">
+                  client.auth.initiatePasswordRecovery()
+                </code>
               </div>
             </div>
           </form>

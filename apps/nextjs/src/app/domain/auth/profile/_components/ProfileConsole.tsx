@@ -1,16 +1,16 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
 import type { AuthUserPayload } from '@hivelari/sdk';
-import LogPanel, { makeEntry, type LogEntry } from '../../_components/LogPanel';
-import MethodsPanel from '../../_components/MethodsPanel';
+import Link from 'next/link';
+import { useState } from 'react';
 import {
-  updateProfileAction,
   initiateEmailVerificationAction,
   initiatePasswordRecoveryAction,
   logoutAction,
+  updateProfileAction,
 } from '../../_actions';
+import LogPanel, { makeEntry, type LogEntry } from '../../_components/LogPanel';
+import MethodsPanel from '../../_components/MethodsPanel';
 
 const METHODS = [
   'client.auth.updateProfile()',
@@ -41,16 +41,29 @@ export default function ProfileConsole({
     e.preventDefault();
     setBusy(true);
     try {
-      const res = await updateProfileAction({ first_name: firstName, last_name: lastName, username, phone });
+      const res = await updateProfileAction({
+        first_name: firstName,
+        last_name: lastName,
+        username,
+        phone,
+      });
       if (res.success && 'user' in res && res.user) {
         setUser(res.user);
-        addLog('auth.updateProfile', true, `Updated → ${firstName} ${lastName}`);
+        addLog(
+          'auth.updateProfile',
+          true,
+          `Updated → ${firstName} ${lastName}`,
+        );
         setEditing(false);
       } else {
         throw new Error('error' in res ? res.error : 'Update failed');
       }
     } catch (err) {
-      addLog('auth.updateProfile', false, err instanceof Error ? err.message : String(err));
+      addLog(
+        'auth.updateProfile',
+        false,
+        err instanceof Error ? err.message : String(err),
+      );
     } finally {
       setBusy(false);
     }
@@ -61,7 +74,11 @@ export default function ProfileConsole({
       await initiateEmailVerificationAction();
       addLog('auth.initiateEmailVerification', true, 'Verification email sent');
     } catch (err) {
-      addLog('auth.initiateEmailVerification', false, err instanceof Error ? err.message : String(err));
+      addLog(
+        'auth.initiateEmailVerification',
+        false,
+        err instanceof Error ? err.message : String(err),
+      );
     }
   }
 
@@ -69,9 +86,17 @@ export default function ProfileConsole({
     if (!user) return;
     try {
       await initiatePasswordRecoveryAction(user.email);
-      addLog('auth.initiatePasswordRecovery', true, `Recovery email sent to ${user.email}`);
+      addLog(
+        'auth.initiatePasswordRecovery',
+        true,
+        `Recovery email sent to ${user.email}`,
+      );
     } catch (err) {
-      addLog('auth.initiatePasswordRecovery', false, err instanceof Error ? err.message : String(err));
+      addLog(
+        'auth.initiatePasswordRecovery',
+        false,
+        err instanceof Error ? err.message : String(err),
+      );
     }
   }
 
@@ -83,7 +108,9 @@ export default function ProfileConsole({
             ?
           </div>
           <div>
-            <p className="mb-1.5 text-[15px] font-semibold text-ink">Not signed in</p>
+            <p className="mb-1.5 text-[15px] font-semibold text-ink">
+              Not signed in
+            </p>
             <p className="text-[13px] text-ink-2">
               Sign in to view and manage your profile.
             </p>
@@ -130,16 +157,22 @@ export default function ProfileConsole({
           <form onSubmit={handleSave} className="flex flex-col gap-5">
             <div className="grid grid-cols-2 gap-3 max-[640px]:grid-cols-1">
               <div className="field">
-                <label className="label">First name</label>
+                <label htmlFor="profile-first" className="label">
+                  First name
+                </label>
                 <input
+                  id="profile-first"
                   className="input"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 />
               </div>
               <div className="field">
-                <label className="label">Last name</label>
+                <label htmlFor="profile-last" className="label">
+                  Last name
+                </label>
                 <input
+                  id="profile-last"
                   className="input"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
@@ -147,16 +180,22 @@ export default function ProfileConsole({
               </div>
             </div>
             <div className="field">
-              <label className="label">Username</label>
+              <label htmlFor="profile-username" className="label">
+                Username
+              </label>
               <input
+                id="profile-username"
                 className="input"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="field">
-              <label className="label">Phone</label>
+              <label htmlFor="profile-phone" className="label">
+                Phone
+              </label>
               <input
+                id="profile-phone"
                 className="input"
                 type="tel"
                 value={phone}
@@ -164,7 +203,11 @@ export default function ProfileConsole({
               />
             </div>
             <div className="flex items-center gap-2">
-              <button type="submit" className="btn btn-primary btn-sm" disabled={busy}>
+              <button
+                type="submit"
+                className="btn btn-primary btn-sm"
+                disabled={busy}
+              >
                 {busy ? 'Saving…' : 'Save changes'}
               </button>
               <button
@@ -174,7 +217,9 @@ export default function ProfileConsole({
               >
                 Cancel
               </button>
-              <code className="sdk-badge ml-auto">client.auth.updateProfile()</code>
+              <code className="sdk-badge ml-auto">
+                client.auth.updateProfile()
+              </code>
             </div>
           </form>
         ) : (
@@ -184,7 +229,10 @@ export default function ProfileConsole({
                 { k: 'Username', v: user.username },
                 { k: 'Phone', v: user.phone },
               ].map(({ k, v }) => (
-                <div key={k} className="flex items-center justify-between text-[13px]">
+                <div
+                  key={k}
+                  className="flex items-center justify-between text-[13px]"
+                >
                   <span className="text-ink-3">{k}</span>
                   <span className="text-ink">{v ?? '—'}</span>
                 </div>
@@ -216,7 +264,9 @@ export default function ProfileConsole({
               >
                 Verify email
               </button>
-              <code className="sdk-badge text-[10px]">auth.initiateEmailVerification()</code>
+              <code className="sdk-badge text-[10px]">
+                auth.initiateEmailVerification()
+              </code>
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -226,11 +276,16 @@ export default function ProfileConsole({
               >
                 Reset password
               </button>
-              <code className="sdk-badge text-[10px]">auth.initiatePasswordRecovery()</code>
+              <code className="sdk-badge text-[10px]">
+                auth.initiatePasswordRecovery()
+              </code>
             </div>
             <div className="flex items-center gap-2">
               <form action={logoutAction} className="flex-1">
-                <button type="submit" className="btn btn-danger btn-sm btn-full">
+                <button
+                  type="submit"
+                  className="btn btn-danger btn-sm btn-full"
+                >
                   Sign out
                 </button>
               </form>

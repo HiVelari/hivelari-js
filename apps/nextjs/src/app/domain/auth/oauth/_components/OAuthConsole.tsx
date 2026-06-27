@@ -1,14 +1,17 @@
 'use client';
 
-import { useState } from 'react';
-import GoogleIcon from '@/app/_icons/google.svg';
-import GitHubIcon from '@/app/_icons/github.svg';
 import ExternalLinkIcon from '@/app/_icons/external-link.svg';
+import GitHubIcon from '@/app/_icons/github.svg';
+import GoogleIcon from '@/app/_icons/google.svg';
+import { useState } from 'react';
+import { socialRedirectUrlAction } from '../../_actions';
 import LogPanel, { makeEntry, type LogEntry } from '../../_components/LogPanel';
 import MethodsPanel from '../../_components/MethodsPanel';
-import { socialRedirectUrlAction } from '../../_actions';
 
-const METHODS = ['client.auth.socialRedirectUrl()', 'client.auth.authenticateUsingCode()'];
+const METHODS = [
+  'client.auth.socialRedirectUrl()',
+  'client.auth.authenticateUsingCode()',
+];
 
 const PROVIDERS = [
   { id: 'google', label: 'Continue with Google', Icon: GoogleIcon },
@@ -36,9 +39,15 @@ export default function OAuthConsole() {
       const res = await socialRedirectUrlAction(provider);
       if (res.success && 'redirectUrl' in res && res.redirectUrl) {
         setRedirect({ provider, url: res.redirectUrl });
-        addLog('auth.socialRedirectUrl', true, `Got redirect URL for ${provider}`);
+        addLog(
+          'auth.socialRedirectUrl',
+          true,
+          `Got redirect URL for ${provider}`,
+        );
       } else {
-        throw new Error('error' in res ? res.error : 'Could not get redirect URL');
+        throw new Error(
+          'error' in res ? res.error : 'Could not get redirect URL',
+        );
       }
     } catch (err) {
       addLog(
@@ -117,11 +126,15 @@ export default function OAuthConsole() {
 
         {/* How it works */}
         <div className="rounded-sm border border-line bg-bg px-5 py-4">
-          <p className="mb-2 text-[12px] font-semibold text-ink-2">How it works</p>
+          <p className="mb-2 text-[12px] font-semibold text-ink-2">
+            How it works
+          </p>
           <ol className="list-decimal flex flex-col gap-2 pl-4 text-[12.5px] leading-[1.65] text-ink-2">
             <li>
               Call{' '}
-              <code className="inline-code text-[11px]">socialRedirectUrl(provider, callbackUrl)</code>{' '}
+              <code className="inline-code text-[11px]">
+                socialRedirectUrl(provider, callbackUrl)
+              </code>{' '}
               to get the provider's OAuth URL.
             </li>
             <li>Inspect the URL above, then redirect the user to it.</li>
@@ -129,7 +142,10 @@ export default function OAuthConsole() {
               On return, the{' '}
               <code className="inline-code text-[11px]">?code</code> param is
               exchanged via{' '}
-              <code className="inline-code text-[11px]">authenticateUsingCode(code)</code>.
+              <code className="inline-code text-[11px]">
+                authenticateUsingCode(code)
+              </code>
+              .
             </li>
           </ol>
         </div>

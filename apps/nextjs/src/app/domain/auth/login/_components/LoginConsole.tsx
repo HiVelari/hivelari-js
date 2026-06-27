@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import type { AuthUserPayload } from '@hivelari/sdk';
+import { useState } from 'react';
+import { loginAction } from '../../_actions';
 import LogPanel, { makeEntry, type LogEntry } from '../../_components/LogPanel';
 import MethodsPanel from '../../_components/MethodsPanel';
-import { loginAction } from '../../_actions';
 
 const METHODS = ['client.auth.login()'];
 
@@ -35,7 +35,11 @@ export default function LoginConsole({
         throw new Error('error' in res ? res.error : 'Authentication failed');
       }
     } catch (err) {
-      addLog('auth.login', false, err instanceof Error ? err.message : String(err));
+      addLog(
+        'auth.login',
+        false,
+        err instanceof Error ? err.message : String(err),
+      );
     } finally {
       setBusy(false);
     }
@@ -74,8 +78,11 @@ export default function LoginConsole({
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="field">
-              <label className="label">Email</label>
+              <label htmlFor="login-email" className="label">
+                Email
+              </label>
               <input
+                id="login-email"
                 className="input"
                 type="email"
                 value={email}
@@ -85,8 +92,11 @@ export default function LoginConsole({
               />
             </div>
             <div className="field">
-              <label className="label">Password</label>
+              <label htmlFor="login-password" className="label">
+                Password
+              </label>
               <input
+                id="login-password"
                 className="input"
                 type="password"
                 value={password}

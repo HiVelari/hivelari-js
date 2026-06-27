@@ -1,20 +1,20 @@
-"use server";
+'use server';
 
-import { getVelariClient } from "@/lib/velari";
+import { getVelariClient } from '@/lib/velari';
 import type {
   AuthResponsePayload,
   LoginParams,
   RegisterParams,
   UpdateProfileParams,
-} from "@hivelari/sdk";
-import { revalidatePath } from "next/cache";
-import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
+} from '@hivelari/sdk';
+import { revalidatePath } from 'next/cache';
+import { cookies, headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 async function getAppBaseUrl() {
   const headersList = await headers();
 
-  return headersList.get("origin");
+  return headersList.get('origin');
 }
 
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7;
@@ -23,13 +23,13 @@ async function persistSession(data: AuthResponsePayload) {
   const cookieStore = await cookies();
   const opts = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax" as const,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax' as const,
     maxAge: SESSION_MAX_AGE,
   };
-  cookieStore.set("velari_token", data.token, opts);
-  cookieStore.set("velari_user", JSON.stringify(data.user), opts);
-  revalidatePath("/domain/auth");
+  cookieStore.set('velari_token', data.token, opts);
+  cookieStore.set('velari_user', JSON.stringify(data.user), opts);
+  revalidatePath('/domain/auth');
 }
 
 export async function loginAction(params: LoginParams) {
@@ -42,14 +42,14 @@ export async function loginAction(params: LoginParams) {
       return { success: true, user: response.data.user };
     }
 
-    return { success: false, error: "Authentication failed." };
+    return { success: false, error: 'Authentication failed.' };
   } catch (error: unknown) {
     return {
       success: false,
       error:
         error instanceof Error
           ? error.message
-          : "An error occurred during login.",
+          : 'An error occurred during login.',
     };
   }
 }
@@ -64,14 +64,14 @@ export async function registerAction(params: RegisterParams) {
       return { success: true, user: response.data.user };
     }
 
-    return { success: false, error: "Registration failed." };
+    return { success: false, error: 'Registration failed.' };
   } catch (error: unknown) {
     return {
       success: false,
       error:
         error instanceof Error
           ? error.message
-          : "An error occurred during registration.",
+          : 'An error occurred during registration.',
     };
   }
 }
@@ -87,11 +87,11 @@ export async function logoutAction() {
   }
 
   const cookieStore = await cookies();
-  cookieStore.delete("velari_token");
-  cookieStore.delete("velari_user");
+  cookieStore.delete('velari_token');
+  cookieStore.delete('velari_user');
 
-  revalidatePath("/domain/auth");
-  redirect("/domain/auth/login");
+  revalidatePath('/domain/auth');
+  redirect('/domain/auth/login');
 }
 
 export async function updateProfileAction(params: UpdateProfileParams) {
@@ -101,24 +101,24 @@ export async function updateProfileAction(params: UpdateProfileParams) {
 
     if (response.success && response.data) {
       const cookieStore = await cookies();
-      cookieStore.set("velari_user", JSON.stringify(response.data), {
+      cookieStore.set('velari_user', JSON.stringify(response.data), {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
         maxAge: SESSION_MAX_AGE,
       });
-      revalidatePath("/domain/auth");
+      revalidatePath('/domain/auth');
       return { success: true, user: response.data };
     }
 
-    return { success: false, error: "Failed to update profile." };
+    return { success: false, error: 'Failed to update profile.' };
   } catch (error: unknown) {
     return {
       success: false,
       error:
         error instanceof Error
           ? error.message
-          : "An error occurred during profile update.",
+          : 'An error occurred during profile update.',
     };
   }
 }
@@ -134,7 +134,7 @@ export async function initiateEmailVerificationAction() {
       error:
         error instanceof Error
           ? error.message
-          : "An error occurred initiating email verification.",
+          : 'An error occurred initiating email verification.',
     };
   }
 }
@@ -154,7 +154,7 @@ export async function initiatePasswordRecoveryAction(email: string) {
       error:
         error instanceof Error
           ? error.message
-          : "An error occurred initiating password recovery.",
+          : 'An error occurred initiating password recovery.',
     };
   }
 }
@@ -174,7 +174,7 @@ export async function socialRedirectUrlAction(provider: string) {
       error:
         error instanceof Error
           ? error.message
-          : "An error occurred retrieving social redirect URL.",
+          : 'An error occurred retrieving social redirect URL.',
     };
   }
 }
@@ -189,14 +189,14 @@ export async function authenticateUsingCodeAction(code: string) {
       return { success: true, user: response.data.user };
     }
 
-    return { success: false, error: "Authentication failed." };
+    return { success: false, error: 'Authentication failed.' };
   } catch (error: unknown) {
     return {
       success: false,
       error:
         error instanceof Error
           ? error.message
-          : "An error occurred during code authentication.",
+          : 'An error occurred during code authentication.',
     };
   }
 }
