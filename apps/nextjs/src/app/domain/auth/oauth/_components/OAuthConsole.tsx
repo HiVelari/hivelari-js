@@ -63,7 +63,11 @@ export default function OAuthConsole() {
   function handleRedirectNow() {
     if (redirect) {
       addLog('redirect', true, `Navigating to ${redirect.provider}…`);
-      window.location.href = redirect.url;
+      window.open(
+        redirect.url,
+        'popup',
+        'width=600,height=700,left=100,top=100,resizable=yes,scrollbars=yes',
+      );
     }
   }
 
