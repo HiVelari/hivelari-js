@@ -36,8 +36,8 @@ const DOMAINS = [
 
 export default function DomainPage() {
   return (
-    <div className="mx-auto max-w-[820px] px-14 pt-14 pb-24 max-[768px]:max-w-full max-[768px]:px-5 max-[768px]:pt-8 max-[768px]:pb-18">
-      <div className="mb-12 flex items-start justify-between gap-6 max-[768px]:mb-8 max-[768px]:flex-wrap max-[768px]:gap-3.5">
+    <div className="mx-auto max-w-[920px] px-16 pt-16 pb-28 max-[768px]:max-w-full max-[768px]:px-6 max-[768px]:pt-10 max-[768px]:pb-20">
+      <div className="mb-14 flex items-start justify-between gap-6 max-[768px]:mb-10 max-[768px]:flex-wrap max-[768px]:gap-4">
         <div>
           <p className="mb-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-accent-light">
             SDK domains

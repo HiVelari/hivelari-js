@@ -6,6 +6,7 @@
   "scripts": {
     "serve": "simapi serve",
     "dev": "simapi dev",
+    "portless": "portless",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {

@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "portless": "turbo run portless",
     "lint": "biome lint .",
     "format": "biome format --write .",
     "check-types": "turbo run check-types",

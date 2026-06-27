@@ -16,6 +16,11 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "portless": {
+      "with": ["@hivelari/sdk#dev"],
+      "cache": false,
+      "persistent": true
     }
   }
 }
