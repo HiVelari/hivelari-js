@@ -1,51 +1,51 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
-import { LockIcon } from "@/app/_icons/LockIcon";
-import { CartIcon } from "@/app/_icons/CartIcon";
-import { MenuIcon } from "@/app/_icons/MenuIcon";
-import { CloseIcon } from "@/app/_icons/CloseIcon";
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import LockIcon from '@/app/_icons/lock.svg';
+import CartIcon from '@/app/_icons/cart.svg';
+import MenuIcon from '@/app/_icons/menu.svg';
+import CloseIcon from '@/app/_icons/close.svg';
 
 const NAV: Array<
   | { label: string; href: string; exact: boolean }
   | { group: string; items: { label: string; href: string }[] }
 > = [
-  { label: "Overview", href: "/domain", exact: true },
+  { label: 'Overview', href: '/domain', exact: true },
   {
-    group: "Authentication",
+    group: 'Authentication',
     items: [
-      { label: "Overview", href: "/domain/auth" },
-      { label: "Login", href: "/domain/auth/login" },
-      { label: "Register", href: "/domain/auth/register" },
-      { label: "OAuth", href: "/domain/auth/oauth" },
-      { label: "Profile", href: "/domain/auth/profile" },
-      { label: "Password recovery", href: "/domain/auth/recovery" },
+      { label: 'Overview', href: '/domain/auth' },
+      { label: 'Login', href: '/domain/auth/login' },
+      { label: 'Register', href: '/domain/auth/register' },
+      { label: 'OAuth', href: '/domain/auth/oauth' },
+      { label: 'Profile', href: '/domain/auth/profile' },
+      { label: 'Password recovery', href: '/domain/auth/recovery' },
     ],
   },
   {
-    group: "Commerce",
+    group: 'Commerce',
     items: [
-      { label: "Overview", href: "/domain/commerce" },
-      { label: "Products", href: "/domain/commerce/products" },
+      { label: 'Overview', href: '/domain/commerce' },
+      { label: 'Products', href: '/domain/commerce/products' },
     ],
   },
 ];
 
 const GROUP_ICONS: Record<string, React.ReactNode> = {
-  Authentication: <LockIcon size={12} />,
-  Commerce: <CartIcon size={12} />,
+  Authentication: <LockIcon width={12} height={12} />,
+  Commerce: <CartIcon width={12} height={12} />,
 };
 
 const ICON_BTN =
-  "flex size-9 cursor-pointer items-center justify-center rounded-sm border border-line bg-white/[0.06] text-ink-2 transition hover:bg-white/10 hover:text-ink";
+  'flex size-9 cursor-pointer items-center justify-center rounded-sm border border-line bg-white/[0.06] text-ink-2 transition hover:bg-white/10 hover:text-ink';
 
 const LINK_BASE =
-  "block rounded-sm px-3 py-[7px] text-[13.5px] font-[450] tracking-[-0.01em] text-ink-2 no-underline transition-[color,background] hover:bg-white/[0.04] hover:text-ink";
+  'block rounded-sm px-3 py-[7px] text-[13.5px] font-[450] tracking-[-0.01em] text-ink-2 no-underline transition-[color,background] hover:bg-white/[0.04] hover:text-ink';
 const LINK_ACTIVE =
-  "sidebar-link--active relative bg-white/[0.06] font-medium !text-ink";
+  'sidebar-link--active relative bg-white/[0.06] font-medium !text-ink';
 
 function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
   const pathname = usePathname();
@@ -83,7 +83,7 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
         </div>
         <nav className="flex flex-col gap-0.5">
           {NAV.map((item) => {
-            if ("href" in item) {
+            if ('href' in item) {
               const active = item.exact
                 ? pathname === item.href
                 : pathname.startsWith(item.href);
@@ -92,7 +92,7 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                   key={item.href}
                   href={item.href}
                   onClick={onLinkClick}
-                  className={`${LINK_BASE} ${active ? LINK_ACTIVE : ""}`}
+                  className={`${LINK_BASE} ${active ? LINK_ACTIVE : ''}`}
                 >
                   {item.label}
                 </Link>
@@ -102,7 +102,9 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
             return (
               <div key={item.group} className="mt-5">
                 <div className="mb-1.5 flex items-center gap-[7px] px-3 text-[12px] font-semibold tracking-[0.01em] text-ink-2">
-                  <span className="flex text-ink-3">{GROUP_ICONS[item.group]}</span>
+                  <span className="flex text-ink-3">
+                    {GROUP_ICONS[item.group]}
+                  </span>
                   {item.group}
                 </div>
                 <div className="flex flex-col gap-px">
@@ -113,7 +115,7 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                         key={sub.href}
                         href={sub.href}
                         onClick={onLinkClick}
-                        className={`${LINK_BASE} pl-7 text-[13px] ${active ? LINK_ACTIVE : ""}`}
+                        className={`${LINK_BASE} pl-7 text-[13px] ${active ? LINK_ACTIVE : ''}`}
                       >
                         {sub.label}
                       </Link>
@@ -133,11 +135,16 @@ export default function DomainSidebar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => { setOpen(false); }, [pathname]);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: pathname is an intentional trigger dep — closes drawer on navigation
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [open]);
 
   return (
@@ -168,12 +175,13 @@ export default function DomainSidebar() {
           onClick={() => setOpen(true)}
           aria-label="Open navigation"
         >
-          <MenuIcon />
+          <MenuIcon width={18} height={18} />
         </button>
       </div>
 
       {/* ── Mobile drawer backdrop ── */}
       {open && (
+        // biome-ignore lint/a11y/useKeyWithClickEvents: aria-hidden element, not interactive for keyboard users
         <div
           className="fixed inset-0 z-[200] hidden animate-[fadeIn_0.2s_ease] bg-[rgba(5,5,9,0.7)] backdrop-blur-[2px] max-[768px]:block"
           onClick={() => setOpen(false)}
@@ -184,7 +192,7 @@ export default function DomainSidebar() {
       {/* ── Mobile drawer ── */}
       <aside
         className={`thin-scroll fixed inset-y-0 left-0 z-[300] hidden h-[100dvh] w-[272px] flex-col overflow-x-hidden overflow-y-auto border-r border-line bg-raised transition-transform duration-[320ms] ease-[cubic-bezier(0.16,1,0.3,1)] max-[768px]:flex ${
-          open ? "translate-x-0" : "-translate-x-full"
+          open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <button
@@ -193,7 +201,7 @@ export default function DomainSidebar() {
           onClick={() => setOpen(false)}
           aria-label="Close navigation"
         >
-          <CloseIcon />
+          <CloseIcon width={18} height={18} />
         </button>
         <SidebarContent onLinkClick={() => setOpen(false)} />
       </aside>

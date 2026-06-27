@@ -1,13 +1,13 @@
-import { ServerIcon } from "@/app/_icons/ServerIcon";
-import { CodeIcon } from "@/app/_icons/CodeIcon";
-import { ShieldIcon } from "@/app/_icons/ShieldIcon";
-import { FileIcon } from "@/app/_icons/FileIcon";
-import { ClockIcon } from "@/app/_icons/ClockIcon";
-import { CubeIcon } from "@/app/_icons/CubeIcon";
+import ServerIcon from '@/app/_icons/server.svg';
+import CodeIcon from '@/app/_icons/code.svg';
+import ShieldIcon from '@/app/_icons/shield.svg';
+import FileIcon from '@/app/_icons/file.svg';
+import ClockIcon from '@/app/_icons/clock.svg';
+import CubeIcon from '@/app/_icons/cube.svg';
 
 const FEATURES = [
   {
-    icon: <ServerIcon />,
+    icon: <ServerIcon width={19} height={19} />,
     title: 'Server-only',
     desc: (
       <>
@@ -17,31 +17,31 @@ const FEATURES = [
     ),
   },
   {
-    icon: <CodeIcon />,
+    icon: <CodeIcon width={19} height={19} />,
     title: 'Fully typed',
     desc: 'Every request parameter, response shape, and error variant is typed with TypeScript generics. No casting.',
   },
   {
-    icon: <ShieldIcon />,
+    icon: <ShieldIcon width={19} height={19} />,
     title: 'Zod validated',
     desc: 'Environment variables are validated with Zod on startup. You get a clear error if config is missing, not a cryptic runtime failure.',
   },
   {
-    icon: <FileIcon />,
+    icon: <FileIcon width={19} height={19} />,
     title: 'App Router native',
     desc: 'Designed for Server Actions, RSCs, and Route Handlers. No client-side adapters or context providers needed.',
   },
   {
-    icon: <ClockIcon />,
+    icon: <ClockIcon width={19} height={19} />,
     title: 'Fast by default',
     desc: 'Lightweight with no unnecessary dependencies. Requests go straight to the HiVelari API with no client-side round trips.',
   },
   {
-    icon: <CubeIcon />,
+    icon: <CubeIcon width={19} height={19} />,
     title: 'Modular domains',
     desc: (
       <>
-        Each service is a separate domain (<code>auth</code>,{" "}
+        Each service is a separate domain (<code>auth</code>,{' '}
         <code>commerce</code>). More domains ship as the API grows — one client,
         always.
       </>

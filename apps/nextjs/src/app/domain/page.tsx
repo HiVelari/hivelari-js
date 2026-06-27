@@ -1,28 +1,36 @@
-import type { Metadata } from "next";
-import { LockIcon } from "@/app/_icons/LockIcon";
-import { CartIcon } from "@/app/_icons/CartIcon";
-import { InfoIcon } from "@/app/_icons/InfoIcon";
+import type { Metadata } from 'next';
+import LockIcon from '@/app/_icons/lock.svg';
+import CartIcon from '@/app/_icons/cart.svg';
+import InfoIcon from '@/app/_icons/info.svg';
 
 export const metadata: Metadata = {
-  title: "SDK Domains — HiVelari SDK",
+  title: 'SDK Domains — HiVelari SDK',
 };
 
 const DOMAINS = [
   {
-    icon: <LockIcon size={20} />,
-    title: "Authentication",
-    href: "/domain/auth",
-    status: "coming-soon",
-    desc: "Login, register, OAuth flows, session management, profile updates, and password recovery.",
-    methods: ["auth.login()", "auth.register()", "auth.socialRedirectUrl()", "auth.updateProfile()", "auth.logout()"],
+    icon: <LockIcon width={20} height={20} />,
+    title: 'Authentication',
+    href: '/domain/auth',
+    desc: 'Login, register, OAuth flows, session management, profile updates, and password recovery.',
+    methods: [
+      'auth.login()',
+      'auth.register()',
+      'auth.socialRedirectUrl()',
+      'auth.updateProfile()',
+      'auth.logout()',
+    ],
   },
   {
-    icon: <CartIcon size={20} />,
-    title: "Commerce",
-    href: "/domain/commerce",
-    status: "coming-soon",
-    desc: "Product listings, digital & physical items, purchasing flows, and file delivery.",
-    methods: ["commerce.listProducts()", "commerce.getProduct()", "commerce.purchaseProduct()"],
+    icon: <CartIcon width={20} height={20} />,
+    title: 'Commerce',
+    href: '/domain/commerce',
+    desc: 'Product listings, digital & physical items, purchasing flows, and file delivery.',
+    methods: [
+      'commerce.listProducts()',
+      'commerce.getProduct()',
+      'commerce.purchaseProduct()',
+    ],
   },
 ];
 
@@ -38,14 +46,15 @@ export default function DomainPage() {
             All services, one client.
           </h1>
           <p className="max-w-[480px] text-[16px] leading-[1.7] text-ink-2">
-            Each domain maps to a service on the HiVelari API. Initialise
-            a single <code className="inline-code">Velari</code> client and access all of them.
+            Each domain maps to a service on the HiVelari API. Initialise a
+            single <code className="inline-code">Velari</code> client and access
+            all of them.
           </p>
         </div>
         <span className="pill pill-amber">Coming soon</span>
       </div>
 
-      <div className="mb-9 grid grid-cols-2 gap-3.5 overflow-x-auto max-[768px]:grid-cols-1">
+      <div className="mb-9 grid grid-cols-2 gap-3.5 max-[768px]:grid-cols-1">
         {DOMAINS.map((domain, i) => (
           <div
             key={domain.title}
@@ -60,7 +69,9 @@ export default function DomainPage() {
               <h3 className="mb-1.5 text-[17px] font-bold tracking-[-0.03em]">
                 {domain.title}
               </h3>
-              <p className="text-[13px] leading-[1.65] text-ink-2">{domain.desc}</p>
+              <p className="text-[13px] leading-[1.65] text-ink-2">
+                {domain.desc}
+              </p>
             </div>
             <div className="flex flex-1 flex-col gap-[5px]">
               {domain.methods.map((m) => (
@@ -82,18 +93,23 @@ export default function DomainPage() {
 
       <div className="flex gap-4 rounded-md border border-line bg-surface p-6 max-[768px]:flex-col max-[768px]:gap-3">
         <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-sm border border-line-accent bg-accent-dim text-accent-light">
-          <InfoIcon />
+          <InfoIcon width={18} height={18} />
         </div>
         <div>
           <p className="mb-1.5 text-[14px] font-semibold tracking-[-0.02em]">
             Interactive demos are in progress
           </p>
           <p className="text-[13px] leading-[1.65] text-ink-2 [&_a]:text-accent-light [&_a]:underline [&_a]:underline-offset-[3px]">
-            Each domain will have a live, interactive playground where you can call SDK methods
-            directly and see the responses. Check back soon — or browse the{" "}
-            <a href="https://www.npmjs.com/package/@hivelari/sdk" target="_blank" rel="noreferrer">
+            Each domain will have a live, interactive playground where you can
+            call SDK methods directly and see the responses. Check back soon —
+            or browse the{' '}
+            <a
+              href="https://www.npmjs.com/package/@hivelari/sdk"
+              target="_blank"
+              rel="noreferrer"
+            >
               npm package
-            </a>{" "}
+            </a>{' '}
             in the meantime.
           </p>
         </div>

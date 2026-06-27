@@ -3,7 +3,12 @@
 import type { AuthUserPayload } from '@hivelari/sdk';
 import { DevBadge } from '@/providers/AppProviders';
 import { useState } from 'react';
-import { initiateEmailVerificationAction, initiatePasswordRecoveryAction, logoutAction, updateProfileAction } from '../_actions';
+import {
+  initiateEmailVerificationAction,
+  initiatePasswordRecoveryAction,
+  logoutAction,
+  updateProfileAction,
+} from '../_actions';
 
 interface ProfilePanelProps {
   user: AuthUserPayload;
@@ -11,17 +16,22 @@ interface ProfilePanelProps {
   onLog: (label: string, ok: boolean, detail: string) => void;
 }
 
-export default function ProfilePanel({ user, onUpdate, onLog }: ProfilePanelProps) {
-  const [editing, setEditing]     = useState(false);
+export default function ProfilePanel({
+  user,
+  onUpdate,
+  onLog,
+}: ProfilePanelProps) {
+  const [editing, setEditing] = useState(false);
   const [firstName, setFirstName] = useState(user.first_name ?? '');
-  const [lastName, setLastName]   = useState(user.last_name ?? '');
-  const [username, setUsername]   = useState(user.username ?? '');
-  const [phone, setPhone]         = useState(user.phone ?? '');
-  const [busy, setBusy]           = useState(false);
+  const [lastName, setLastName] = useState(user.last_name ?? '');
+  const [username, setUsername] = useState(user.username ?? '');
+  const [phone, setPhone] = useState(user.phone ?? '');
+  const [busy, setBusy] = useState(false);
 
-  const displayName = user.first_name && user.last_name
-    ? `${user.first_name} ${user.last_name}`
-    : user.email;
+  const displayName =
+    user.first_name && user.last_name
+      ? `${user.first_name} ${user.last_name}`
+      : user.email;
 
   const initials = (user.first_name?.[0] ?? user.email[0]).toUpperCase();
 
@@ -29,7 +39,12 @@ export default function ProfilePanel({ user, onUpdate, onLog }: ProfilePanelProp
     e.preventDefault();
     setBusy(true);
     try {
-      const res = await updateProfileAction({ first_name: firstName, last_name: lastName, username, phone });
+      const res = await updateProfileAction({
+        first_name: firstName,
+        last_name: lastName,
+        username,
+        phone,
+      });
       if (res.success && 'user' in res && res.user) {
         onUpdate(res.user);
         onLog('auth.updateProfile', true, `Updated → ${firstName} ${lastName}`);
@@ -38,7 +53,11 @@ export default function ProfilePanel({ user, onUpdate, onLog }: ProfilePanelProp
         throw new Error('error' in res ? res.error : 'Update failed');
       }
     } catch (err) {
-      onLog('auth.updateProfile', false, err instanceof Error ? err.message : String(err));
+      onLog(
+        'auth.updateProfile',
+        false,
+        err instanceof Error ? err.message : String(err),
+      );
     } finally {
       setBusy(false);
     }
@@ -49,27 +68,56 @@ export default function ProfilePanel({ user, onUpdate, onLog }: ProfilePanelProp
       await initiateEmailVerificationAction();
       onLog('auth.initiateEmailVerification', true, 'Verification email sent');
     } catch (err) {
-      onLog('auth.initiateEmailVerification', false, err instanceof Error ? err.message : String(err));
+      onLog(
+        'auth.initiateEmailVerification',
+        false,
+        err instanceof Error ? err.message : String(err),
+      );
     }
   }
 
   async function handlePasswordReset() {
     try {
       await initiatePasswordRecoveryAction(user.email);
-      onLog('auth.initiatePasswordRecovery', true, `Recovery email sent to ${user.email}`);
+      onLog(
+        'auth.initiatePasswordRecovery',
+        true,
+        `Recovery email sent to ${user.email}`,
+      );
     } catch (err) {
-      onLog('auth.initiatePasswordRecovery', false, err instanceof Error ? err.message : String(err));
+      onLog(
+        'auth.initiatePasswordRecovery',
+        false,
+        err instanceof Error ? err.message : String(err),
+      );
     }
   }
 
   return (
-    <div className="card card-p" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+    <div
+      className="card card-p"
+      style={{ display: 'flex', flexDirection: 'column', gap: 24 }}
+    >
       {/* Identity */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
         <div className="avatar">{initials}</div>
         <div style={{ flex: 1, overflow: 'hidden' }}>
-          <div style={{ fontWeight: 600, fontSize: 15, letterSpacing: '-0.02em' }}>{displayName}</div>
-          <div className="ink-2" style={{ fontSize: 13, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.email}</div>
+          <div
+            style={{ fontWeight: 600, fontSize: 15, letterSpacing: '-0.02em' }}
+          >
+            {displayName}
+          </div>
+          <div
+            className="ink-2"
+            style={{
+              fontSize: 13,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {user.email}
+          </div>
         </div>
         <span className="pill pill-ok">Active</span>
       </div>
@@ -78,30 +126,62 @@ export default function ProfilePanel({ user, onUpdate, onLog }: ProfilePanelProp
 
       {/* Profile */}
       {editing ? (
-        <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+        <form
+          onSubmit={handleSave}
+          style={{ display: 'flex', flexDirection: 'column', gap: 14 }}
+        >
+          <div
+            style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}
+          >
             <div className="field">
               <label className="label">First name</label>
-              <input className="input" value={firstName} onChange={e => setFirstName(e.target.value)} />
+              <input
+                className="input"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
             </div>
             <div className="field">
               <label className="label">Last name</label>
-              <input className="input" value={lastName} onChange={e => setLastName(e.target.value)} />
+              <input
+                className="input"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
             </div>
           </div>
           <div className="field">
             <label className="label">Username</label>
-            <input className="input" value={username} onChange={e => setUsername(e.target.value)} />
+            <input
+              className="input"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
           <div className="field">
             <label className="label">Phone</label>
-            <input className="input" type="tel" value={phone} onChange={e => setPhone(e.target.value)} />
+            <input
+              className="input"
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
           </div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <button type="submit" className="btn btn-primary btn-sm" disabled={busy}>
+            <button
+              type="submit"
+              className="btn btn-primary btn-sm"
+              disabled={busy}
+            >
               {busy ? 'Saving…' : 'Save changes'}
             </button>
-            <button type="button" className="btn btn-ghost btn-sm" onClick={() => setEditing(false)}>Cancel</button>
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              onClick={() => setEditing(false)}
+            >
+              Cancel
+            </button>
             <DevBadge method="client.auth.updateProfile()" />
           </div>
         </form>
@@ -132,25 +212,46 @@ export default function ProfilePanel({ user, onUpdate, onLog }: ProfilePanelProp
 
       {/* Quick actions */}
       <div>
-        <p style={{ fontSize: 11, fontWeight: 600, color: 'var(--ink-3)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+        <p
+          style={{
+            fontSize: 11,
+            fontWeight: 600,
+            color: 'var(--ink-3)',
+            marginBottom: 12,
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+          }}
+        >
           Account
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <button type="button" className="btn btn-outline btn-sm" style={{ flex: 1 }} onClick={handleVerifyEmail}>
+            <button
+              type="button"
+              className="btn btn-outline btn-sm"
+              style={{ flex: 1 }}
+              onClick={handleVerifyEmail}
+            >
               Verify email
             </button>
             <DevBadge method="client.auth.initiateEmailVerification()" />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <button type="button" className="btn btn-outline btn-sm" style={{ flex: 1 }} onClick={handlePasswordReset}>
+            <button
+              type="button"
+              className="btn btn-outline btn-sm"
+              style={{ flex: 1 }}
+              onClick={handlePasswordReset}
+            >
               Reset password
             </button>
             <DevBadge method="client.auth.initiatePasswordRecovery()" />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <form action={logoutAction} style={{ flex: 1 }}>
-              <button type="submit" className="btn btn-danger btn-sm btn-full">Sign out</button>
+              <button type="submit" className="btn btn-danger btn-sm btn-full">
+                Sign out
+              </button>
             </form>
             <DevBadge method="client.auth.logout()" />
           </div>

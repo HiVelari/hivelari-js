@@ -5,10 +5,19 @@ import { useState } from 'react';
 import GuestPanel from './GuestPanel';
 import ProfilePanel from './ProfilePanel';
 
-interface LogEntry { ts: string; label: string; ok: boolean; detail: string; }
+interface LogEntry {
+  ts: string;
+  label: string;
+  ok: boolean;
+  detail: string;
+}
 
 function ts() {
-  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  return new Date().toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
 }
 
 const SDK_METHODS = [
@@ -21,12 +30,14 @@ const SDK_METHODS = [
   'client.auth.logout()',
 ];
 
-export default function AuthConsole({ initialUser }: { initialUser?: AuthUserPayload }) {
+export default function AuthConsole({
+  initialUser,
+}: { initialUser?: AuthUserPayload }) {
   const [user, setUser] = useState<AuthUserPayload | undefined>(initialUser);
-  const [log, setLog]   = useState<LogEntry[]>([]);
+  const [log, setLog] = useState<LogEntry[]>([]);
 
   function addLog(label: string, ok: boolean, detail: string) {
-    setLog(prev => [...prev, { ts: ts(), label, ok, detail }]);
+    setLog((prev) => [...prev, { ts: ts(), label, ok, detail }]);
   }
 
   return (
@@ -44,17 +55,28 @@ export default function AuthConsole({ initialUser }: { initialUser?: AuthUserPay
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         {/* Action log */}
         <div className="card" style={{ overflow: 'hidden' }}>
-          <div style={{
-            padding: '10px 16px',
-            borderBottom: '1px solid var(--line)',
-            background: 'var(--surface)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-          }}>
-            <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink-2)' }}>Action Log</span>
+          <div
+            style={{
+              padding: '10px 16px',
+              borderBottom: '1px solid var(--line)',
+              background: 'var(--surface)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+            }}
+          >
+            <span
+              style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink-2)' }}
+            >
+              Action Log
+            </span>
             {log.length > 0 && (
-              <span className="pill pill-neutral" style={{ marginLeft: 'auto' }}>{log.length}</span>
+              <span
+                className="pill pill-neutral"
+                style={{ marginLeft: 'auto' }}
+              >
+                {log.length}
+              </span>
             )}
           </div>
           <div className="terminal-body console-log" style={{ minHeight: 100 }}>
@@ -77,11 +99,20 @@ export default function AuthConsole({ initialUser }: { initialUser?: AuthUserPay
 
         {/* SDK reference */}
         <div className="card card-p2">
-          <p style={{ fontSize: 11, fontWeight: 600, color: 'var(--ink-3)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+          <p
+            style={{
+              fontSize: 11,
+              fontWeight: 600,
+              color: 'var(--ink-3)',
+              marginBottom: 10,
+              textTransform: 'uppercase',
+              letterSpacing: '0.06em',
+            }}
+          >
             SDK Methods
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            {SDK_METHODS.map(m => (
+            {SDK_METHODS.map((m) => (
               <code
                 key={m}
                 style={{

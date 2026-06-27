@@ -10,27 +10,27 @@ export default function StatsPanel({
   publicKey,
 }: StatsPanelProps) {
   const isSandbox =
-    baseUrl.includes("localhost") ||
-    baseUrl.includes("127.0.0.1") ||
-    baseUrl.includes("3001");
+    baseUrl.includes('localhost') ||
+    baseUrl.includes('127.0.0.1') ||
+    baseUrl.includes('3001');
 
   const rows = [
     {
-      key: "Environment",
-      value: isSandbox ? "Local Sandbox" : "Production",
-      accent: isSandbox ? "var(--ok)" : "var(--warn)",
-      dot: isSandbox ? "dot-ok" : "dot-dim",
+      key: 'Environment',
+      value: isSandbox ? 'Local Sandbox' : 'Production',
+      accent: isSandbox ? 'var(--ok)' : 'var(--warn)',
+      dot: isSandbox ? 'dot-ok' : 'dot-dim',
     },
     {
-      key: "Space ID",
-      value: spaceId || "—",
+      key: 'Space ID',
+      value: spaceId || '—',
       accent: undefined,
       dot: undefined,
     },
-    { key: "API Host", value: baseUrl, accent: undefined, dot: undefined },
+    { key: 'API Host', value: baseUrl, accent: undefined, dot: undefined },
     {
-      key: "Public Key",
-      value: publicKey ? `${publicKey.slice(0, 14)}…` : "—",
+      key: 'Public Key',
+      value: publicKey ? `${publicKey.slice(0, 14)}…` : '—',
       accent: undefined,
       dot: undefined,
     },
@@ -48,8 +48,8 @@ export default function StatsPanel({
                 row.accent
                   ? {
                       color: row.accent,
-                      display: "flex",
-                      alignItems: "center",
+                      display: 'flex',
+                      alignItems: 'center',
                       gap: 6,
                     }
                   : undefined

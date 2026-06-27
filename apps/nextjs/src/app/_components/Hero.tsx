@@ -1,5 +1,5 @@
-import Link from "next/link";
-import InstallCommand from "./InstallCommand";
+import Link from 'next/link';
+import InstallCommand from './InstallCommand';
 
 function CodeBlock() {
   return (
@@ -18,9 +18,9 @@ function CodeBlock() {
       <div className="relative bg-[#080810] px-[26px] pt-6 pb-7 font-mono text-[13.5px] leading-[2.05]">
         <span className="t-line">
           <span className="t-kw">import </span>
-          <span className="t-dim">{"{ "}</span>
+          <span className="t-dim">{'{ '}</span>
           <span className="t-type">Velari</span>
-          <span className="t-dim">{" }"}</span>
+          <span className="t-dim">{' }'}</span>
           <span className="t-kw"> from </span>
           <span className="t-str">'@hivelari/sdk'</span>
         </span>
@@ -30,73 +30,79 @@ function CodeBlock() {
         </span>
         <span className="t-gap" />
         <span className="t-line">
-          <span className="t-cm">{"// Credentials are read from env vars:"}</span>
+          <span className="t-cm">
+            {'// Credentials are read from env vars:'}
+          </span>
         </span>
         <span className="t-line">
-          <span className="t-cm">{"// VELARI_SPACE_ID · VELARI_PUBLIC_KEY"}</span>
+          <span className="t-cm">
+            {'// VELARI_SPACE_ID · VELARI_PUBLIC_KEY'}
+          </span>
         </span>
         <span className="t-line">
-          <span className="t-cm">{"// VELARI_SECRET_KEY · VELARI_BASE_URL"}</span>
+          <span className="t-cm">
+            {'// VELARI_SECRET_KEY · VELARI_BASE_URL'}
+          </span>
         </span>
         <span className="t-gap" />
         <span className="t-line">
           <span className="t-kw">export async function </span>
           <span className="t-fn">getClient</span>
-          <span className="t-dim">{"() {"}</span>
+          <span className="t-dim">{'() {'}</span>
         </span>
         <span className="t-line">
           <span className="t-in" />
-          <span className="t-cm">{"// Attach session from cookies"}</span>
+          <span className="t-cm">{'// Attach session from cookies'}</span>
         </span>
         <span className="t-line">
           <span className="t-in" />
           <span className="t-kw">const </span>
-          <span className="t-dim">{"{ "}</span>
+          <span className="t-dim">{'{ '}</span>
           <span className="t-const">token</span>
-          <span className="t-dim">{", "}</span>
+          <span className="t-dim">{', '}</span>
           <span className="t-const">user</span>
-          <span className="t-dim">{" } = "}</span>
+          <span className="t-dim">{' } = '}</span>
           <span className="t-kw">await </span>
           <span className="t-fn">getAuthSession</span>
-          <span className="t-dim">{"()"}</span>
+          <span className="t-dim">{'()'}</span>
         </span>
         <span className="t-line">
           <span className="t-in" />
           <span className="t-kw">return new </span>
           <span className="t-fn">Velari</span>
-          <span className="t-dim">{"({ "}</span>
+          <span className="t-dim">{'({ '}</span>
           <span className="t-const">token</span>
-          <span className="t-dim">{", "}</span>
+          <span className="t-dim">{', '}</span>
           <span className="t-const">user</span>
-          <span className="t-dim">{" })"}</span>
+          <span className="t-dim">{' })'}</span>
         </span>
         <span className="t-line">
-          <span className="t-dim">{"}"}</span>
+          <span className="t-dim">{'}'}</span>
         </span>
         <span className="t-gap" />
         <span className="t-line">
-          <span className="t-cm">{"// In a Server Action:"}</span>
+          <span className="t-cm">{'// In a Server Action:'}</span>
         </span>
         <span className="t-line">
           <span className="t-kw">const </span>
           <span className="t-const">client</span>
-          <span className="t-dim">{" = "}</span>
+          <span className="t-dim">{' = '}</span>
           <span className="t-kw">await </span>
           <span className="t-fn">getClient</span>
-          <span className="t-dim">{"()"}</span>
+          <span className="t-dim">{'()'}</span>
         </span>
         <span className="t-line">
           <span className="t-kw">await </span>
           <span className="t-const">client</span>
-          <span className="t-dim">{"."}</span>
+          <span className="t-dim">{'.'}</span>
           <span className="t-fn">auth</span>
-          <span className="t-dim">{"."}</span>
+          <span className="t-dim">{'.'}</span>
           <span className="t-fn">login</span>
-          <span className="t-dim">{"({ "}</span>
+          <span className="t-dim">{'({ '}</span>
           <span className="t-const">email</span>
-          <span className="t-dim">{", "}</span>
+          <span className="t-dim">{', '}</span>
           <span className="t-const">password</span>
-          <span className="t-dim">{" })"}</span>
+          <span className="t-dim">{' })'}</span>
         </span>
       </div>
     </div>
@@ -121,8 +127,8 @@ export default function Hero() {
             </h1>
 
             <p className="mb-11 max-w-[430px] text-[18px] font-normal leading-[1.75] text-ink-2 fade-up delay-2 max-[520px]:mb-8">
-              Authentication, commerce, and payments — all server-side,
-              fully type-safe. One SDK built for the Next.js App Router.
+              Authentication, commerce, and payments — all server-side, fully
+              type-safe. One SDK built for the Next.js App Router.
             </p>
 
             <div className="flex items-center gap-3 fade-up delay-2 max-[520px]:flex-col max-[520px]:items-stretch">

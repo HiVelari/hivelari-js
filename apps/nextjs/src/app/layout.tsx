@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import ScrollReveal from "./_components/ScrollReveal";
+import type { Metadata } from 'next';
+import './globals.css';
+import ScrollReveal from './_components/ScrollReveal';
 
 export const metadata: Metadata = {
-  title: "HiVelari SDK — The developer SDK for HiVelari",
+  title: 'HiVelari SDK — The developer SDK for HiVelari',
   description:
-    "Authentication, commerce, and payments — all server-side, fully typed. Build on HiVelari faster.",
+    'Authentication, commerce, and payments — all server-side, fully typed. Build on HiVelari faster.',
   icons: {
-    icon: "/favicon.ico",
-    apple: "/logo.png",
+    icon: '/favicon.ico',
+    apple: '/logo.png',
   },
 };
 

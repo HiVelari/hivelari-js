@@ -5,10 +5,13 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: { default: 'HiVelari SDK Demo', template: '%s | HiVelari SDK' },
-  description: 'Next.js example app for the @hivelari/sdk — authentication, commerce, and more.',
+  description:
+    'Next.js example app for the @hivelari/sdk — authentication, commerce, and more.',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       {/*
@@ -25,14 +28,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body suppressHydrationWarning>
         <AppProviders>
           <SiteHeader />
-          <main style={{ flex: 1 }}>
-            {children}
-          </main>
+          <main style={{ flex: 1 }}>{children}</main>
           <footer className="site-footer">
             <span>
               Powered by{' '}
-              <a href="https://github.com/hivelari" target="_blank" rel="noreferrer">@hivelari/sdk</a>
-              {' '}· Next.js example
+              <a
+                href="https://github.com/hivelari"
+                target="_blank"
+                rel="noreferrer"
+              >
+                @hivelari/sdk
+              </a>{' '}
+              · Next.js example
             </span>
             <span>HiVelari &copy; {new Date().getFullYear()}</span>
           </footer>

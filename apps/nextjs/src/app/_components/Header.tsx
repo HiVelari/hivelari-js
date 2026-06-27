@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { GitHubIcon } from "@/app/_icons/GitHubIcon";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import GitHubIcon from '@/app/_icons/github.svg';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 80);
-    window.addEventListener("scroll", handler, { passive: true });
+    window.addEventListener('scroll', handler, { passive: true });
     handler();
-    return () => window.removeEventListener("scroll", handler);
+    return () => window.removeEventListener('scroll', handler);
   }, []);
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-[100] flex justify-center px-12 pt-9 max-[900px]:px-3.5 max-[900px]:pt-3.5">
       <div
-        className={`header-pill flex items-center ${scrolled ? "header-pill--float" : ""}`}
+        className={`header-pill flex items-center ${scrolled ? 'header-pill--float' : ''}`}
       >
         <Link href="/" className="mr-auto flex shrink-0 items-center gap-2.5">
           <Image
@@ -44,7 +44,7 @@ export default function Header() {
             rel="noreferrer"
             className="btn btn-ghost btn-sm max-[600px]:hidden"
           >
-            <GitHubIcon />
+            <GitHubIcon width={16} height={16} />
             GitHub
           </a>
           <Link href="/domain" className="btn btn-primary btn-sm">

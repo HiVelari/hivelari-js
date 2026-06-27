@@ -1,24 +1,28 @@
-import { ExternalLinkIcon } from "@/app/_icons/ExternalLinkIcon";
+import ExternalLinkIcon from '@/app/_icons/external-link.svg';
 
 const LINKS = {
   SDK: [
-    { label: "npm package", href: "https://www.npmjs.com/package/@hivelari/sdk", external: true },
-    { label: "Changelog", href: "#", external: false },
-    { label: "Releases", href: "https://github.com/hivelari", external: true },
+    {
+      label: 'npm package',
+      href: 'https://www.npmjs.com/package/@hivelari/sdk',
+      external: true,
+    },
+    { label: 'Changelog', href: '#', external: false },
+    { label: 'Releases', href: 'https://github.com/hivelari', external: true },
   ],
   Domains: [
-    { label: "Authentication", href: "/domain/auth", external: false },
-    { label: "Commerce", href: "/domain/commerce", external: false },
-    { label: "More coming soon", href: "#", external: false },
+    { label: 'Authentication', href: '/domain/auth', external: false },
+    { label: 'Commerce', href: '/domain/commerce', external: false },
+    { label: 'More coming soon', href: '#', external: false },
   ],
   Connect: [
-    { label: "GitHub", href: "https://github.com/hivelari", external: true },
-    { label: "HiVelari", href: "https://hivelari.com", external: true },
+    { label: 'GitHub', href: 'https://github.com/hivelari', external: true },
+    { label: 'HiVelari', href: 'https://hivelari.com', external: true },
   ],
 };
 
 const LINK_CLASS =
-  "inline-flex items-center gap-[3px] text-[13px] text-ink-3 no-underline transition-colors hover:text-ink-2";
+  'inline-flex items-center gap-[3px] text-[13px] text-ink-3 no-underline transition-colors hover:text-ink-2';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -26,7 +30,6 @@ export default function Footer() {
   return (
     <footer className="mt-auto border-t border-line pt-24 pb-12 max-[768px]:pt-16 max-[768px]:pb-10">
       <div className="container">
-        {/* Top: brand + columns */}
         <div className="mb-9 grid grid-cols-[300px_1fr] gap-20 border-b border-line pb-16 max-[768px]:mb-7 max-[768px]:grid-cols-1 max-[768px]:gap-10 max-[768px]:pb-10">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
@@ -57,12 +60,16 @@ export default function Footer() {
                       <a
                         href={item.href}
                         className={LINK_CLASS}
-                        target={item.external ? "_blank" : undefined}
-                        rel={item.external ? "noreferrer" : undefined}
+                        target={item.external ? '_blank' : undefined}
+                        rel={item.external ? 'noreferrer' : undefined}
                       >
                         {item.label}
                         {item.external && (
-                          <ExternalLinkIcon className="ml-1 inline opacity-50" />
+                          <ExternalLinkIcon
+                            width={10}
+                            height={10}
+                            className="ml-1 inline opacity-50"
+                          />
                         )}
                       </a>
                     </li>
@@ -73,14 +80,19 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
         <div className="flex flex-wrap items-center justify-between gap-4 max-[768px]:flex-col max-[768px]:items-start max-[768px]:gap-3.5">
           <span className="text-[13px] text-ink-3">
             &copy; {year} HiVelari. All rights reserved.
           </span>
           <div className="flex items-center gap-5">
-            <a href="#" className={LINK_CLASS}>Privacy</a>
-            <a href="#" className={LINK_CLASS}>Terms</a>
+            {/* biome-ignore lint/a11y/useValidAnchor: placeholder links — real URLs TBD */}
+            <a href="#" className={LINK_CLASS}>
+              Privacy
+            </a>
+            {/* biome-ignore lint/a11y/useValidAnchor: placeholder links — real URLs TBD */}
+            <a href="#" className={LINK_CLASS}>
+              Terms
+            </a>
             <a
               href="https://www.npmjs.com/package/@hivelari/sdk"
               target="_blank"

@@ -1,7 +1,12 @@
 'use server';
 
 import { getVelariClient } from '@/lib/velari';
-import type { AuthResponsePayload, LoginParams, RegisterParams, UpdateProfileParams } from '@hivelari/sdk';
+import type {
+  AuthResponsePayload,
+  LoginParams,
+  RegisterParams,
+  UpdateProfileParams,
+} from '@hivelari/sdk';
 import { revalidatePath } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -44,7 +49,13 @@ export async function loginAction(params: LoginParams) {
 
     return { success: false, error: 'Authentication failed.' };
   } catch (error: unknown) {
-    return { success: false, error: error instanceof Error ? error.message : 'An error occurred during login.' };
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : 'An error occurred during login.',
+    };
   }
 }
 
@@ -60,7 +71,13 @@ export async function registerAction(params: RegisterParams) {
 
     return { success: false, error: 'Registration failed.' };
   } catch (error: unknown) {
-    return { success: false, error: error instanceof Error ? error.message : 'An error occurred during registration.' };
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : 'An error occurred during registration.',
+    };
   }
 }
 
@@ -101,7 +118,13 @@ export async function updateProfileAction(params: UpdateProfileParams) {
 
     return { success: false, error: 'Failed to update profile.' };
   } catch (error: unknown) {
-    return { success: false, error: error instanceof Error ? error.message : 'An error occurred during profile update.' };
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : 'An error occurred during profile update.',
+    };
   }
 }
 
@@ -111,7 +134,13 @@ export async function initiateEmailVerificationAction() {
     const response = await client.auth.initiateEmailVerification();
     return { success: response.success };
   } catch (error: unknown) {
-    return { success: false, error: error instanceof Error ? error.message : 'An error occurred initiating email verification.' };
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : 'An error occurred initiating email verification.',
+    };
   }
 }
 
@@ -125,7 +154,13 @@ export async function initiatePasswordRecoveryAction(email: string) {
     });
     return { success: response.success };
   } catch (error: unknown) {
-    return { success: false, error: error instanceof Error ? error.message : 'An error occurred initiating password recovery.' };
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : 'An error occurred initiating password recovery.',
+    };
   }
 }
 
@@ -133,10 +168,19 @@ export async function socialRedirectUrlAction(provider: string) {
   try {
     const client = await getVelariClient();
     const baseUrl = await getAppBaseUrl();
-    const response = await client.auth.socialRedirectUrl(provider, `${baseUrl}/auth/callback`);
+    const response = await client.auth.socialRedirectUrl(
+      provider,
+      `${baseUrl}/auth/callback`,
+    );
     return { success: true, redirectUrl: response.data.redirect_url };
   } catch (error: unknown) {
-    return { success: false, error: error instanceof Error ? error.message : 'An error occurred retrieving social redirect URL.' };
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : 'An error occurred retrieving social redirect URL.',
+    };
   }
 }
 
@@ -152,6 +196,12 @@ export async function authenticateUsingCodeAction(code: string) {
 
     return { success: false, error: 'Authentication failed.' };
   } catch (error: unknown) {
-    return { success: false, error: error instanceof Error ? error.message : 'An error occurred during code authentication.' };
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : 'An error occurred during code authentication.',
+    };
   }
 }

@@ -1,8 +1,8 @@
 const STATS = [
-  { value: "100%", label: "Type-safe surface" },
-  { value: "0 KB", label: "Shipped to the client" },
-  { value: "Zod", label: "Validated config" },
-  { value: "ESM", label: "Pure, tree-shakeable" },
+  { value: '100%', label: 'Type-safe surface' },
+  { value: '0 KB', label: 'Shipped to the client' },
+  { value: 'Zod', label: 'Validated config' },
+  { value: 'ESM', label: 'Pure, tree-shakeable' },
 ];
 
 export default function Stats() {

@@ -1,10 +1,10 @@
-import { LockIcon } from "@/app/_icons/LockIcon";
-import { CartIcon } from "@/app/_icons/CartIcon";
+import LockIcon from '@/app/_icons/lock.svg';
+import CartIcon from '@/app/_icons/cart.svg';
 
 const SERVICES = [
   {
     id: 'auth',
-    icon: <LockIcon size={22} />,
+    icon: <LockIcon width={22} height={22} />,
     title: 'Authentication',
     desc: 'Complete identity management for your users. Email/password, OAuth providers, session handling, and profile management — all in a handful of typed calls.',
     methods: [
@@ -20,7 +20,7 @@ const SERVICES = [
   },
   {
     id: 'commerce',
-    icon: <CartIcon size={22} />,
+    icon: <CartIcon width={22} height={22} />,
     title: 'Commerce',
     desc: 'Physical and digital product listings, purchasing flows, file delivery, and inventory — all rendered server-side from your Next.js components.',
     methods: [
@@ -43,8 +43,8 @@ export default function Services() {
             Every domain, one client.
           </h2>
           <p className="max-w-[520px] text-[17px] font-normal leading-[1.7] text-ink-2">
-            Each service maps directly to a HiVelari API domain.
-            The client is shared — initialise once, use everywhere.
+            Each service maps directly to a HiVelari API domain. The client is
+            shared — initialise once, use everywhere.
           </p>
         </div>
 

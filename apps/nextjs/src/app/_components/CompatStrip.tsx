@@ -17,7 +17,7 @@ export default function CompatStrip() {
       <div className="marquee-track flex w-max animate-marquee items-center gap-9 whitespace-nowrap">
         {doubled.map((item, i) => (
           <span
-            key={i}
+            key={`${i}-${item}`}
             className="flex items-center gap-[9px] text-[13px] font-medium tracking-[-0.01em] text-ink-3"
           >
             {i > 0 && <span className="size-[3px] rounded-full bg-ink-3" />}

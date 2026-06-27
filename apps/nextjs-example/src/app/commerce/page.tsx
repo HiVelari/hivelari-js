@@ -39,30 +39,58 @@ export default async function CommerceCatalogPage({ searchParams }: PageProps) {
     <div className="wrap page">
       <div style={{ marginBottom: 40 }}>
         <p className="section-label">Commerce</p>
-        <h1 className="section-title" style={{ fontSize: 36 }}>Product catalog</h1>
+        <h1 className="section-title" style={{ fontSize: 36 }}>
+          Product catalog
+        </h1>
         <p className="section-sub">
           Products fetched server-side via{' '}
-          <code className="mono" style={{ fontSize: 13, color: 'var(--accent-text)' }}>client.commerce.listProducts()</code>
+          <code
+            className="mono"
+            style={{ fontSize: 13, color: 'var(--accent-text)' }}
+          >
+            client.commerce.listProducts()
+          </code>
         </p>
       </div>
 
-      <StatsPanel spaceId={client.spaceId} baseUrl={client.baseUrl} publicKey={client.pubKey} />
+      <StatsPanel
+        spaceId={client.spaceId}
+        baseUrl={client.baseUrl}
+        publicKey={client.pubKey}
+      />
       <SearchForm initialSearch={search} />
 
       {errorMessage ? (
         <div className="card card-p" style={{ maxWidth: 640 }}>
-          <p style={{ fontWeight: 600, color: 'var(--fail)', marginBottom: 8, fontSize: 15 }}>Sandbox offline</p>
-          <p className="ink-2" style={{ fontSize: 14, marginBottom: 20, lineHeight: 1.65 }}>
-            Could not reach <code className="mono" style={{ fontSize: 12 }}>{client.baseUrl}</code>.
-            Start the local sandbox to see products.
-          </p>
-          <div
-            className="terminal"
-            style={{ borderRadius: 6 }}
+          <p
+            style={{
+              fontWeight: 600,
+              color: 'var(--fail)',
+              marginBottom: 8,
+              fontSize: 15,
+            }}
           >
-            <div className="terminal-body" style={{ padding: '14px 18px', minHeight: 'auto' }}>
+            Sandbox offline
+          </p>
+          <p
+            className="ink-2"
+            style={{ fontSize: 14, marginBottom: 20, lineHeight: 1.65 }}
+          >
+            Could not reach{' '}
+            <code className="mono" style={{ fontSize: 12 }}>
+              {client.baseUrl}
+            </code>
+            . Start the local sandbox to see products.
+          </p>
+          <div className="terminal" style={{ borderRadius: 6 }}>
+            <div
+              className="terminal-body"
+              style={{ padding: '14px 18px', minHeight: 'auto' }}
+            >
               <span className="t-prompt">❯ </span>
-              <span className="t-cmd">pnpm --filter @hivelari/sandbox run serve</span>
+              <span className="t-cmd">
+                pnpm --filter @hivelari/sandbox run serve
+              </span>
             </div>
           </div>
         </div>

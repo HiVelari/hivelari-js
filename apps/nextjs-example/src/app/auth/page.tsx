@@ -15,10 +15,17 @@ export default async function AuthDomainPage() {
     <div className="wrap page">
       <div style={{ marginBottom: 40 }}>
         <p className="section-label">Authentication</p>
-        <h1 className="section-title" style={{ fontSize: 36 }}>Identity &amp; access</h1>
+        <h1 className="section-title" style={{ fontSize: 36 }}>
+          Identity &amp; access
+        </h1>
         <p className="section-sub">
           Login, register, update profile, and OAuth flows via{' '}
-          <code className="mono" style={{ fontSize: 13, color: 'var(--accent-text)' }}>client.auth.*</code>
+          <code
+            className="mono"
+            style={{ fontSize: 13, color: 'var(--accent-text)' }}
+          >
+            client.auth.*
+          </code>
         </p>
       </div>
 

@@ -1,4 +1,4 @@
-import DomainSidebar from "./_components/DomainSidebar";
+import DomainSidebar from './_components/DomainSidebar';
 
 export default function DomainLayout({
   children,

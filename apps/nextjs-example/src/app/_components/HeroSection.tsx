@@ -112,14 +112,14 @@ export default function HeroSection() {
             </div>
 
             <h1 className="hero-h1">
-              Ship faster<br />
+              Ship faster
+              <br />
               with <em>HiVelari</em>.
             </h1>
 
             <p className="hero-sub">
-              Authentication, commerce, and payments built for the
-              Next.js App Router. Server-only. Fully typed. Zero client
-              bundle leak.
+              Authentication, commerce, and payments built for the Next.js App
+              Router. Server-only. Fully typed. Zero client bundle leak.
             </p>
 
             <div className="hero-ctas">

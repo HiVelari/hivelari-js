@@ -47,12 +47,20 @@ export default async function CommerceProductPage({ params }: ProductProps) {
   if (errorMsg || !product) {
     return (
       <div className="wrap page">
-        <Link href="/commerce" className="btn btn-ghost btn-sm" style={{ marginBottom: 24, display: 'inline-flex' }}>
+        <Link
+          href="/commerce"
+          className="btn btn-ghost btn-sm"
+          style={{ marginBottom: 24, display: 'inline-flex' }}
+        >
           ← Back to catalog
         </Link>
         <div className="card card-p">
-          <p style={{ fontWeight: 600, color: 'var(--fail)', marginBottom: 6 }}>Failed to load product</p>
-          <p className="ink-2" style={{ fontSize: 14 }}>{errorMsg ?? 'Product not found.'}</p>
+          <p style={{ fontWeight: 600, color: 'var(--fail)', marginBottom: 6 }}>
+            Failed to load product
+          </p>
+          <p className="ink-2" style={{ fontSize: 14 }}>
+            {errorMsg ?? 'Product not found.'}
+          </p>
         </div>
       </div>
     );

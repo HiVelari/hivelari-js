@@ -51,7 +51,10 @@ export const sdkDomains = [
     badge: 'Live',
     description:
       'Browse products with full-text search. Demonstrates listProducts(), getProduct(), pagination, and typed query params.',
-    endpoints: ['GET /api/commerce/v1/products', 'GET /api/commerce/v1/products/:id'],
+    endpoints: [
+      'GET /api/commerce/v1/products',
+      'GET /api/commerce/v1/products/:id',
+    ],
   },
   {
     title: 'Authentication',

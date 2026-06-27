@@ -29,7 +29,9 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('hvl-theme') as Theme | null;
-    const preferred = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    const preferred = window.matchMedia('(prefers-color-scheme: light)').matches
+      ? 'light'
+      : 'dark';
     const initial = saved ?? preferred;
     setTheme(initial);
     setDevMode(localStorage.getItem('hvl-devmode') === 'true');
@@ -49,12 +51,14 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   }, [devMode, mounted]);
 
   return (
-    <AppContext.Provider value={{
-      theme,
-      devMode,
-      toggleTheme: () => setTheme(t => t === 'dark' ? 'light' : 'dark'),
-      toggleDevMode: () => setDevMode(d => !d),
-    }}>
+    <AppContext.Provider
+      value={{
+        theme,
+        devMode,
+        toggleTheme: () => setTheme((t) => (t === 'dark' ? 'light' : 'dark')),
+        toggleDevMode: () => setDevMode((d) => !d),
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

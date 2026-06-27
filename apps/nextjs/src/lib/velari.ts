@@ -8,7 +8,9 @@ export async function getAuthSession() {
 
   let user = undefined;
   if (userJson) {
-    try { user = JSON.parse(userJson); } catch (_) {}
+    try {
+      user = JSON.parse(userJson);
+    } catch (_) {}
   }
 
   return { token, user };

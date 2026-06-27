@@ -10,8 +10,8 @@ export default function CtaBanner() {
             Start building today.
           </h2>
           <p className="relative mx-auto mb-11 max-w-[440px] text-[18px] leading-[1.65] text-ink-2">
-            Drop in the SDK, point it at your HiVelari space, and ship
-            your first authenticated page in under an hour.
+            Drop in the SDK, point it at your HiVelari space, and ship your
+            first authenticated page in under an hour.
           </p>
           <div className="relative flex items-center justify-center gap-3 max-[600px]:flex-col">
             <a
