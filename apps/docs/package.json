@@ -1,0 +1,13 @@
+{
+  "name": "hivelari-docs",
+  "private": true,
+  "scripts": {
+    "docs:dev": "vitepress dev --host 127.0.0.1 --port \"$PORT\"",
+    "portless": "portless",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "2.0.0-alpha.17"
+  }
+}
