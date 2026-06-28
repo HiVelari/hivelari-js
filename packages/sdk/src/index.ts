@@ -11,6 +11,16 @@ export { VelariResponse } from '@/resources/VelariResponse';
 export { PaginatedResponse } from '@/resources/PaginatedResponse';
 export { PingInfo } from '@/resources/PingInfo';
 export { Product } from '@/resources/commerce/Product';
+export type {
+  ProductFile,
+  ProductImage,
+  ProductSpecification,
+  ProductSeo,
+  ProductOption,
+  ProductOptionValue,
+  ProductVariant,
+  ProductVariantOptionValue,
+} from '@/resources/commerce/Product';
 export { Category } from '@/resources/records/Category';
 export { Currency } from '@/resources/records/Currency';
 
@@ -22,6 +32,12 @@ export type {
   CommerceProductPayload,
   ProductFilePayload,
   ProductImagePayload,
+  ProductSpecificationPayload,
+  ProductSeoPayload,
+  ProductOptionPayload,
+  ProductOptionValuePayload,
+  ProductVariantPayload,
+  ProductVariantOptionValuePayload,
 } from '@/types/commerce';
 export type {
   LoginParams,
