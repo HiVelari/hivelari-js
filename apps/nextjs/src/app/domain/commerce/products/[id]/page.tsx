@@ -1,4 +1,4 @@
-import { getVelariClient } from '@/lib/velari';
+import velariClient from '@/lib/velari';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import ProductViewer from './_components/ProductViewer';
@@ -12,8 +12,7 @@ export async function generateMetadata({
 }: ProductPageProps): Promise<Metadata> {
   const { id } = await params;
   try {
-    const client = await getVelariClient();
-    const { data } = await client.commerce.getProduct(id);
+    const { data } = await velariClient.commerce.getProduct(id);
     return {
       title: `${data.name} — HiVelari SDK`,
       description: data.description || `View details for ${data.name}`,
@@ -25,13 +24,12 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params;
-  const client = await getVelariClient();
 
   let product = null;
   let errorMessage: string | null = null;
 
   try {
-    const { data } = await client.commerce.getProduct(id);
+    const { data } = await velariClient.commerce.getProduct(id);
     product = data;
   } catch (error: unknown) {
     errorMessage = error instanceof Error ? error.message : String(error);

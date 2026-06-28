@@ -1,5 +1,5 @@
+import velariClient from '@/lib/velari';
 import type { Metadata } from 'next';
-import { getAuthSession } from '@/lib/velari';
 import RegisterConsole from './_components/RegisterConsole';
 
 export const metadata: Metadata = {
@@ -7,7 +7,8 @@ export const metadata: Metadata = {
 };
 
 export default async function RegisterPage() {
-  const { user } = await getAuthSession();
+  const user = velariClient.user();
+
   return (
     <div className="mx-auto max-w-[1040px] px-16 pt-16 pb-28 max-[768px]:max-w-full max-[768px]:px-6 max-[768px]:pt-10 max-[768px]:pb-20">
       <div className="mb-10">
@@ -22,6 +23,7 @@ export default async function RegisterPage() {
           On success the user is immediately signed in.
         </p>
       </div>
+
       <RegisterConsole initialUser={user} />
     </div>
   );

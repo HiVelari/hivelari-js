@@ -1,4 +1,4 @@
-import { getVelariClient } from '@/lib/velari';
+import velariClient from '@/lib/velari';
 import type { Metadata } from 'next';
 import ProductGrid from './_components/ProductGrid';
 import SearchForm from './_components/SearchForm';
@@ -13,15 +13,14 @@ interface PageProps {
 
 export default async function ProductsPage({ searchParams }: PageProps) {
   const { search } = await searchParams;
-  const client = await getVelariClient();
 
   let products:
-    | Awaited<ReturnType<typeof client.commerce.listProducts>>['data']
+    | Awaited<ReturnType<typeof velariClient.commerce.listProducts>>['data']
     | null = null;
   let errorMessage: string | null = null;
 
   try {
-    const response = await client.commerce.listProducts({
+    const response = await velariClient.commerce.listProducts({
       search: search || undefined,
     });
     products = response.data;

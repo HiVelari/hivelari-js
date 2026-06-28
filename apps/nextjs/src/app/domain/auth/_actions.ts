@@ -1,6 +1,6 @@
 'use server';
 
-import { getVelariClient } from '@/lib/velari';
+import velariClient from '@/lib/velari';
 import type {
   LoginParams,
   RegisterParams,
@@ -17,8 +17,7 @@ async function getAppBaseUrl() {
 
 export async function loginAction(params: LoginParams) {
   try {
-    const client = await getVelariClient();
-    const response = await client.auth.login(params);
+    const response = await velariClient.auth.login(params);
 
     if (response.success && response.data?.token) {
       revalidatePath('/domain/auth');
@@ -39,8 +38,7 @@ export async function loginAction(params: LoginParams) {
 
 export async function registerAction(params: RegisterParams) {
   try {
-    const client = await getVelariClient();
-    const response = await client.auth.register(params);
+    const response = await velariClient.auth.register(params);
 
     if (response.success && response.data?.token) {
       revalidatePath('/domain/auth');
@@ -61,9 +59,8 @@ export async function registerAction(params: RegisterParams) {
 
 export async function logoutAction() {
   try {
-    const client = await getVelariClient();
-    if (client.isAuthenticated()) {
-      await client.auth.logout();
+    if (velariClient.isAuthenticated()) {
+      await velariClient.auth.logout();
     }
   } catch (_e) {
     // local sign-out must always succeed
@@ -75,8 +72,7 @@ export async function logoutAction() {
 
 export async function updateProfileAction(params: UpdateProfileParams) {
   try {
-    const client = await getVelariClient();
-    const response = await client.auth.updateProfile(params);
+    const response = await velariClient.auth.updateProfile(params);
 
     if (response.success && response.data) {
       revalidatePath('/domain/auth');
@@ -97,8 +93,7 @@ export async function updateProfileAction(params: UpdateProfileParams) {
 
 export async function initiateEmailVerificationAction() {
   try {
-    const client = await getVelariClient();
-    const response = await client.auth.initiateEmailVerification();
+    const response = await velariClient.auth.initiateEmailVerification();
     return { success: response.success };
   } catch (error: unknown) {
     return {
@@ -113,9 +108,8 @@ export async function initiateEmailVerificationAction() {
 
 export async function initiatePasswordRecoveryAction(email: string) {
   try {
-    const client = await getVelariClient();
     const baseUrl = await getAppBaseUrl();
-    const response = await client.auth.initiatePasswordRecovery({
+    const response = await velariClient.auth.initiatePasswordRecovery({
       email,
       redirect_url: `${baseUrl}/domain/auth/recovery`,
     });
@@ -133,9 +127,8 @@ export async function initiatePasswordRecoveryAction(email: string) {
 
 export async function socialRedirectUrlAction(provider: string) {
   try {
-    const client = await getVelariClient();
     const baseUrl = await getAppBaseUrl();
-    const response = await client.auth.socialRedirectUrl(
+    const response = await velariClient.auth.socialRedirectUrl(
       provider,
       `${baseUrl}/domain/auth/callback`,
     );
@@ -153,8 +146,7 @@ export async function socialRedirectUrlAction(provider: string) {
 
 export async function authenticateUsingCodeAction(code: string) {
   try {
-    const client = await getVelariClient();
-    const response = await client.auth.exchangeCode(code);
+    const response = await velariClient.auth.exchangeCode(code);
 
     if (response.success && response.data?.token) {
       revalidatePath('/domain/auth');
