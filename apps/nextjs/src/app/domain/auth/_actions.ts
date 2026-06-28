@@ -2,34 +2,17 @@
 
 import { getVelariClient } from '@/lib/velari';
 import type {
-  AuthResponsePayload,
   LoginParams,
   RegisterParams,
   UpdateProfileParams,
-} from '@hivelari/sdk';
+} from '@hivelari/nextjs';
 import { revalidatePath } from 'next/cache';
-import { cookies, headers } from 'next/headers';
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 async function getAppBaseUrl() {
   const headersList = await headers();
-
   return headersList.get('origin');
-}
-
-const SESSION_MAX_AGE = 60 * 60 * 24 * 7;
-
-async function persistSession(data: AuthResponsePayload) {
-  const cookieStore = await cookies();
-  const opts = {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax' as const,
-    maxAge: SESSION_MAX_AGE,
-  };
-  cookieStore.set('velari_token', data.token, opts);
-  cookieStore.set('velari_user', JSON.stringify(data.user), opts);
-  revalidatePath('/domain/auth');
 }
 
 export async function loginAction(params: LoginParams) {
@@ -38,7 +21,7 @@ export async function loginAction(params: LoginParams) {
     const response = await client.auth.login(params);
 
     if (response.success && response.data?.token) {
-      await persistSession(response.data);
+      revalidatePath('/domain/auth');
       return { success: true, user: response.data.user };
     }
 
@@ -60,7 +43,7 @@ export async function registerAction(params: RegisterParams) {
     const response = await client.auth.register(params);
 
     if (response.success && response.data?.token) {
-      await persistSession(response.data);
+      revalidatePath('/domain/auth');
       return { success: true, user: response.data.user };
     }
 
@@ -86,10 +69,6 @@ export async function logoutAction() {
     // local sign-out must always succeed
   }
 
-  const cookieStore = await cookies();
-  cookieStore.delete('velari_token');
-  cookieStore.delete('velari_user');
-
   revalidatePath('/domain/auth');
   redirect('/domain/auth/login');
 }
@@ -100,13 +79,6 @@ export async function updateProfileAction(params: UpdateProfileParams) {
     const response = await client.auth.updateProfile(params);
 
     if (response.success && response.data) {
-      const cookieStore = await cookies();
-      cookieStore.set('velari_user', JSON.stringify(response.data), {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: SESSION_MAX_AGE,
-      });
       revalidatePath('/domain/auth');
       return { success: true, user: response.data };
     }
@@ -182,10 +154,10 @@ export async function socialRedirectUrlAction(provider: string) {
 export async function authenticateUsingCodeAction(code: string) {
   try {
     const client = await getVelariClient();
-    const response = await client.auth.authenticateUsingCode(code);
+    const response = await client.auth.exchangeCode(code);
 
     if (response.success && response.data?.token) {
-      await persistSession(response.data);
+      revalidatePath('/domain/auth');
       return { success: true, user: response.data.user };
     }
 

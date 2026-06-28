@@ -10,9 +10,29 @@ import {
   UpdateProfileParams,
 } from '@/types/auth';
 
+/**
+ * Auth service — login, register, social OAuth, profile, and session management.
+ *
+ * Available as `client.auth` on any {@link Velari} instance.
+ * For Next.js, `@hivelari/nextjs` wraps these methods with automatic cookie persistence.
+ */
 export class AuthService {
   constructor(private client: Velari) {}
 
+  /**
+   * Authenticate with email and password.
+   * On success, sets the client's active token and user.
+   *
+   * @example
+   * ```ts
+   * const response = await client.auth.login({ email: 'user@example.com', password: 'secret' });
+   * if (response.success) {
+   *   console.log(response.data.user.email);
+   * }
+   * ```
+   *
+   * @throws {VelariError} With status `401` on invalid credentials.
+   */
   async login(
     params: LoginParams,
   ): Promise<VelariResponse<AuthResponsePayload>> {
@@ -31,6 +51,12 @@ export class AuthService {
     return response;
   }
 
+  /**
+   * Register a new user account.
+   * On success, sets the client's active token and user.
+   *
+   * @throws {VelariError} With status `422` on validation failures (e.g. duplicate email).
+   */
   async register(
     params: RegisterParams,
   ): Promise<VelariResponse<AuthResponsePayload>> {
@@ -49,6 +75,19 @@ export class AuthService {
     return response;
   }
 
+  /**
+   * Get the OAuth redirect URL for a social provider.
+   * Redirect the user's browser to `response.data.redirect_url` to start the OAuth flow.
+   *
+   * @param provider    Social provider slug (e.g. `'google'`, `'github'`).
+   * @param redirectUrl Callback URL to return the user to after OAuth completes.
+   *
+   * @example
+   * ```ts
+   * const response = await client.auth.socialRedirectUrl('google', 'https://myapp.com/auth/callback');
+   * redirect(response.data.redirect_url);
+   * ```
+   */
   async socialRedirectUrl(
     provider: string,
     redirectUrl: string,
@@ -63,6 +102,18 @@ export class AuthService {
     });
   }
 
+  /**
+   * Exchange an encrypted short-lived code for a session.
+   *
+   * The code is produced by the HiVelari server's social OAuth callback and
+   * contains an AES-encrypted JSON payload with `{ token, user, expires_at }`.
+   * This method decrypts it locally — no additional network request is made.
+   *
+   * For Next.js, prefer `client.auth.exchangeCode()` from `@hivelari/nextjs`
+   * which also persists the resulting session to cookies.
+   *
+   * @throws {VelariError} If the code is expired or cannot be decrypted.
+   */
   async authenticateUsingCode(
     code: string,
   ): Promise<VelariResponse<AuthResponsePayload>> {
@@ -94,6 +145,15 @@ export class AuthService {
     }
   }
 
+  /**
+   * Exchange a provider access token for a HiVelari session token.
+   * Used when your app handles the OAuth flow itself and obtains the provider token directly.
+   *
+   * @param provider Social provider slug (e.g. `'google'`).
+   * @param params   The provider access token.
+   *
+   * @throws {VelariError} On invalid or expired provider tokens.
+   */
   async exchangeSocialToken(
     provider: string,
     params: SocialExchangeTokenParams,
@@ -113,6 +173,12 @@ export class AuthService {
     return response;
   }
 
+  /**
+   * Initiate a password recovery email for the given address.
+   *
+   * @param params.email        The account email.
+   * @param params.redirect_url Where to send the user after clicking the recovery link.
+   */
   async initiatePasswordRecovery(params: {
     email: string;
     redirect_url: string;
@@ -125,6 +191,15 @@ export class AuthService {
     });
   }
 
+  /**
+   * Log out the current user.
+   * Revokes the session token on the server, then clears the client's token and user.
+   *
+   * For Next.js, use `client.auth.logout()` from `@hivelari/nextjs` which also
+   * deletes session cookies.
+   *
+   * @throws {VelariError} With status `401` if the token is already invalid.
+   */
   async logout(): Promise<VelariResponse<{ success: boolean }>> {
     const response = await this.client.request<{ success: boolean }>({
       method: 'POST',
@@ -140,6 +215,12 @@ export class AuthService {
     return response;
   }
 
+  /**
+   * Send an email verification link to the authenticated user.
+   * Requires an active session token.
+   *
+   * @throws {VelariError} With status `401` if the user is not authenticated.
+   */
   async initiateEmailVerification(): Promise<
     VelariResponse<{ success: boolean }>
   > {
@@ -150,6 +231,12 @@ export class AuthService {
     });
   }
 
+  /**
+   * Fetch the authenticated user's full profile from the API.
+   * Updates the in-memory user on the client on success.
+   *
+   * @throws {VelariError} With status `401` if the user is not authenticated.
+   */
   async getProfile(): Promise<VelariResponse<AuthUserPayload>> {
     const response = await this.client.request<AuthUserPayload>({
       method: 'GET',
@@ -165,6 +252,14 @@ export class AuthService {
     return response;
   }
 
+  /**
+   * Update the authenticated user's profile fields.
+   * Updates the in-memory user on the client on success.
+   *
+   * Pass only the fields you want to change — all fields are optional.
+   *
+   * @throws {VelariError} With status `422` on validation failures.
+   */
   async updateProfile(
     params: UpdateProfileParams,
   ): Promise<VelariResponse<AuthUserPayload>> {

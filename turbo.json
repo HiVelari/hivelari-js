@@ -18,7 +18,7 @@
       "persistent": true
     },
     "portless": {
-      "with": ["@hivelari/sdk#dev"],
+      "with": ["@hivelari/sdk#dev", "@hivelari/nextjs#dev"],
       "cache": false,
       "persistent": true
     }

@@ -1,0 +1,47 @@
+{
+  "name": "@hivelari/nextjs",
+  "version": "0.1.0",
+  "description": "Next.js integration for the HiVelari SDK — cookie-based session management, social OAuth callback handling, and route middleware out of the box.",
+  "keywords": ["hivelari", "sdk", "nextjs", "typescript"],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.mts",
+        "require": "./dist/index.d.cts"
+      },
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./middleware": {
+      "types": {
+        "import": "./dist/middleware.d.mts",
+        "require": "./dist/middleware.d.cts"
+      },
+      "import": "./dist/middleware.mjs",
+      "require": "./dist/middleware.cjs"
+    }
+  },
+  "files": ["dist", "README.md", "package.json"],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "check-types": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@hivelari/sdk": "workspace:*",
+    "next": ">=15"
+  },
+  "devDependencies": {
+    "@hivelari/sdk": "workspace:*",
+    "next": "16.2.9",
+    "server-only": "^0.0.1",
+    "tsdown": "^0.22.3",
+    "typescript": "^5.7.2",
+    "@types/node": "^22.10.2"
+  }
+}

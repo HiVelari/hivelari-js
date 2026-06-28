@@ -26,6 +26,9 @@ importers:
 
   apps/nextjs:
     dependencies:
+      '@hivelari/nextjs':
+        specifier: workspace:*
+        version: link:../../packages/nextjs
       '@hivelari/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
@@ -61,38 +64,25 @@ importers:
         specifier: ^5
         version: 5.9.3
 
-  apps/nextjs-example:
-    dependencies:
+  packages/nextjs:
+    devDependencies:
       '@hivelari/sdk':
         specifier: workspace:*
-        version: link:../../packages/sdk
+        version: link:../sdk
+      '@types/node':
+        specifier: ^22.10.2
+        version: 22.20.0
       next:
         specifier: 16.2.9
         version: 16.2.9(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      react:
-        specifier: 19.2.4
-        version: 19.2.4
-      react-dom:
-        specifier: 19.2.4
-        version: 19.2.4(react@19.2.4)
-    devDependencies:
-      '@biomejs/biome':
-        specifier: ^1.9.4
-        version: 1.9.4
-      '@svgr/webpack':
-        specifier: ^8.1.0
-        version: 8.1.0(typescript@5.9.3)
-      '@types/node':
-        specifier: ^20
-        version: 20.19.43
-      '@types/react':
-        specifier: ^19
-        version: 19.2.17
-      '@types/react-dom':
-        specifier: ^19
-        version: 19.2.3(@types/react@19.2.17)
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
+      tsdown:
+        specifier: ^0.22.3
+        version: 0.22.3(tsx@4.22.4)(typescript@5.9.3)(unrun@0.2.39)
       typescript:
-        specifier: ^5
+        specifier: ^5.7.2
         version: 5.9.3
 
   packages/sandbox:

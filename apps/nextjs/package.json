@@ -10,6 +10,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@hivelari/nextjs": "workspace:*",
     "@hivelari/sdk": "workspace:*",
     "next": "16.2.9",
     "react": "19.2.4",

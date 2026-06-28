@@ -1,3 +1,9 @@
+/**
+ * Raw paginated payload shape returned by list API endpoints.
+ * Transformed into {@link PaginatedResponse} by the SDK.
+ *
+ * @template T The raw item type before transformation.
+ */
 export interface PaginatedPayload<T> {
   data: T[];
   meta: {
