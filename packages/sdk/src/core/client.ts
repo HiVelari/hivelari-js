@@ -5,6 +5,7 @@ import { PingInfo } from '@/resources/PingInfo';
 import { VelariResponse } from '@/resources/VelariResponse';
 import { AuthService } from '@/services/auth';
 import { CommerceService } from '@/services/commerce';
+import { ProfileService } from '@/services/profiles';
 import { RecordsService } from '@/services/records';
 import type { AuthUserPayload } from '@/types/auth';
 import axios, { type AxiosInstance, isAxiosError } from 'axios';
@@ -73,6 +74,9 @@ export class Velari {
   /** Auth service: login, register, OAuth, profile management. */
   readonly auth: AuthService;
 
+  /** Profile service: personal and business profiles. */
+  readonly profile: ProfileService;
+
   constructor(options?: { token?: string; user?: AuthUserPayload }) {
     const envVal = getValidatedEnv();
 
@@ -104,6 +108,7 @@ export class Velari {
     this.commerce = new CommerceService(this);
     this.records = new RecordsService(this);
     this.auth = new AuthService(this);
+    this.profile = new ProfileService(this);
   }
 
   /**

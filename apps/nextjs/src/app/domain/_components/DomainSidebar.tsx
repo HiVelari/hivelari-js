@@ -1,13 +1,13 @@
 'use client';
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import Image from 'next/image';
-import LockIcon from '@/app/_icons/lock.svg';
 import CartIcon from '@/app/_icons/cart.svg';
-import MenuIcon from '@/app/_icons/menu.svg';
 import CloseIcon from '@/app/_icons/close.svg';
+import LockIcon from '@/app/_icons/lock.svg';
+import MenuIcon from '@/app/_icons/menu.svg';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const NAV: Array<
   | { label: string; href: string; exact: boolean }
@@ -30,6 +30,14 @@ const NAV: Array<
     items: [
       { label: 'Overview', href: '/domain/commerce' },
       { label: 'Products', href: '/domain/commerce/products' },
+    ],
+  },
+  {
+    group: 'Profiles',
+    items: [
+      { label: 'Overview', href: '/domain/profiles' },
+      { label: 'Personal Profiles', href: '/domain/profiles/personal' },
+      { label: 'Business Profiles', href: '/domain/profiles/business' },
     ],
   },
 ];
