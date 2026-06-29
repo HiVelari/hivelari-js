@@ -1,7 +1,13 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
   "files": {
-    "ignore": ["packages/sandbox/src/endpoints/auth.ts"]
+    "ignore": [
+      "packages/sandbox/src/endpoints/auth.ts",
+      "apps/docs/.vitepress/cache/**",
+      "apps/docs/.vitepress/dist/**",
+      "**/dist/**",
+      "**/node_modules/**"
+    ]
   },
   "organizeImports": {
     "enabled": true

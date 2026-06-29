@@ -4,6 +4,7 @@ import type { ResolvedVelariNextOptions, VelariNextOptions } from '@/types';
 import type {
   AuthUserPayload,
   CommerceService,
+  ProfileService,
   RecordsService,
 } from '@hivelari/sdk';
 import { Velari } from '@hivelari/sdk';
@@ -35,6 +36,9 @@ export class VelariNext {
   /** Records service (currencies, categories) — same API as the raw SDK. */
   readonly records: RecordsService;
 
+  /** Profile service (personal and business profiles) — same API as the raw SDK. */
+  readonly profile: ProfileService;
+
   /** Resolved configuration with all defaults applied. */
   readonly options: ResolvedVelariNextOptions;
 
@@ -46,6 +50,7 @@ export class VelariNext {
     this.auth = new NextAuthService(sdk.auth, sdk, options);
     this.commerce = sdk.commerce;
     this.records = sdk.records;
+    this.profile = sdk.profile;
   }
 
   /**

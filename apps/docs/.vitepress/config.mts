@@ -1,86 +1,86 @@
-import { defineConfig } from "vitepress";
+import { defineConfig } from 'vitepress';
 import {
   buildPackageItems,
   HELLO_PAGES,
   NEXTJS_PAGES,
   SANDBOX_PAGES,
   SDK_PAGES,
-} from "./nav.mts";
+} from './nav.mts';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  srcDir: "src",
+  srcDir: 'src',
 
-  title: "HiVelari SDK docs",
-  description: "HiVelari SDK documentation",
+  title: 'HiVelari SDK docs',
+  description: 'HiVelari SDK documentation',
   themeConfig: {
-    logo: "/assets/logo.png",
-    search: { provider: "local" },
+    logo: '/assets/logo.png',
+    search: { provider: 'local' },
 
     nav: [
       {
-        text: "Hi Velari",
-        items: buildPackageItems(HELLO_PAGES, "hello"),
+        text: 'Hi Velari',
+        items: buildPackageItems(HELLO_PAGES, 'hello'),
       },
       {
-        text: "SDK",
-        items: buildPackageItems(SDK_PAGES, "sdk"),
+        text: 'SDK',
+        items: buildPackageItems(SDK_PAGES, 'sdk'),
       },
       {
-        text: "NextJS",
-        items: buildPackageItems(NEXTJS_PAGES, "nextjs"),
+        text: 'NextJS',
+        items: buildPackageItems(NEXTJS_PAGES, 'nextjs'),
       },
       {
-        text: "Sandbox",
-        items: buildPackageItems(SANDBOX_PAGES, "sandbox"),
+        text: 'Sandbox',
+        items: buildPackageItems(SANDBOX_PAGES, 'sandbox'),
       },
     ],
 
     sidebar: [
       {
-        text: "Hi Velari",
-        items: buildPackageItems(HELLO_PAGES, "hello"),
+        text: 'Hi Velari',
+        items: buildPackageItems(HELLO_PAGES, 'hello'),
       },
       {
-        text: "Packages",
+        text: 'Packages',
         items: [
           {
-            text: "@hivelari/sdk",
+            text: '@hivelari/sdk',
             collapsed: false,
-            items: buildPackageItems(SDK_PAGES, "sdk"),
+            items: buildPackageItems(SDK_PAGES, 'sdk'),
           },
           {
-            text: "@hivelari/nextjs",
+            text: '@hivelari/nextjs',
             collapsed: true,
-            items: buildPackageItems(NEXTJS_PAGES, "nextjs"),
+            items: buildPackageItems(NEXTJS_PAGES, 'nextjs'),
           },
           {
-            text: "@hivelari/sandbox",
+            text: '@hivelari/sandbox',
             collapsed: true,
-            items: buildPackageItems(SANDBOX_PAGES, "sandbox"),
+            items: buildPackageItems(SANDBOX_PAGES, 'sandbox'),
           },
         ],
       },
     ],
 
-    socialLinks: [{ icon: "github", link: "https://github.com/HiVelari" }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/HiVelari' }],
 
     footer: {
-      copyright: "Copyright (c) 2026 MayR Labs",
-      message: "Built with Love by the HiVelari Team",
+      copyright: 'Copyright (c) 2026 MayR Labs',
+      message: 'Built with Love by the HiVelari Team',
     },
 
     editLink: {
       pattern:
-        "https://github.com/HiVelari/hivelari-js/edit/main/apps/docs/src/:path",
-      text: "Edit this page on GitHub",
+        'https://github.com/HiVelari/hivelari-js/edit/main/apps/docs/src/:path',
+      text: 'Edit this page on GitHub',
     },
 
     outline: {
       level: [2, 3],
-      label: "Outline",
+      label: 'Outline',
     },
   },
 
-  ignoreDeadLinks: "localhostLinks",
+  ignoreDeadLinks: 'localhostLinks',
 });
